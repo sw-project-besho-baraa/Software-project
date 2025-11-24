@@ -2,10 +2,12 @@
 <profiles version="12">
     <profile kind="CodeFormatterProfile" name="Strict4Spaces" version="12">
         <setting id="org.eclipse.jdt.core.formatter.blank_lines_after_package" value="1"/>
-
         <setting id="org.eclipse.jdt.core.formatter.blank_lines_after_imports" value="1"/>
-
         <setting id="org.eclipse.jdt.core.formatter.blank_lines_between_type_declarations" value="1"/>
+        <setting id="org.eclipse.jdt.core.formatter.blank_lines_before_method" value="1"/>
+        <setting id="org.eclipse.jdt.core.formatter.blank_lines_after_method" value="1"/>
+        <setting id="org.eclipse.jdt.core.formatter.keep_blank_lines_in_code" value="1"/>
+        <setting id="org.eclipse.jdt.core.formatter.keep_blank_lines_in_methods" value="1"/>
 
         <setting id="org.eclipse.jdt.core.formatter.tabulation.char" value="space"/>
         <setting id="org.eclipse.jdt.core.formatter.tabulation.size" value="4"/>

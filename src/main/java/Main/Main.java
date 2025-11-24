@@ -1,4 +1,6 @@
-package defualt;
+package Main;
+
+import Entity.User;
 
 public class Main
 {
