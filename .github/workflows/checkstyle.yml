@@ -8,6 +8,7 @@ on:
 
 jobs:
   checkstyle:
+    name: Checkstyle Job
     runs-on: ubuntu-latest
 
     steps:
