@@ -1,9 +1,11 @@
 package DTO;
 
 /**
- * Data Transfer Object representing credentials supplied by a user during authentication.
+ * Data Transfer Object representing credentials supplied by a user during
+ * authentication.
  * <p>
- * This DTO typically contains the minimal information required to attempt a login.
+ * This DTO typically contains the minimal information required to attempt a
+ * login.
  */
 public class UserDTO
 {
@@ -13,8 +15,11 @@ public class UserDTO
     /**
      * Creates a new UserDTO with the provided credentials.
      *
-     * @param email    the user's email address
-     * @param password the user's password (usually a plaintext input that will be validated/hashed elsewhere)
+     * @param email
+     *            the user's email address
+     * @param password
+     *            the user's password (usually a plaintext input that will be
+     *            validated/hashed elsewhere)
      */
     public UserDTO(String email, String password)
     {
@@ -35,7 +40,8 @@ public class UserDTO
     /**
      * Sets the user's email address.
      *
-     * @param email the email to set
+     * @param email
+     *            the email to set
      */
     public void setEmail(String email)
     {
@@ -55,7 +61,8 @@ public class UserDTO
     /**
      * Sets the user's password.
      *
-     * @param password the password to set
+     * @param password
+     *            the password to set
      */
     public void setPassword(String password)
     {

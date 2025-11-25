@@ -5,18 +5,22 @@ import Session.ISessionManager;
 /**
  * Service responsible for terminating the current user session.
  * <p>
- * This service delegates the logout operation to the configured {@link ISessionManager}.
+ * This service delegates the logout operation to the configured
+ * {@link ISessionManager}.
  */
-public class LogoutService {
+public class LogoutService
+{
 
     private final ISessionManager sessionManager;
 
     /**
      * Creates a new LogoutService.
      *
-     * @param sessionManager the session manager used to perform logout operations
+     * @param sessionManager
+     *            the session manager used to perform logout operations
      */
-    public LogoutService(ISessionManager sessionManager) {
+    public LogoutService(ISessionManager sessionManager)
+    {
         this.sessionManager = sessionManager;
     }
 
@@ -25,7 +29,8 @@ public class LogoutService {
      * <p>
      * If no session is active, this method is a no-op.
      */
-    public void logout() {
+    public void logout()
+    {
         sessionManager.logout();
     }
 
@@ -34,7 +39,8 @@ public class LogoutService {
      *
      * @return the session manager instance
      */
-    public ISessionManager getSessionManager() {
+    public ISessionManager getSessionManager()
+    {
         return sessionManager;
     }
 }
