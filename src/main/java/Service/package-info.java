@@ -1,4 +1,5 @@
 /**
- * Contains service-layer components coordinating domain logic and infrastructure collaborators.
+ * Contains service-layer components coordinating domain logic and
+ * infrastructure collaborators.
  */
 package Service;

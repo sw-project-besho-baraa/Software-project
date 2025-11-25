@@ -5,15 +5,16 @@ import Entity.User;
 /**
  * Abstraction for managing the lifecycle of a user session.
  * <p>
- * Implementations can vary (local, distributed, HTTP, etc.) but must provide
- * a consistent API for logging in/out and querying session state.
+ * Implementations can vary (local, distributed, HTTP, etc.) but must provide a
+ * consistent API for logging in/out and querying session state.
  */
 public interface ISessionManager
 {
     /**
      * Starts a session for the specified user.
      *
-     * @param user the authenticated user for whom the session will be started
+     * @param user
+     *            the authenticated user for whom the session will be started
      */
     void login(User user);
 

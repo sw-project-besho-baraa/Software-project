@@ -3,9 +3,11 @@ package Session;
 import Entity.User;
 
 /**
- * Simple in-memory session manager that stores the current user in a local field.
+ * Simple in-memory session manager that stores the current user in a local
+ * field.
  * <p>
- * Suitable for desktop applications, CLI tools, or simple prototypes. Not suitable for multi-user server environments.
+ * Suitable for desktop applications, CLI tools, or simple prototypes. Not
+ * suitable for multi-user server environments.
  */
 public class LocalSessionManager implements ISessionManager
 {
@@ -14,7 +16,8 @@ public class LocalSessionManager implements ISessionManager
     /**
      * Stores the given user as the current session.
      *
-     * @param user the authenticated user
+     * @param user
+     *            the authenticated user
      */
     @Override
     public void login(User user)
