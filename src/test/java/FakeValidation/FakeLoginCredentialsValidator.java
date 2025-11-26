@@ -14,14 +14,14 @@ import Validation.LoginCredentialsValidator;
  */
 public class FakeLoginCredentialsValidator extends LoginCredentialsValidator {
 
-    // === Tracking fields ===
+
     private boolean wasCalled = false;
     private boolean resultToReturn = true;
     private UserDTO lastDto = null;
     private User lastUser = null;
 
     /**
-     * Constructor — passes fake hashing instance to parent class.
+     * Constructor passes fake hashing instance to parent class.
      */
     public FakeLoginCredentialsValidator(IHashingPassword hashingPassword) {
         super(hashingPassword);
@@ -29,9 +29,9 @@ public class FakeLoginCredentialsValidator extends LoginCredentialsValidator {
 
     /**
      * Fake validation logic:
-     * - Records that it was called.
-     * - Stores the passed DTO and User.
-     * - Returns a pre-defined result (controlled from tests).
+     *  Records that it was called.
+     *  Stores the passed DTO and User.
+     *  Returns a pre-defined result (controlled from tests).
      */
     @Override
     public boolean validateLogin(UserDTO dto, User user) {

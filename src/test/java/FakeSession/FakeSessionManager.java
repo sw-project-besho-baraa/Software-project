@@ -5,7 +5,7 @@ import Session.ISessionManager;
 
 public class FakeSessionManager implements ISessionManager {
 
-    private static User currentUser;
+    private User currentUser;
     @Override
     public void login(User user) {
         currentUser = user;
