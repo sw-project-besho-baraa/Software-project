@@ -13,6 +13,7 @@ public class User
     private String hashedPassword;
     private Date creationDate;
     private UserRole userRole;
+    public User (){}
     public User(int id, String name, String email, String hashedPassword)
     {
         this.id = id;
