@@ -22,11 +22,6 @@ public class LogoutTests {
         logoutService = new LogoutService(sessionManager);
     }
 
-    /**
-     * Scenario 1:
-     * When no user is logged in calls logout()
-     * should keep the session in not logged in.
-     */
     @Test
     void logoutDoesNothingWhenNoUserLoggedIn() {
         assertFalse(sessionManager.isLoggedIn(), "no user logged in initially");
@@ -35,11 +30,7 @@ public class LogoutTests {
         assertFalse(sessionManager.isLoggedIn(), "No user should be logged in after logout()");
         assertNull(sessionManager.getUser(), "Session should remain empty after logout()");
     }
-    /**
-     * Scenario 2:
-     * When a user is logged in  calls logout()
-     * should clear the current session.
-     */
+
     @Test
     void logoutClearsActiveSession() {
         User user = new User();
@@ -52,11 +43,7 @@ public class LogoutTests {
         assertNull(sessionManager.getUser(), "Session should not store any user after logout()");
     }
 
-    /**
-     * Scenario 3:
-     * getSessionManager() should return the same instance
-     * that was passed to LogoutService.
-     */
+
     @Test
     void getSessionManagerReturnsSameInstance() {
         assertSame(sessionManager, logoutService.getSessionManager(),"LogoutService should expose the same session manager instance");

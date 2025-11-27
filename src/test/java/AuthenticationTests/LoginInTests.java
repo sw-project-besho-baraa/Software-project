@@ -30,12 +30,7 @@ public class LoginInTests {
         loginService = new LoginService(loginCredentialsValidator, sessionManager, userRepository);
     }
 
-    /**
-     * Scenario 1:
-     * User not found login() should return false,
-     * validator must NOT be called,
-     * and no session should be started.
-     */
+
     @Test
     void loginReturnsFalseWhenUserNotFound() {
         UserDTO dto = new UserDTO("Bishawi@gmail.com", "letsholetsho");
@@ -45,13 +40,7 @@ public class LoginInTests {
         assertFalse(sessionManager.isLoggedIn(), "No user should be logged in");
     }
 
-    /**
-     * Scenario 2:
-     * User exists in repository but credentials are invalid:
-     *  login() should return false
-     *  validator must be called with the right user & DTO
-     *  no session should be started
-     */
+
     @Test
     void loginReturnsFalseWhenCredentialsInvalid() {
 
@@ -69,13 +58,7 @@ public class LoginInTests {
         assertNull(sessionManager.getUser(), "Session should not hold any user");
     }
 
-    /**
-     * Scenario 3:
-     * User exists and credentials are valid:
-     *  login() should return true
-     *  validator must be called
-     *  session should store the logged-in user
-     */
+
     @Test
     void loginReturnsTrueWhenCredentialsValidAndStartsSession() {
         User existingUser = new User();

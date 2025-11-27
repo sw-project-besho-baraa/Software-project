@@ -17,11 +17,7 @@ public class LoginCredentialsValidatorTests {
         fakeHashing = new FakeHashingPassword();
         validator = new LoginCredentialsValidator(fakeHashing);
     }
-    /**
-     * Scenario 1:
-     * If the User object is null, validation should fail
-     * and no hashing verification should be called.
-     */
+
     @Test
     void validateLoginReturnsFalseWhenUserIsNull() {
         UserDTO dto = new UserDTO("bishawi@example.com", "password123");
@@ -29,11 +25,7 @@ public class LoginCredentialsValidatorTests {
         assertFalse(result, "Expected validation to fail when user is null");
         assertFalse(fakeHashing.wasCalled(), "hashing verifyPassword should not be called when user is null");
     }
-    /**
-     * Scenario 2:
-     * If the email in UserDTO does not match the User email,
-     * validation should fail and hashing should not be called.
-     */
+
     @Test
     void validateLoginReturnsFalseWhenEmailsDoNotMatch() {
         UserDTO dto = new UserDTO("bishawi@example.com", "password123");
@@ -45,11 +37,7 @@ public class LoginCredentialsValidatorTests {
         assertFalse(fakeHashing.wasCalled(), "Hashing verifyPassword should NOT be called when emails differ");
     }
 
-    /**
-     * Scenario 3:
-     * Emails match, but password verification fails.
-     * Validation should return false and hashing should be called.
-     */
+
     @Test
     void validateLoginReturnsFalseWhenPasswordDoesNotMatch() {
         UserDTO dto = new UserDTO("bishawi@example.com", "wrong-password");
@@ -63,11 +51,7 @@ public class LoginCredentialsValidatorTests {
         assertEquals(dto.getPassword(), fakeHashing.getLastPlainPassword(), "Plain password should be passed to hashing");
         assertEquals(user.getHashedPassword(), fakeHashing.getLastHashedPassword(), "Stored hash should be passed to hashing");
     }
-    /**
-     * Scenario 4:
-     * Emails match and hashing verification succeeds.
-     * Validation should return true.
-     */
+
     @Test
     void validateLoginReturnsTrueWhenCredentialsAreValid() {
         UserDTO dto = new UserDTO("bishawi@example.com", "correct-password");
