@@ -22,7 +22,8 @@ public class LocalSessionManager implements ISessionManager
     @Override
     public void login(User user)
     {
-        if(user==null){
+        if (user == null)
+        {
             throw new IllegalArgumentException("User cannot be null");
         }
         this.user = user;

@@ -2,14 +2,17 @@ package Util.HashingPassword;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-public class BCryptHashingPassword implements IHashingPassword {
+public class BCryptHashingPassword implements IHashingPassword
+{
     @Override
-    public String hashPassword(String password) {
-        return BCrypt.hashpw(password, BCrypt.gensalt(12));
+    public String hashPassword(String password)
+    {
+        return BCrypt.hashpw(password,BCrypt.gensalt(12));
     }
 
     @Override
-    public boolean verifyPassword(String password, String hashedPassword) {
-        return  BCrypt.checkpw(password, hashedPassword);
+    public boolean verifyPassword(String password,String hashedPassword)
+    {
+        return BCrypt.checkpw(password,hashedPassword);
     }
 }

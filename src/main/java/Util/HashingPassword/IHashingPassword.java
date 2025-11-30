@@ -1,8 +1,9 @@
 package Util.HashingPassword;
 
-public interface IHashingPassword {
+public interface IHashingPassword
+{
 
     public String hashPassword(String password);
 
-    public boolean verifyPassword(String password, String hashedPassword);
+    public boolean verifyPassword(String password,String hashedPassword);
 }

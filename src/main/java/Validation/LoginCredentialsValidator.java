@@ -4,8 +4,6 @@ import DTO.UserDTO;
 import Entity.User;
 import Util.HashingPassword.IHashingPassword;
 
-import java.util.Optional;
-
 public class LoginCredentialsValidator
 {
     private final IHashingPassword hashingPassword;
