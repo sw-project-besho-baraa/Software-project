@@ -40,10 +40,11 @@ public class LocalSession_Test
         sessionManager.login(user);
         assertEquals(user,sessionManager.getUser());
     }
+
     @Test
     void logIn_WithInvalidUser_ThrowsException()
     {
-        assertThrows(IllegalArgumentException.class,()->sessionManager.login(null));
+        assertThrows(IllegalArgumentException.class,() -> sessionManager.login(null));
     }
 
 }
