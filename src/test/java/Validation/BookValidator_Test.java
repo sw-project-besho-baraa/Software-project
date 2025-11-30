@@ -1,10 +1,10 @@
+package Validation;
 
 import Entity.Book;
-import Validation.BookValidator;
 import org.junit.jupiter.api.*;
-import org.mockito.Mockito;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+
 public class BookValidator_Test {
     private BookValidator validator;
     @BeforeEach

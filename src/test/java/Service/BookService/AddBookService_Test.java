@@ -1,4 +1,4 @@
-package BookService;
+package Service.BookService;
 import Entity.Book;
 import Repository.BookRepository;
 import Service.Book.AddBookService;
