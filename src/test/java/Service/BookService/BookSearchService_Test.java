@@ -4,15 +4,15 @@ import Entity.Book;
 import Repository.BookRepository;
 import Service.Book.BookSearchService;
 import Service.Book.SearchStrategy.IBookSearchStrategy;
-
 import org.junit.jupiter.api.*;
+
 import java.util.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class BookSearchService_Test
 {
-
     private BookRepository bookRepository;
     private BookSearchService bookSearchService;
     private IBookSearchStrategy<String> strategy;
@@ -42,5 +42,10 @@ public class BookSearchService_Test
     @Test
     void search_NullValue_ThrowsNullPointerException() {
         assertThrows(NullPointerException.class, () -> bookSearchService.search(strategy, null), "Expected NullPointerException when value is null");
+    }
+
+    @Test
+    void constructor_NullRepository_ThrowsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new BookSearchService(null), "Expected NullPointerException when repository is null");
     }
 }
