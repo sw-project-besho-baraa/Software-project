@@ -1,46 +1,46 @@
 package Service.BookService;
-import Entity.Book;
-import Service.Book.BookSearchService;
-import Service.Book.SearchStrategy.BookSearchStrategy;
 
-import Validation.SearchValidator;
+import Entity.Book;
+import Repository.BookRepository;
+import Service.Book.BookSearchService;
+import Service.Book.SearchStrategy.IBookSearchStrategy;
+
 import org.junit.jupiter.api.*;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class BookSearchService_Test {
+public class BookSearchService_Test
+{
 
+    private BookRepository bookRepository;
     private BookSearchService bookSearchService;
-    private BookSearchStrategy strategy;
-    private SearchValidator searchValidator;
+    private IBookSearchStrategy<String> strategy;
 
     @BeforeEach
     void setup() {
-        bookSearchService = new BookSearchService();
-        strategy = mock(BookSearchStrategy.class);
-        searchValidator = mock(SearchValidator.class);
-        bookSearchService.setStrategy(strategy, searchValidator);
+        bookRepository = mock(BookRepository.class);
+        bookSearchService = new BookSearchService(bookRepository);
+        strategy = mock(IBookSearchStrategy.class);
     }
 
     @Test
-    void search_WithStrategy_CallsStrategyAndReturnsResult() {
+    void search_WithStrategy_ReturnsExpectedBooks() {
         String keyword = "Bara Obama";
         List<Book> expectedBooks = Collections.singletonList(mock(Book.class));
-        when(strategy.searchBook(keyword)).thenReturn(expectedBooks);
-        List<Book> result = bookSearchService.search(keyword);
-        assertSame(expectedBooks, result);
+        when(strategy.searchBook(bookRepository, keyword)).thenReturn(expectedBooks);
+        List<Book> result = bookSearchService.search(strategy, keyword);
+        assertEquals(expectedBooks, result, "The search result should match the mocked books");
+        verify(strategy, times(1)).searchBook(bookRepository, keyword);
     }
 
     @Test
-    void search_WithoutStrategy_ThrowsIllegalStateException() {
-        BookSearchService nullServiceStrategy = new BookSearchService();
-        assertThrows(IllegalStateException.class, () -> nullServiceStrategy.search("besho"));
+    void search_NullStrategy_ThrowsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> bookSearchService.search(null, "test"), "Expected NullPointerException when strategy is null");
     }
+
     @Test
-    void search_InvalidKey_ThrowsFromValidator() {
-        String invalid = null;
-        doThrow(new IllegalArgumentException("Search string cannot be null or empty")).when(searchValidator).validate(invalid);
-        assertThrows(IllegalArgumentException.class, () -> bookSearchService.search(invalid));
+    void search_NullValue_ThrowsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> bookSearchService.search(strategy, null), "Expected NullPointerException when value is null");
     }
 }

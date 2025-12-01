@@ -3,23 +3,18 @@ package Service.Book;
 import Entity.Book;
 import Repository.BookRepository;
 import Session.ISessionManager;
-import Session.LocalSessionManager;
-import Validation.BookValidator;
+import lombok.NonNull;
 
 public class AddBookService
 {
-    private ISessionManager sessionManager;
-    private BookValidator bookValidator;
     private final BookRepository bookRepository;
-    public AddBookService(BookRepository bookRepository, BookValidator bookValidator)
+    public AddBookService(BookRepository bookRepository)
     {
         this.bookRepository = bookRepository;
-        this.bookValidator = bookValidator;
     }
 
-    public void addBook(Book book)
+    public void addBook(@NonNull Book book)
     {
-        bookValidator.validate(book);
         bookRepository.save(book);
     }
 }
