@@ -5,15 +5,12 @@ import Repository.BookRepository;
 
 import java.util.List;
 
-public class BookSearchByIsbnStrategy implements BookSearchStrategy {
-    private BookRepository bookRepository;
-
-    public  BookSearchByIsbnStrategy (BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
+public class BookSearchByIsbnStrategy implements IBookSearchStrategy<String>
+{
 
     @Override
-    public List<Book> searchBook(String isbn ) {
+    public List<Book> searchBook(BookRepository bookRepository,String isbn)
+    {
         return bookRepository.findByIsbnContainingIgnoreCase(isbn);
     }
 }

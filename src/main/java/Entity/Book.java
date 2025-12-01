@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 public class Book extends Item
 {
+
     @Column(unique = true, nullable = false)
     private String isbn;
     @Column(nullable = false)

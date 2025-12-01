@@ -19,7 +19,6 @@ public abstract class Item
 
     public Item(String title)
     {
-        this.id = id;
         this.title = title;
     }
 

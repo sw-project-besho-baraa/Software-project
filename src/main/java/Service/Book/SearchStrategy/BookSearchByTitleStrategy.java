@@ -5,15 +5,11 @@ import Repository.BookRepository;
 
 import java.util.List;
 
-public class BookSearchByTitleStrategy implements BookSearchStrategy {
-    private  BookRepository bookRepository;
-
-    public  BookSearchByTitleStrategy(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
-
+public class BookSearchByTitleStrategy implements IBookSearchStrategy<String>
+{
     @Override
-    public List<Book> searchBook(String bookTitle) {
-        return bookRepository.findByTitleContainingIgnoreCase(bookTitle);
+    public List<Book> searchBook(BookRepository bookRepository,String title)
+    {
+        return bookRepository.findByTitleContainingIgnoreCase(title);
     }
 }
