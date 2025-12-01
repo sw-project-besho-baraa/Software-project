@@ -1,6 +1,7 @@
 package Session;
 
 import Entity.User;
+import lombok.NonNull;
 
 /**
  * Simple in-memory session manager that stores the current user in a local
@@ -20,12 +21,8 @@ public class LocalSessionManager implements ISessionManager
      *            the authenticated user
      */
     @Override
-    public void login(User user)
+    public void login(@NonNull User user)
     {
-        if (user == null)
-        {
-            throw new IllegalArgumentException("User cannot be null");
-        }
         this.user = user;
     }
 

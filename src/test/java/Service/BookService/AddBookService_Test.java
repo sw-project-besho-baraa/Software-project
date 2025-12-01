@@ -15,7 +15,8 @@ public class AddBookService_Test
     private AddBookService addBookService;
 
     @BeforeEach
-    void setup() {
+    void setup()
+    {
         bookRepository = mock(BookRepository.class);
         addBookService = new AddBookService(bookRepository);
     }
