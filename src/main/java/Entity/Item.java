@@ -16,7 +16,9 @@ public abstract class Item
     @Column(nullable = false)
     protected String title;
     protected boolean isBorrowed;
-    protected Date borrowDate;
+    @JoinColumn(name = "user_id")
+    private User borrower;
+    private Date borrowedDate;
     public Item()
     {
     }

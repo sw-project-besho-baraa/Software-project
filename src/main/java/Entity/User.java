@@ -20,7 +20,7 @@ public class User
     private Date creationDate;
     private UserRole userRole;
     @OneToMany(mappedBy = "borrower", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Book> books;
+    private List<Item> borrowedItems;
 
     public User(int id, String name, String email, String hashedPassword)
     {

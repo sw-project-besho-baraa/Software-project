@@ -16,9 +16,6 @@ public class Book extends Item
     private String isbn;
     @Column(nullable = false)
     private String author;
-    @JoinColumn(name = "user_id")
-    private User borrower;
-    private Date borrowedDate;
     public Book()
     {
     }
