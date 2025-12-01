@@ -9,7 +9,7 @@ import Validation.BookValidator;
 public class AddBookService
 {
     private ISessionManager sessionManager;
-    private BookValidator bookValidator;;
+    private BookValidator bookValidator;
     private final BookRepository bookRepository;
     public AddBookService(BookRepository bookRepository, BookValidator bookValidator)
     {

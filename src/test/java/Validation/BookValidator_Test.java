@@ -2,7 +2,6 @@ package Validation;
 
 import Entity.Book;
 import org.junit.jupiter.api.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BookValidator_Test {
