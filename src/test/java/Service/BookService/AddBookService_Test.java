@@ -22,17 +22,15 @@ public class AddBookService_Test
     }
 
     @Test
-    void addBook_ValidBook_SavesBook()
-    {
+    void addBook_ValidBook_SavesBook() {
         Book book = mock(Book.class);
         addBookService.addBook(book);
-        verify(bookRepository,times(1)).save(book);
+        verify(bookRepository, times(1)).save(book);
 
     }
 
     @Test
-    void addBook_NullBook_ThrowsException()
-    {
-        assertThrows(NullPointerException.class,() -> addBookService.addBook(null));
+    void addBook_NullBook_ThrowsException() {
+        assertThrows(NullPointerException.class, () -> addBookService.addBook(null));
     }
 }
