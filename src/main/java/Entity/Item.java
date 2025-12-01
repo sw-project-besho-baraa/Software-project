@@ -16,7 +16,6 @@ public abstract class Item
     public Item()
     {
     }
-
     public Item(String title)
     {
         this.title = title;
