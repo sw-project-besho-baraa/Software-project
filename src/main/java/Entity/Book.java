@@ -1,7 +1,13 @@
 package Entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.Date;
+
+@Setter
+@Getter
 @Entity
 public class Book extends Item
 {
@@ -21,23 +27,4 @@ public class Book extends Item
         this.isbn = isbn;
     }
 
-    public String getIsbn()
-    {
-        return isbn;
-    }
-
-    public void setIsbn(String isbn)
-    {
-        this.isbn = isbn;
-    }
-
-    public String getAuthor()
-    {
-        return author;
-    }
-
-    public void setAuthor(String author)
-    {
-        this.author = author;
-    }
 }

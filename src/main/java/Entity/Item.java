@@ -1,9 +1,13 @@
 package Entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
+@Setter
+@Getter
 public abstract class Item
 {
     @Id
@@ -12,7 +16,9 @@ public abstract class Item
     @Column(nullable = false)
     protected String title;
     protected boolean isBorrowed;
-    protected Date borrowDate;
+    @JoinColumn(name = "user_id")
+    private User borrower;
+    private Date borrowedDate;
     public Item()
     {
     }
@@ -21,43 +27,4 @@ public abstract class Item
         this.title = title;
     }
 
-    public int getId()
-    {
-        return id;
-    }
-
-    public void setId(int id)
-    {
-        this.id = id;
-    }
-
-    public boolean isBorrowed()
-    {
-        return isBorrowed;
-    }
-
-    public void setBorrowed(boolean borrowed)
-    {
-        isBorrowed = borrowed;
-    }
-
-    public Date getBorrowDate()
-    {
-        return borrowDate;
-    }
-
-    public void setBorrowDate(Date borrowDate)
-    {
-        this.borrowDate = borrowDate;
-    }
-
-    public String getTitle()
-    {
-        return title;
-    }
-
-    public void setTitle(String title)
-    {
-        this.title = title;
-    }
 }
