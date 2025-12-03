@@ -2,9 +2,8 @@ package Hashing;
 
 import Util.HashingPassword.BCryptHashingPassword;
 import org.junit.jupiter.api.*;
-import org.mockito.Mockito;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class BCryptHashingPassword_Test
 {
