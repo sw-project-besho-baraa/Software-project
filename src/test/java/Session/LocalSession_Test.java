@@ -44,7 +44,7 @@ public class LocalSession_Test
     @Test
     void logIn_WithInvalidUser_ThrowsException()
     {
-        assertThrows(IllegalArgumentException.class,() -> sessionManager.login(null));
+        assertThrows(NullPointerException.class,() -> sessionManager.login(null));
     }
 
 }
