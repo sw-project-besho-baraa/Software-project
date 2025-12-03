@@ -1,5 +1,7 @@
 package DTO.UserDTO;
 
+import lombok.*;
+
 /**
  * Data Transfer Object representing credentials supplied by a user during
  * authentication.
@@ -7,6 +9,8 @@ package DTO.UserDTO;
  * This DTO typically contains the minimal information required to attempt a
  * login.
  */
+@Getter
+@Setter
 public class UserCredentialsDTO
 {
     private String email;
@@ -27,45 +31,4 @@ public class UserCredentialsDTO
         this.password = password;
     }
 
-    /**
-     * Returns the user's email address.
-     *
-     * @return the email
-     */
-    public String getEmail()
-    {
-        return email;
-    }
-
-    /**
-     * Sets the user's email address.
-     *
-     * @param email
-     *            the email to set
-     */
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-
-    /**
-     * Returns the user's password as provided in the login form.
-     *
-     * @return the password
-     */
-    public String getPassword()
-    {
-        return password;
-    }
-
-    /**
-     * Sets the user's password.
-     *
-     * @param password
-     *            the password to set
-     */
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
 }

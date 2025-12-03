@@ -2,5 +2,5 @@ package Util.MessageFormater;
 
 public interface IMessageFormater<IMessageObj>
 {
-    String formatMessage(IMessageObj messageObj);
+    String formatMessage(IMessageObj messageObjM);
 }

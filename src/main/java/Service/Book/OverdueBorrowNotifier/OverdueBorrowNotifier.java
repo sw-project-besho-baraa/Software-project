@@ -2,8 +2,6 @@ package Service.Book.OverdueBorrowNotifier;
 
 import DTO.UserDTO.UserContactDTO;
 import Service.Book.OverdueBorrowDetection.OverdueBookDetector;
-import Service.Book.OverdueBorrowDetection.OverdueBorrowedItemsData;
-import Service.Book.OverdueBorrowDetection.RegularOverdueBookDetector;
 import Service.Book.OverdueBorrowDetection.OverdueBorrowedItem;
 import Service.NotificationSender.INotificationSender;
 
