@@ -1,6 +1,6 @@
 package Service;
 
-import DTO.UserDTO;
+import DTO.UserDTO.UserCredentialsDTO;
 import Repository.UserRepository;
 import Session.ISessionManager;
 import Validation.LoginCredentialsValidator;
@@ -47,7 +47,7 @@ public class LoginService
      * @return true if authentication succeeds and a session is started; false
      *         otherwise
      */
-    public boolean login(UserDTO userDTO)
+    public boolean login(UserCredentialsDTO userDTO)
     {
         var userOpt = userRepository.findByEmail(userDTO.getEmail());
 

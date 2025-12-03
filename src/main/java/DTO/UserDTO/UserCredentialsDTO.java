@@ -1,4 +1,4 @@
-package DTO;
+package DTO.UserDTO;
 
 /**
  * Data Transfer Object representing credentials supplied by a user during
@@ -7,7 +7,7 @@ package DTO;
  * This DTO typically contains the minimal information required to attempt a
  * login.
  */
-public class UserDTO
+public class UserCredentialsDTO
 {
     private String email;
     private String password;
@@ -21,7 +21,7 @@ public class UserDTO
      *            the user's password (usually a plaintext input that will be
      *            validated/hashed elsewhere)
      */
-    public UserDTO(String email, String password)
+    public UserCredentialsDTO(String email, String password)
     {
         this.email = email;
         this.password = password;

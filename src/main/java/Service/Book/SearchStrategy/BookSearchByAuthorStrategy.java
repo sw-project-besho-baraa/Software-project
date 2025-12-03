@@ -6,7 +6,7 @@ import java.util.List;
 
 public class BookSearchByAuthorStrategy implements IBookSearchStrategy<String>
 {
-    
+
     @Override
     public List<Book> searchBook(BookRepository bookRepository,String author)
     {

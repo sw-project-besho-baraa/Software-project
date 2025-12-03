@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import Exception.OverdueItemsException;
-import Service.Book.OverdueBorrowDetection.OverdueBorrowEvent;
+import Service.Book.OverdueBorrowDetection.OverdueBorrowData;
 import Service.Book.OverdueBorrowDetection.OverdueBorrowEventManager;
 
 import java.util.List;
@@ -31,8 +31,8 @@ public class StandardOverdueBorrowValidator implements IOverdueBorrowValidation
             if (daysBetween > limit)
             {
                 long overdueDays = daysBetween - limit;
-                OverdueBorrowEvent event = new OverdueBorrowEvent(user, item, overdueDays, today);
-                events.notify("overdue", event);
+                OverdueBorrowData event = new OverdueBorrowData(user, item, overdueDays, today);
+                events.notify("overdue",event);
                 return "item \"" + item.getTitle() + "\" is overdue by " + overdueDays + " days";
             }
             return null;

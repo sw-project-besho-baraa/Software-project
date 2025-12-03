@@ -1,10 +1,9 @@
 package Validation;
 
-import DTO.UserDTO;
+import DTO.UserDTO.UserCredentialsDTO;
 import Entity.User;
 import Util.HashingPassword.IHashingPassword;
 import org.junit.jupiter.api.*;
-import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -24,7 +23,7 @@ public class LoginCredentialsValidation_Test
     @Test
     void validateLogin_WithCorrectEmailAndValidPassword_ReturnsTrue()
     {
-        UserDTO dto = new UserDTO("besho@gmail.com", "123456");
+        UserCredentialsDTO dto = new UserCredentialsDTO("besho@gmail.com", "123456");
         User user = mock(User.class);
         when(user.getEmail()).thenReturn("besho@gmail.com");
         when(user.getHashedPassword()).thenReturn("$2a$12$f/7CRbI3/q2TS.EJMoUyHOT0CzN06iUUltla7Cidxqo.gO6DL5WGi");
@@ -37,7 +36,7 @@ public class LoginCredentialsValidation_Test
     @Test
     void invalidLogin_WithCorrectEmailAndInvalidPassword_ReturnsFalse()
     {
-        UserDTO dto = new UserDTO("besho@gmail.com", "123");
+        UserCredentialsDTO dto = new UserCredentialsDTO("besho@gmail.com", "123");
         User user = mock(User.class);
         when(user.getEmail()).thenReturn("besho@gmail.com");
         when(user.getHashedPassword()).thenReturn("$2a$12$f/7CRbI3/q2TS.EJMoUyHOT0CzN06iUUltla7Cidxqo.gO6DL5WGi");
@@ -50,7 +49,7 @@ public class LoginCredentialsValidation_Test
     @Test
     void invalidLogin_WithInvalidEmailAndCorrectPassword_ReturnsFalse()
     {
-        UserDTO dto = new UserDTO("besho@gmail.com", "123456");
+        UserCredentialsDTO dto = new UserCredentialsDTO("besho@gmail.com", "123456");
         User user = mock(User.class);
         when(user.getEmail()).thenReturn("beshoinvalid@gmail.com");
         when(user.getHashedPassword()).thenReturn("$2a$12$f/7CRbI3/q2TS.EJMoUyHOT0CzN06iUUltla7Cidxqo.gO6DL5WGi");
@@ -61,7 +60,7 @@ public class LoginCredentialsValidation_Test
     @Test
     void invalidLogin_WithNullUser_ReturnsFalse()
     {
-        UserDTO dto = new UserDTO("besho@gmail.com", "123456");
+        UserCredentialsDTO dto = new UserCredentialsDTO("besho@gmail.com", "123456");
         User user = null;
         boolean result = validator.validateLogin(dto,user);
         assertFalse(result);
