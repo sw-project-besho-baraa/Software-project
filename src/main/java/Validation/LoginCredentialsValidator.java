@@ -1,6 +1,6 @@
 package Validation;
 
-import DTO.UserDTO;
+import DTO.UserDTO.UserCredentialsDTO;
 import Entity.User;
 import Util.HashingPassword.IHashingPassword;
 
@@ -13,7 +13,7 @@ public class LoginCredentialsValidator
         this.hashingPassword = hashingPassword;
     }
 
-    public boolean validateLogin(UserDTO userDTO,User user)
+    public boolean validateLogin(UserCredentialsDTO userDTO,User user)
     {
 
         if (user == null)

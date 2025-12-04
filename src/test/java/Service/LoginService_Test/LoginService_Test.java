@@ -1,6 +1,6 @@
 package Service.LoginService_Test;
 
-import DTO.UserDTO;
+import DTO.UserDTO.UserCredentialsDTO;
 import Entity.User;
 import Repository.UserRepository;
 import Service.LoginService;
@@ -31,7 +31,7 @@ public class LoginService_Test
     @Test
     void login_UserNotFound_ReturnsFalse()
     {
-        UserDTO dto = new UserDTO("besho@gmail.com", "123456");
+        UserCredentialsDTO dto = new UserCredentialsDTO("besho@gmail.com", "123456");
         boolean result = loginService.login(dto);
         when(userRepository.findByEmail("besho@gmail.com")).thenReturn(Optional.empty());
         assertFalse(result);
@@ -40,7 +40,7 @@ public class LoginService_Test
     @Test
     void login_InvalidCredentials_ReturnsFalse()
     {
-        UserDTO dto = new UserDTO("besho@gmail.com", "123456");
+        UserCredentialsDTO dto = new UserCredentialsDTO("besho@gmail.com", "123456");
         User user = mock(User.class);
         when(userRepository.findByEmail("besho@gmail.com")).thenReturn(Optional.of(user));
         when(loginCredentialsValidator.validateLogin(dto,user)).thenReturn(false);
@@ -51,7 +51,7 @@ public class LoginService_Test
     @Test
     void login_ValidCredentials_ReturnsTrue()
     {
-        UserDTO dto = new UserDTO("besho@gmail.com", "123456");
+        UserCredentialsDTO dto = new UserCredentialsDTO("besho@gmail.com", "123456");
         User user = mock(User.class);
         when(userRepository.findByEmail("besho@gmail.com")).thenReturn(Optional.of(user));
         when(loginCredentialsValidator.validateLogin(dto,user)).thenReturn(true);

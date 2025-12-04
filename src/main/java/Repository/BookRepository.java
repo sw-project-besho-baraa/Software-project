@@ -1,21 +1,19 @@
 package Repository;
 
 import Entity.Book;
+import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface BookRepository extends JpaRepository<Book, Integer>
+public interface BookRepository extends JpaRepository<@NonNull Book, @NonNull Integer>
 {
 
-    Book findByEmail(String email);
+    List<Book> findByTitleContainingIgnoreCase(@NonNull String title);
 
-    List<Book> findByTitleContainingIgnoreCase(String title);
+    List<Book> findByAuthorContainingIgnoreCase(@NonNull String author);
 
-    List<Book> findByAuthorContainingIgnoreCase(String author);
-
-    List<Book> findByIsbnContainingIgnoreCase(String isbn);
+    List<Book> findByIsbnContainingIgnoreCase(@NonNull String isbn);
 }

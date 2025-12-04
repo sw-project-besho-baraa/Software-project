@@ -1,8 +1,7 @@
 package Entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
@@ -22,6 +21,7 @@ public abstract class Item
     public Item()
     {
     }
+
     public Item(String title)
     {
         this.title = title;

@@ -1,6 +1,7 @@
 package Service;
 
 import Session.ISessionManager;
+import lombok.Getter;
 
 /**
  * Service responsible for terminating the current user session.
@@ -8,6 +9,7 @@ import Session.ISessionManager;
  * This service delegates the logout operation to the configured
  * {@link ISessionManager}.
  */
+@Getter
 public class LogoutService
 {
 
@@ -39,8 +41,4 @@ public class LogoutService
      *
      * @return the session manager instance
      */
-    public ISessionManager getSessionManager()
-    {
-        return sessionManager;
-    }
 }
