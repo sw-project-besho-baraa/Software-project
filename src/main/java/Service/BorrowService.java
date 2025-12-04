@@ -7,14 +7,11 @@ import Validation.BorrowValidator;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-
 import javax.transaction.Transactional;
-
 @Setter
 @Getter
 public class BorrowService
 {
-
     private UserRepository userRepository;
     private BorrowValidator borrowValidator;
     public BorrowService(UserRepository userRepository, BorrowValidator borrowValidator)
@@ -26,7 +23,6 @@ public class BorrowService
     @Transactional
     public void borrow(@NonNull User user,@NonNull Item item) throws Exception
     {
-
         borrowValidator.validate(user,item);
         item.setBorrowed(true);
         item.setBorrower(user);
