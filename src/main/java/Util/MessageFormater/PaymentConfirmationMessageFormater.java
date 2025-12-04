@@ -1,6 +1,5 @@
 package Util.MessageFormater;
 
-
 import Service.Book.Payment.PaymentConfirmationData;
 
 public class PaymentConfirmationMessageFormater implements IMessageFormater<PaymentConfirmationData> {
@@ -384,7 +383,7 @@ public class PaymentConfirmationMessageFormater implements IMessageFormater<Paym
                 </html>
                 """;
 
-        String html = htmlTemplate
+        return htmlTemplate
                 .replace("{{patronName}}",       nullSafe(data.patronName()))
                 .replace("{{amountPaid}}",       nullSafe(data.amountPaid()))
                 .replace("{{paymentDate}}",      nullSafe(data.paymentDate()))
@@ -395,11 +394,9 @@ public class PaymentConfirmationMessageFormater implements IMessageFormater<Paym
                 .replace("{{previousBalance}}",  nullSafe(data.previousBalance()))
                 .replace("{{remainingBalance}}", nullSafe(data.remainingBalance()))
                 .replace("{{currency}}",         nullSafe(data.currency()));
-
-        return html;
     }
 
-    private static String nullSafe(String value) {
-        return value == null ? "" : value;
+    private static String nullSafe(Object value) {
+        return value == null ? "" : String.valueOf(value);
     }
 }
