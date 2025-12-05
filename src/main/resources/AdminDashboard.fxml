@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: linear-gradient(to bottom right, #020617, #0f172a);" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Presentation.AdminDashboardController">
+
+    <left>
+        <VBox prefWidth="190.0" spacing="10.0" style="-fx-background-color: #020617;">
+            <padding>
+                <Insets bottom="16" left="16" right="16" top="16" />
+            </padding>
+            <children>
+                <Label text="Library System" textFill="#e5e7eb">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                <Label text="Admin Panel" textFill="#9ca3af">
+                    <font>
+                        <Font size="12.0" />
+                    </font>
+                </Label>
+                <Separator />
+
+                <Button fx:id="btnDashboard" maxWidth="Infinity" onAction="#onShowDashboard" style="-fx-background-radius: 999; -fx-background-color: #38bdf8; -fx-text-fill: #020617; -fx-font-weight: bold;" text="Dashboard" />
+                <Button fx:id="btnMedia" maxWidth="Infinity" onAction="#onShowMedia" style="-fx-background-radius: 999; -fx-background-color: #111827; -fx-text-fill: #e5e7eb;" text="Media (Books)" />
+                <Button fx:id="btnOverdue" maxWidth="Infinity" onAction="#onShowOverdue" style="-fx-background-radius: 999; -fx-background-color: #111827; -fx-text-fill: #e5e7eb;" text="Overdue" />
+                <Button fx:id="btnUsersFines" maxWidth="Infinity" onAction="#onShowUsersFines" style="-fx-background-radius: 999; -fx-background-color: #111827; -fx-text-fill: #e5e7eb;" text="Users And Fines" />
+                <Button fx:id="btnReminders" maxWidth="Infinity" onAction="#onShowReminders" style="-fx-background-radius: 999; -fx-background-color: #111827; -fx-text-fill: #e5e7eb;" text="Reminders" />
+
+                <Pane VBox.vgrow="ALWAYS" />
+                <Separator />
+                <Button fx:id="btnLogout" maxWidth="Infinity" onAction="#onLogout" style="-fx-background-radius: 999; -fx-background-color: rgba(248,113,113,0.18); -fx-text-fill: #fecaca;" text="Logout" />
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane fx:id="contentStack" style="-fx-padding: 18;">
+            <children>
+
+                <VBox fx:id="paneDashboard" spacing="10.0" style="-fx-background-color: #0b1120; -fx-background-radius: 18; -fx-padding: 16;">
+                    <children>
+                        <Label text="Dashboard" textFill="#e5e7eb">
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Label>
+                        <Separator />
+                        <Label fx:id="lblTotalBooks" text="Total books: 0" textFill="#e5e7eb" />
+                        <Label fx:id="lblBorrowedCount" text="Borrowed items: 0" textFill="#e5e7eb" />
+                        <Label fx:id="lblOverdueCount" text="Overdue items: 0" textFill="#fca5a5" />
+                    </children>
+                </VBox>
+
+                <VBox fx:id="paneMedia" spacing="10.0" style="-fx-background-color: #0b1120; -fx-background-radius: 18; -fx-padding: 16;">
+                    <children>
+                        <Label text="Media · Books And CDs" textFill="#e5e7eb">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+
+                        <HBox spacing="8.0">
+                            <children>
+                                <ComboBox fx:id="cmbSearchType" prefWidth="150.0" />
+                                <TextField fx:id="txtSearchQuery" promptText="Search by title, author, ISBN..." style="-fx-background-radius: 999; -fx-background-color: #020617; -fx-text-fill: #e5e7eb; -fx-prompt-text-fill: #6b7280;" HBox.hgrow="ALWAYS" />
+                                <Button onAction="#onSearchMedia" style="-fx-background-radius: 999; -fx-background-color: #38bdf8; -fx-text-fill: #020617;" text="Search" />
+                                <Button onAction="#onClearSearch" style="-fx-background-radius: 999; -fx-background-color: #1f2937; -fx-text-fill: #e5e7eb;" text="Clear" />
+                            </children>
+                        </HBox>
+
+                        <TableView fx:id="tblMedia" style="-fx-background-color: #020617; -fx-table-cell-border-color: #111827; -fx-control-inner-background: #020617;" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="colType" prefWidth="70.0" text="Type" />
+                                <TableColumn fx:id="colTitle" prefWidth="200.0" text="Title" />
+                                <TableColumn fx:id="colAuthor" prefWidth="150.0" text="Author" />
+                                <TableColumn fx:id="colIsbn" prefWidth="120.0" text="ISBN" />
+                                <TableColumn fx:id="colStatus" prefWidth="90.0" text="Status" />
+                                <TableColumn fx:id="colDueDate" prefWidth="100.0" text="Due Date" />
+                            </columns>
+                        </TableView>
+
+                        <HBox spacing="8.0">
+                            <children>
+                                <Button onAction="#onAddBook" style="-fx-background-radius: 999; -fx-background-color: #22c55e; -fx-text-fill: #020617; -fx-font-weight: bold;" text="Add Book" />
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+
+                <VBox fx:id="paneOverdue" spacing="10.0" style="-fx-background-color: #0b1120; -fx-background-radius: 18; -fx-padding: 16;">
+                    <children>
+                        <Label text="Overdue Items" textFill="#e5e7eb">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Button onAction="#onDetectOverdue" style="-fx-background-radius: 999; -fx-background-color: rgba(248,113,113,0.2); -fx-text-fill: #fecaca;" text="Detect Overdue" />
+
+                        <TableView fx:id="tblOverdue" style="-fx-background-color: #020617; -fx-table-cell-border-color: #111827; -fx-control-inner-background: #020617;" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="colOverType" prefWidth="70.0" text="Type" />
+                                <TableColumn fx:id="colOverTitle" prefWidth="200.0" text="Title" />
+                                <TableColumn fx:id="colOverUser" prefWidth="150.0" text="User" />
+                                <TableColumn fx:id="colOverDueDate" prefWidth="100.0" text="Due Date" />
+                                <TableColumn fx:id="colOverStatus" prefWidth="100.0" text="Status" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </VBox>
+
+                <VBox fx:id="paneUsersFines" spacing="10.0" style="-fx-background-color: #0b1120; -fx-background-radius: 18; -fx-padding: 16;">
+                    <children>
+                        <Label text="Users And Fines" textFill="#e5e7eb">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+
+                        <HBox spacing="8.0">
+                            <children>
+                                <Label text="User email:" textFill="#e5e7eb" />
+                                <TextField fx:id="txtUserEmail" prefWidth="260.0" promptText="user@example.com" style="-fx-background-radius: 999; -fx-background-color: #020617; -fx-text-fill: #e5e7eb; -fx-prompt-text-fill: #6b7280;" />
+                                <Button onAction="#onLoadUser" style="-fx-background-radius: 999; -fx-background-color: #38bdf8; -fx-text-fill: #020617;" text="Load user" />
+                            </children>
+                        </HBox>
+
+                        <Label fx:id="lblUserStatus" text="Status: -" textFill="#e5e7eb" />
+                        <Label fx:id="lblUserFine" text="Current fine: 0 NIS" textFill="#fca5a5" />
+
+                        <HBox spacing="8.0">
+                            <children>
+                                <TextField fx:id="txtFinePayment" prefWidth="150.0" promptText="Payment amount" style="-fx-background-radius: 999; -fx-background-color: #020617; -fx-text-fill: #e5e7eb; -fx-prompt-text-fill: #6b7280;" />
+                                <Button onAction="#onPayFine" style="-fx-background-radius: 999; -fx-background-color: #22c55e; -fx-text-fill: #020617;" text="Pay Fine" />
+                            </children>
+                        </HBox>
+
+                        <Button onAction="#onUnregisterUser" style="-fx-background-radius: 999; -fx-background-color: rgba(248,113,113,0.3); -fx-text-fill: #fee2e2;" text="Unregister User" />
+                    </children>
+                </VBox>
+
+                <VBox fx:id="paneReminders" spacing="10.0" style="-fx-background-color: #0b1120; -fx-background-radius: 18; -fx-padding: 16;">
+                    <children>
+                        <Label text="Reminders" textFill="#e5e7eb">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Button onAction="#onSendReminders" style="-fx-background-radius: 999; -fx-background-color: rgba(56,189,248,0.25); -fx-text-fill: #e0f2fe;" text="Send Overdue Reminders" />
+                        <TextArea fx:id="txtRemindersLog" prefRowCount="8" promptText="Log of sent reminders (demo)..." style="-fx-control-inner-background: #020617; -fx-text-fill: #e5e7eb; -fx-prompt-text-fill: #6b7280;" />
+                    </children>
+                </VBox>
+
+            </children>
+        </StackPane>
+    </center>
+
+</BorderPane>

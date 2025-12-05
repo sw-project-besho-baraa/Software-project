@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+
+<StackPane xmlns="http://javafx.com/javafx/19"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="Presentation.LoginController"
+           prefHeight="600.0" prefWidth="900.0"
+           style="-fx-background-color: linear-gradient(to bottom right, #020617, #020617 40%, #020617 55%, #020617 60%, #001427 100%);">
+
+    <children>
+
+
+        <Circle radius="120"
+                layoutX="140" layoutY="110"
+                style="-fx-fill: radial-gradient(center 20% 20%, radius 60%, #38bdf8, transparent);" />
+        <Circle radius="90"
+                layoutX="780" layoutY="520"
+                style="-fx-fill: radial-gradient(center 50% 50%, radius 60%, #22c55e33, transparent);" />
+
+
+        <StackPane maxWidth="480" maxHeight="420">
+            <children>
+                <Rectangle arcWidth="32" arcHeight="32" width="480" height="420"
+                           style="-fx-fill: rgba(15,23,42,0.85);
+                                  -fx-stroke: rgba(148,163,184,0.35);
+                                  -fx-stroke-width: 1.2;" >
+                    <effect>
+                        <DropShadow radius="24"
+                                    offsetX="0" offsetY="18"
+                                    color="rgba(0,0,0,0.55)" />
+                    </effect>
+                </Rectangle>
+
+                <VBox spacing="24" alignment="CENTER_LEFT"
+                      maxWidth="400"
+                      style="-fx-padding: 28 32 32 32;">
+
+
+                    <HBox spacing="14" alignment="CENTER_LEFT">
+                        <children>
+                            <Circle radius="22"
+                                    style="-fx-fill: linear-gradient(to bottom right, #38bdf8, #0ea5e9);" />
+                            <VBox spacing="4">
+                                <children>
+                                    <Label text="Library Management System"
+                                           style="-fx-text-fill: white;
+                                                  -fx-font-size: 20px;
+                                                  -fx-font-weight: bold;" />
+                                    <Label text="Sign in to manage books, users, and borrowing"
+                                           style="-fx-text-fill: #9ca3af;
+                                                  -fx-font-size: 12px;" />
+                                </children>
+                            </VBox>
+                        </children>
+                    </HBox>
+
+                    <Rectangle height="1" width="360"
+                               style="-fx-fill: rgba(148,163,184,0.35);" />
+
+                    <VBox spacing="14" maxWidth="360">
+
+                        <children>
+                            <VBox spacing="6">
+                                <children>
+                                    <Label text="Email address"
+                                           style="-fx-text-fill: #e5e7eb;
+                                                  -fx-font-size: 12px;
+                                                  -fx-font-weight: bold;" />
+                                    <TextField fx:id="emailField"
+                                               promptText="you@example.com"
+                                               style="-fx-background-radius: 12;
+                                                      -fx-background-color: rgba(15,23,42,0.9);
+                                                      -fx-border-radius: 12;
+                                                      -fx-border-color: rgba(148,163,184,0.65);
+                                                      -fx-border-width: 1;
+                                                      -fx-text-fill: white;
+                                                      -fx-prompt-text-fill: #6b7280;
+                                                      -fx-padding: 9 14 9 14;" />
+                                </children>
+                            </VBox>
+
+                            <VBox spacing="6">
+                                <children>
+                                    <Label text="Password"
+                                           style="-fx-text-fill: #e5e7eb;
+                                                  -fx-font-size: 12px;
+                                                  -fx-font-weight: bold;" />
+                                    <PasswordField fx:id="passwordField"
+                                                   promptText="••••••••"
+                                                   style="-fx-background-radius: 12;
+                                                          -fx-background-color: rgba(15,23,42,0.9);
+                                                          -fx-border-radius: 12;
+                                                          -fx-border-color: rgba(148,163,184,0.65);
+                                                          -fx-border-width: 1;
+                                                          -fx-text-fill: white;
+                                                          -fx-prompt-text-fill: #6b7280;
+                                                          -fx-padding: 9 14 9 14;" />
+                                </children>
+                            </VBox>
+
+                            <Button text="Sign in"
+                                    onAction="#onLoginClick"
+                                    maxWidth="Infinity"
+                                    style="-fx-background-color: linear-gradient(to right, #38bdf8, #0ea5e9);
+                                           -fx-text-fill: white;
+                                           -fx-font-weight: bold;
+                                           -fx-font-size: 14px;
+                                           -fx-background-radius: 999;
+                                           -fx-padding: 10 0 10 0;
+                                           -fx-cursor: hand;">
+                                <effect>
+                                    <DropShadow radius="18"
+                                                offsetX="0" offsetY="8"
+                                                color="rgba(56,189,248,0.45)" />
+                                </effect>
+                            </Button>
+
+                            <Label fx:id="statusLabel"
+                                   text=""
+                                   style="-fx-text-fill: #9ca3af;
+                                          -fx-font-size: 12px;" />
+                        </children>
+                    </VBox>
+
+                    <Label text="Made By Bishawi And Abuhalima"
+                           style="-fx-text-fill: #6b7280;
+                                  -fx-font-size: 11px;
+                                  -fx-padding: 8 0 0 0;" />
+
+                </VBox>
+            </children>
+        </StackPane>
+
+    </children>
+</StackPane>

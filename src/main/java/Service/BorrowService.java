@@ -7,7 +7,7 @@ import Validation.BorrowValidator;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 @Setter
 @Getter
 public class BorrowService
