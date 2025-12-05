@@ -1,8 +1,9 @@
-package Validation;
+package Validation_Test;
 
 import DTO.UserDTO.UserCredentialsDTO;
 import Entity.User;
 import Util.HashingPassword.IHashingPassword;
+import Validation.LoginCredentialsValidator;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,4 +1,4 @@
-package Hashing;
+package Hashing_Test;
 
 import Util.HashingPassword.BCryptHashingPassword;
 import org.junit.jupiter.api.*;

@@ -1,4 +1,4 @@
-package Service.LoginService_Test;
+package Service_Test.LoginService_Test;
 
 import DTO.UserDTO.UserCredentialsDTO;
 import Entity.User;
