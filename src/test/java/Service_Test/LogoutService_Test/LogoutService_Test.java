@@ -1,4 +1,4 @@
-package Service.LogoutService_Test;
+package Service_Test.LogoutService_Test;
 
 import Service.LogoutService;
 import Session.ISessionManager;
