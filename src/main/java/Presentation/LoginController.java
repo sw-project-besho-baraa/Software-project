@@ -40,7 +40,7 @@ public class LoginController {
             return;
         }
 
-        User user = new User(1, "Static User", email, password);
+        User user = new User("Static User", email, password);
         user.setUserRole(role);
         statusLabel.setText("Login successful  (" + role + ")");
         openDashboardForRole(role);

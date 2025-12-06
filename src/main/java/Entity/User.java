@@ -8,20 +8,37 @@ import java.util.*;
 
 @Getter
 @Setter
+@Entity
+@Table(name = "users")
+@NoArgsConstructor
 public class User
 {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
-    private String email;
-    private String hashedPassword;
-    private Date creationDate;
-    private UserRole userRole;
-    @OneToMany(mappedBy = "borrower", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Item> borrowedItems;
 
-    public User(int id, String name, String email, String hashedPassword)
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String hashedPassword;
+
+    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date creationDate;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRole userRole;
+
+    @OneToMany(mappedBy = "borrower", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MediaItem> borrowedItems = new ArrayList<>();
+
+
+    public User( String name, String email, String hashedPassword)
     {
-        this.id = id;
         this.name = name;
         this.email = email;
         this.hashedPassword = hashedPassword;
@@ -31,5 +48,9 @@ public class User
     public String toString()
     {
         return ToStringBuilder.reflectionToString(this,ToStringStyle.MULTI_LINE_STYLE);
+    }
+    @PrePersist
+    protected void onCreate() {
+        creationDate = new Date();
     }
 }

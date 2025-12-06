@@ -1,20 +1,23 @@
 package Entity;
-
-import jakarta.persistence.*;
 import lombok.*;
+import Enum.MediaItemType;
+import jakarta.persistence.*;
 
 @Setter
 @Getter
 @Entity
-public class Book extends Item
+@NoArgsConstructor
+public class Book extends MediaItem
 {
 
     @Column(unique = true, nullable = false)
     private String isbn;
     @Column(nullable = false)
     private String author;
-    public Book()
-    {
+
+    @Override
+    public MediaItemType getMediaType() {
+        return MediaItemType.Book;
     }
 
     public Book(String title, String isbn, String author)

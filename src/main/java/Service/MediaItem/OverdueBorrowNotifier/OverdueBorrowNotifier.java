@@ -1,7 +1,7 @@
 package Service.Book.OverdueBorrowNotifier;
 
 import DTO.UserDTO.UserContactDTO;
-import Service.Book.OverdueBorrowDetection.OverdueBookDetector;
+import Service.Book.OverdueBorrowDetection.OverdueItemDetector;
 import Service.Book.OverdueBorrowDetection.OverdueBorrowedItem;
 import Service.NotificationSender.INotificationSender;
 
@@ -10,9 +10,9 @@ import java.util.List;
 public class OverdueBorrowNotifier
 {
     private final List<INotificationSender<UserContactDTO, List<OverdueBorrowedItem>>> notifiersMethods;
-    private final OverdueBookDetector overdueBookDetector;
+    private final OverdueItemDetector overdueBookDetector;
     public OverdueBorrowNotifier(List<INotificationSender<UserContactDTO, List<OverdueBorrowedItem>>> notifiersMethods,
-            OverdueBookDetector overdueBookDetector)
+            OverdueItemDetector overdueBookDetector)
     {
         this.notifiersMethods = notifiersMethods;
         this.overdueBookDetector = overdueBookDetector;
