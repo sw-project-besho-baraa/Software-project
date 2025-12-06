@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="defualt.databaseproject.dashboard">
+    <children>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <children>
+                <BorderPane layoutX="14.0" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #11192c;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <top>
+                        <AnchorPane prefHeight="45.0" prefWidth="1100.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <AnchorPane layoutX="154.0" layoutY="-77.0" prefHeight="35.0" prefWidth="1100.0" style="-fx-background-color: #1f2a42;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <ImageView fitHeight="46.0" fitWidth="1105.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 35px; -fx-fit-width: 1100px;">
+                                            <image>
+                                                <Image url="@img/image.png" />
+                                            </image>
+                                        </ImageView>
+                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="21.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
+                                            <image>
+                                                <Image url="@img/group.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Label layoutX="49.0" layoutY="15.0" text="User Page ">
+                                            <font>
+                                                <Font name="Tahoma" size="14.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </AnchorPane>
+                    </top>
+                    <left>
+                        <AnchorPane prefHeight="580.0" prefWidth="211.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <AnchorPane id="1e" layoutX="14.0" layoutY="78.0" prefHeight="555.0" prefWidth="211.0" style="-fx-background-color: #1f2a42;" stylesheets="@css/ooo.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="75.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 64px; -fx-fit-width: 64px;">
+                                            <image>
+                                                <Image url="@img/user (11).png" />
+                                            </image>
+                                        </ImageView>
+                                        <Label id="text" layoutX="70.0" layoutY="132.0" stylesheets="@css/ooo.css" text="Welcome," textFill="WHITE">
+                                            <font>
+                                                <Font name="Tahoma" size="17.0" />
+                                            </font>
+                                        </Label>
+                                        <Label id="text" fx:id="userNameTestField" alignment="CENTER" contentDisplay="CENTER" layoutX="9.0" layoutY="160.0" prefHeight="23.0" prefWidth="198.0" stylesheets="@css/ooo.css" text="mohammad bishawi" textFill="WHITE">
+                                            <font>
+                                                <Font name="Arial Bold" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <Line endX="65.0" layoutX="129.0" layoutY="208.0" startX="-110.0" stroke="WHITE" />
+                                        <Button id="button" fx:id="homeButton" layoutX="15.0" layoutY="253.0" mnemonicParsing="false" onAction="#homeButtonClick" prefHeight="29.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Home" textFill="WHITE">
+                                            <font>
+                                                <Font name="Arial Bold" size="10.0" />
+                                            </font>
+                                        </Button>
+                                        <Button id="button" fx:id="search" layoutX="16.0" layoutY="292.0" mnemonicParsing="false" onAction="#searchButton" prefHeight="31.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Search" textFill="WHITE">
+                                            <font>
+                                                <Font name="Arial Bold" size="10.0" />
+                                            </font>
+                                        </Button>
+                                        <Button id="button" fx:id="payFine" layoutX="13.0" layoutY="335.0" mnemonicParsing="false" onAction="#payFineButton" prefHeight="29.0" prefWidth="185.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Pay Fine" textFill="WHITE">
+                                            <font>
+                                                <Font name="Arial Bold" size="10.0" />
+                                            </font>
+                                        </Button>
+                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="27.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
+                                            <image>
+                                                <Image url="@img/home.png" />
+                                            </image>
+                                        </ImageView>
+                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="27.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
+                                            <image>
+                                                <Image url="@img/add.png" />
+                                            </image>
+                                        </ImageView>
+                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="27.0" layoutY="342.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
+                                            <image>
+                                                <Image url="@img/target.png" />
+                                            </image>
+                                        </ImageView>
+                                        <Button id="button" fx:id="logoutButton" layoutX="15.0" layoutY="511.0" mnemonicParsing="false" onAction="#logoutButton" prefHeight="30.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Logout" textFill="WHITE">
+                                            <font>
+                                                <Font name="Arial Bold" size="10.0" />
+                                            </font>
+                                        </Button>
+                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="27.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
+                                            <image>
+                                                <Image url="@img/logout.png" />
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </AnchorPane>
+                    </left>
+                    <center>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <AnchorPane fx:id="homePage" layoutX="-6.0" prefHeight="555.0" prefWidth="889.0" style="-fx-background-color: #11192c;" stylesheets="@css/ooo.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <AnchorPane id="ee" layoutX="26.0" layoutY="268.0" prefHeight="194.0" prefWidth="837.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 30px;" stylesheets="@css/ooo.css">
+                                            <children>
+                                                <AnchorPane id="2e" layoutX="14.0" layoutY="12.0" prefHeight="171.0" prefWidth="220.0" style="-fx-background-color: #141e34; -fx-background-radius: 30px;" stylesheets="@css/ooo.css">
+                                                    <children>
+                                                        <Label id="text" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="36.0" prefHeight="43.0" prefWidth="115.0" stylesheets="@css/ooo.css" text="Number of Books " textFill="WHITE">
+                                                            <font>
+                                                                <Font size="14.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label id="text" fx:id="numberOfBooks" alignment="CENTER" contentDisplay="CENTER" layoutX="56.0" layoutY="79.0" prefHeight="20.0" prefWidth="109.0" stylesheets="@css/ooo.css" text="100" textFill="WHITE">
+                                                            <font>
+                                                                <Font size="36.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="24.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 32px;">
+                                                            <image>
+                                                                <Image url="@img/clipboard.png" />
+                                                            </image>
+                                                        </ImageView>
+                                                    </children>
+                                                </AnchorPane>
+                                                <AnchorPane id="2e" layoutX="315.0" layoutY="12.0" prefHeight="171.0" prefWidth="220.0" style="-fx-background-color: #141e34; -fx-background-radius: 30px;" stylesheets="@css/ooo.css">
+                                                    <children>
+                                                        <Label id="text" alignment="CENTER" contentDisplay="CENTER" layoutX="53.0" layoutY="25.0" prefHeight="43.0" prefWidth="153.0" stylesheets="@css/ooo.css" text="Number of OverDue" textFill="WHITE">
+                                                            <font>
+                                                                <Font size="14.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label id="text" fx:id="numberOfOverDue" alignment="CENTER" contentDisplay="CENTER" layoutX="56.0" layoutY="79.0" prefHeight="20.0" prefWidth="109.0" stylesheets="@css/ooo.css" text="99" textFill="WHITE">
+                                                            <font>
+                                                                <Font size="36.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="27.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 32px;">
+                                                            <image>
+                                                                <Image url="@img/box.png" />
+                                                            </image>
+                                                        </ImageView>
+                                                    </children>
+                                                </AnchorPane>
+                                                <AnchorPane id="2e" layoutX="603.0" layoutY="12.0" prefHeight="171.0" prefWidth="220.0" style="-fx-background-color: #141e34; -fx-background-radius: 30px;" stylesheets="@css/ooo.css">
+                                                    <children>
+                                                        <Label id="text" alignment="CENTER" contentDisplay="CENTER" layoutX="59.0" layoutY="23.0" prefHeight="43.0" prefWidth="139.0" stylesheets="@css/ooo.css" text="Your Fine" textFill="WHITE">
+                                                            <font>
+                                                                <Font size="24.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label id="text" fx:id="fine" alignment="CENTER" contentDisplay="CENTER" layoutX="56.0" layoutY="86.0" prefHeight="20.0" prefWidth="109.0" text="1888" textFill="WHITE">
+                                                            <font>
+                                                                <Font size="36.0" />
+                                                            </font>
+                                                            <stylesheets>
+                                                                <URL value="@css/ooo.css" />
+                                                                <URL value="@css/ooo.css" />
+                                                            </stylesheets>
+                                                        </Label>
+                                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="27.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 32px;">
+                                                            <image>
+                                                                <Image url="@img/customer (1).png" />
+                                                            </image>
+                                                        </ImageView>
+                                                    </children>
+                                                </AnchorPane>
+                                            </children>
+                                        </AnchorPane>
+                              <Label id="text" alignment="CENTER" contentDisplay="CENTER" layoutX="278.0" layoutY="25.0" prefHeight="23.0" prefWidth="309.0" stylesheets="@css/ooo.css" text="Libray Mangement System" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="265.0" fitWidth="232.0" layoutX="329.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@img/book.png" />
+                                 </image>
+                              </ImageView>
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane fx:id="searchPage" layoutX="345.0" layoutY="157.0" prefHeight="551.0" prefWidth="889.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <AnchorPane id="2e" layoutX="44.0" layoutY="33.0" prefHeight="376.0" prefWidth="802.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 30;" stylesheets="@css/ooo.css">
+                                            <children>
+                                                <TableView layoutX="14.0" layoutY="56.0" prefHeight="246.0" prefWidth="522.0" visible="false">
+                                                    <columns>
+                                                        <TableColumn prefWidth="75.0" />
+                                                        <TableColumn prefWidth="75.0" />
+                                                    </columns>
+                                                </TableView>
+                                                <TableView fx:id="itemTable" layoutX="32.0" layoutY="168.0" prefHeight="194.0" prefWidth="738.0" style="-fx-background-size: 4500;">
+                                                    <columns>
+                                          <TableColumn fx:id="selectCustomerColumn" prefWidth="74.0" text="ISBN" />
+                                                        <TableColumn fx:id="customerIdColumn" minWidth="7.0" prefWidth="77.0" text="Title" />
+                                          <TableColumn fx:id="customerFirstNameColumn" prefWidth="122.0" text="Author" />
+                                                        <TableColumn fx:id="customerCityColumn" minWidth="0.0" prefWidth="85.0" text="Type" />
+                                          <TableColumn fx:id="customerGenderColumn" prefWidth="180.0" text="##" />
+                                          <TableColumn fx:id="customerBirthDateColumn" prefWidth="199.0" text="Is Borrowed" />
+                                                    </columns>
+                                                </TableView>
+                                                <Label id="text" layoutX="284.0" layoutY="37.0" prefHeight="39.0" prefWidth="194.0" stylesheets="@css/ooo.css" text="        Our Items " textAlignment="CENTER" textFill="WHITE">
+                                                    <font>
+                                                        <Font name="Franklin Gothic Medium Cond" size="32.0" />
+                                                    </font>
+                                                </Label>
+                                    <ComboBox id="e3" fx:id="searchList" layoutX="50.0" layoutY="121.0" prefHeight="25.0" prefWidth="225.0" promptText="Choose your search method" stylesheets="@css/ooo.css" />
+                                    <TextField id="e3" fx:id="searchBar" layoutX="305.0" layoutY="121.0" prefHeight="25.0" prefWidth="291.0" promptText="Type what you are looking for" style="-fx-background-radius: 15px;" stylesheets="@css/ooo.css" />
+                                    <Button id="button" layoutX="608.0" layoutY="122.0" mnemonicParsing="false" onAction="#searchByButton" prefHeight="28.0" prefWidth="67.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Search" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Bold" size="10.0" />
+                                       </font>
+                                    </Button>
+                                    <Button id="button" layoutX="689.0" layoutY="122.0" mnemonicParsing="false" onAction="#viewAllButton" prefHeight="29.0" prefWidth="67.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="View All" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Bold" size="10.0" />
+                                       </font>
+                                    </Button>
+                                            </children>
+                                        </AnchorPane>
+                                        <AnchorPane id="2e" layoutX="44.0" layoutY="453.0" prefHeight="65.0" prefWidth="802.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 30px;" stylesheets="@css/ooo.css">
+                                            <children>
+                                                <Button id="button" layoutX="309.0" layoutY="18.0" mnemonicParsing="false" onAction="#myItemsButton" prefHeight="30.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="My Items" textFill="WHITE">
+                                                    <font>
+                                                        <Font name="Arial Bold" size="10.0" />
+                                                    </font>
+                                                </Button>
+                                                <Button id="button" layoutX="62.0" layoutY="17.0" mnemonicParsing="false" onAction="#borrowItemButton" prefHeight="31.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Borrow Item" textFill="WHITE">
+                                                    <font>
+                                                        <Font name="Arial Bold" size="10.0" />
+                                                    </font>
+                                                </Button>
+                                    <Button id="button" layoutX="558.0" layoutY="18.0" mnemonicParsing="false" onAction="#returnItemButton" prefHeight="30.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Return Item" textFill="WHITE">
+                                       <font>
+                                          <Font name="Arial Bold" size="10.0" />
+                                       </font>
+                                    </Button>
+                                            </children>
+                                        </AnchorPane>
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane fx:id="payFinePage" layoutX="332.0" layoutY="159.0" prefHeight="551.0" prefWidth="889.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <AnchorPane id="1e" layoutX="69.0" layoutY="112.0" prefHeight="164.0" prefWidth="751.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 30px;" stylesheets="@css/ooo.css">
+                                            <children>
+                                                <AnchorPane id="2e" layoutX="201.0" layoutY="54.0" prefHeight="37.0" prefWidth="327.0" style="-fx-background-color: #6abcb9; -fx-background-radius: 30;" stylesheets="@css/ooo.css">
+                                                    <children>
+                                                        <Label layoutX="14.0" layoutY="10.0" text="User Email :" />
+                                                        <Label fx:id="userEmailField" layoutX="84.0" layoutY="10.0" text="Email" />
+                                                    </children>
+                                                </AnchorPane>
+                                                <AnchorPane id="2e" layoutX="199.0" layoutY="101.0" prefHeight="37.0" prefWidth="328.0" style="-fx-background-color: #6abcb9; -fx-background-radius: 30;" stylesheets="@css/ooo.css">
+                                                    <children>
+                                                        <Label layoutX="18.0" layoutY="10.0" text="Your Fine :">
+                                                            <font>
+                                                                <Font name="Tahoma" size="12.0" />
+                                                            </font>
+                                                        </Label>
+                                                        <Label fx:id="feinInDollar" layoutX="90.0" layoutY="10.0" text="10000 dollar" />
+                                                    </children>
+                                                </AnchorPane>
+                                                <Label id="text" layoutX="304.0" layoutY="20.0" stylesheets="@css/ooo.css" text="Payment Page" textFill="WHITE">
+                                                    <font>
+                                                        <Font name="Tahoma" size="19.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </AnchorPane>
+                                        <AnchorPane id="1e" layoutX="69.0" layoutY="303.0" prefHeight="43.0" prefWidth="752.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 30px;" stylesheets="@css/ooo.css">
+                                            <children>
+                                                <Button id="button" layoutX="420.0" layoutY="8.0" mnemonicParsing="false" onAction="#payButton" prefHeight="28.0" prefWidth="199.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Pay " textFill="WHITE">
+                                                    <font>
+                                                        <Font name="Arial Bold" size="10.0" />
+                                                    </font>
+                                                </Button>
+                                    <TextField id="e3" fx:id="payValueTextField" layoutX="179.0" layoutY="9.0" prefHeight="19.0" prefWidth="152.0" stylesheets="@css/ooo.css" />
+                                            </children>
+                                        </AnchorPane>
+                                          <Button id="button" alignment="CENTER" layoutX="386.0" layoutY="424.0" mnemonicParsing="false" onAction="#PrintDetails" prefHeight="30.0" prefWidth="117.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="    Print Details" textAlignment="RIGHT" textFill="WHITE">
+                                              <font>
+                                                  <Font name="Arial Bold" size="10.0" />
+                                              </font>
+                                          </Button>
+                                          <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="395.0" layoutY="431.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
+                                              <image>
+                                                  <Image url="@img/printing.png" />
+                                              </image>
+                                          </ImageView>
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </AnchorPane>
+                    </center>
+                </BorderPane>
+            </children>
+        </AnchorPane>
+    </children>
+</StackPane>

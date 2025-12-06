@@ -1,94 +1,83 @@
 package Presentation;
 
-import Entity.User;
-import Enum.UserRole;
+import DTO.UserDTO.UserCredentialsDTO;
+import Service.LoginService;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-
-public class LoginController
-{
-
-    @FXML
-    private TextField emailField;
+@Component
+public class LoginController {
 
     @FXML
-    private PasswordField passwordField;
+    private TextField emailTextField;
 
     @FXML
-    private Label statusLabel;
+    private PasswordField passwordTextField;
 
     @FXML
-    private void onLoginClick()
-    {
-        String email = emailField.getText();
-        String password = passwordField.getText();
-        UserRole role = null;
-        if (email.equals("admin@mobo.com") && password.equals("1234"))
-        {
-            role = UserRole.Admin;
-        } else if (email.equals("librarian@mobo.com") && password.equals("1234"))
-        {
-            role = UserRole.Librarian;
-        } else if (email.equals("user@mobo.com") && password.equals("1234"))
-        {
-            role = UserRole.User;
-        }
+    private Button signInButton;
 
-        if (role == null)
-        {
-            statusLabel.setText("Invalid email or password ");
+    @FXML
+    private Label wrongUsernameOrPassword;
+
+    private final LoginService loginService;
+
+    @Autowired
+    public LoginController(LoginService loginService) {
+        this.loginService = loginService;
+    }
+
+    @FXML
+    void onSignIn(ActionEvent event) {
+        String email = emailTextField.getText() != null ? emailTextField.getText().trim() : "";
+        String password = passwordTextField.getText() != null ? passwordTextField.getText() : "";
+
+        if (email.isEmpty() || password.isEmpty()) {
+            showError("Please enter both email and password.");
             return;
         }
 
-        User user = new User("Static User", email, password);
-        user.setUserRole(role);
-        statusLabel.setText("Login successful  (" + role + ")");
-        openDashboardForRole(role);
-    }
+        UserCredentialsDTO credentials = new UserCredentialsDTO(email, password);
 
-    private void openDashboardForRole(UserRole role)
-    {
-        String fxmlPath;
-        String title;
+        boolean success = loginService.login(credentials);
 
-        switch (role) {
-            case Admin -> {
-                fxmlPath = "/AdminDashboard.fxml";
-                title = "Admin Dashboard";
-            }
-            case Librarian -> {
-                fxmlPath = "/LibrarianDashboard.fxml";
-                title = "Librarian Dashboard";
-            }
-            case User -> {
-                fxmlPath = "/UserDashboard.fxml";
-                title = "User Dashboard";
-            }
-            default -> {
-                statusLabel.setText("Unknown role ");
-                return;
-            }
+        if (!success) {
+            showError("Wrong email or password.");
+            return;
         }
 
-        try
-        {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
-            Stage stage = (Stage) emailField.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle(title);
-            stage.show();
+        openUserScreen();
+    }
 
-        } catch (IOException e)
-        {
+    private void showError(String message) {
+        if (wrongUsernameOrPassword != null) {
+            wrongUsernameOrPassword.setText(message);
+            wrongUsernameOrPassword.setVisible(true);
+        }
+    }
+
+    private void openUserScreen() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) signInButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("User Dashboard");
+            stage.centerOnScreen();
+            stage.show();
+        } catch (Exception e) {
             e.printStackTrace();
-            statusLabel.setText("Failed to open dashboard");
+            showError("Error loading user screen.");
         }
     }
 }

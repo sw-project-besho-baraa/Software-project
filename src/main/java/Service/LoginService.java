@@ -11,6 +11,7 @@ import Validation.LoginCredentialsValidator;
  * It validates provided credentials, checks the user repository, and delegates
  * session establishment to an {@link ISessionManager}.
  */
+
 public class LoginService
 {
 
@@ -47,6 +48,7 @@ public class LoginService
      * @return true if authentication succeeds and a session is started; false
      *         otherwise
      */
+
     public boolean login(UserCredentialsDTO userDTO)
     {
         var userOpt = userRepository.findByEmail(userDTO.getEmail());

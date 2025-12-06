@@ -2,6 +2,7 @@ package Util.HashingPassword;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+
 public class BCryptHashingPassword implements IHashingPassword
 {
     @Override
