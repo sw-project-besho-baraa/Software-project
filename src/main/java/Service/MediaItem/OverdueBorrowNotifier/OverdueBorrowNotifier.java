@@ -1,20 +1,20 @@
-package Service.Book.OverdueBorrowNotifier;
+package Service.MediaItem.OverdueBorrowNotifier;
 
 import DTO.UserDTO.UserContactDTO;
-import Service.Book.OverdueBorrowDetection.OverdueItemDetector;
-import Service.Book.OverdueBorrowDetection.OverdueBorrowedItem;
+import Service.MediaItem.OverdueBorrowDetection.OverdueItemDetector;
+import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItem;
 import Service.NotificationSender.INotificationSender;
 
 import java.util.List;
 
 public class OverdueBorrowNotifier
 {
-    private final List<INotificationSender<UserContactDTO, List<OverdueBorrowedItem>>> notifiersMethods;
+    private final INotificationSender<UserContactDTO, List<OverdueBorrowedItem>> notifier;
     private final OverdueItemDetector overdueBookDetector;
-    public OverdueBorrowNotifier(List<INotificationSender<UserContactDTO, List<OverdueBorrowedItem>>> notifiersMethods,
+    public OverdueBorrowNotifier(INotificationSender<UserContactDTO, List<OverdueBorrowedItem>> notifier,
             OverdueItemDetector overdueBookDetector)
     {
-        this.notifiersMethods = notifiersMethods;
+        this.notifier = notifier;
         this.overdueBookDetector = overdueBookDetector;
     }
 
@@ -23,10 +23,7 @@ public class OverdueBorrowNotifier
         var overBorrows = overdueBookDetector.detectUsersWithOverdueBooks();
         for (var overBorrow : overBorrows)
         {
-            for (var notifier : notifiersMethods)
-            {
-                notifier.send(overBorrow.userContactDTO(),overBorrow.items());
-            }
+            notifier.send(overBorrow.userContactDTO(),overBorrow.items());
         }
     }
 }

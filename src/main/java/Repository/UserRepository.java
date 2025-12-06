@@ -17,6 +17,9 @@ public interface UserRepository extends JpaRepository<@NonNull User, @NonNull In
 {
     Optional<User> findByEmail(@NonNull String email);
 
-//    @Query("select distinct u from User u join u.bookings b where b.durationMinutes > :minMinutes")
-//    List<OverdueBorrowedItemsData> findUsersWithBookingsExceedingDuration(@Param("minMinutes") Integer minMinutes);
+    // @Query("select distinct u from User u join u.bookings b where
+    // b.durationMinutes > :minMinutes")
+    // List<OverdueBorrowedItemsData>
+    // findUsersWithBookingsExceedingDuration(@Param("minMinutes") Integer
+    // minMinutes);
 }

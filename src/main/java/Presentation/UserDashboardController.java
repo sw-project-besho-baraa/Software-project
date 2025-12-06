@@ -17,45 +17,76 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-public class UserDashboardController implements Initializable {
+public class UserDashboardController implements Initializable
+{
 
-    @FXML private Button btnHome;
-    @FXML private Button btnSearch;
-    @FXML private Button btnBorrowed;
-    @FXML private Button btnFines;
-    @FXML private Button btnLogout;
+    @FXML
+    private Button btnHome;
+    @FXML
+    private Button btnSearch;
+    @FXML
+    private Button btnBorrowed;
+    @FXML
+    private Button btnFines;
+    @FXML
+    private Button btnLogout;
 
-    @FXML private VBox paneHome;
-    @FXML private VBox paneSearch;
-    @FXML private VBox paneBorrowed;
-    @FXML private VBox paneFines;
+    @FXML
+    private VBox paneHome;
+    @FXML
+    private VBox paneSearch;
+    @FXML
+    private VBox paneBorrowed;
+    @FXML
+    private VBox paneFines;
 
+    @FXML
+    private Label lblUserEmail;
+    @FXML
+    private Label lblBorrowStatus;
+    @FXML
+    private Label lblHomeFine;
 
-    @FXML private Label lblUserEmail;
-    @FXML private Label lblBorrowStatus;
-    @FXML private Label lblHomeFine;
+    @FXML
+    private ComboBox<String> cmbSearchType;
+    @FXML
+    private TextField txtSearchQuery;
+    @FXML
+    private TableView<MediaItem> tblSearchResults;
+    @FXML
+    private TableColumn<MediaItem, String> colResultType;
+    @FXML
+    private TableColumn<MediaItem, String> colResultTitle;
+    @FXML
+    private TableColumn<MediaItem, String> colResultAuthor;
+    @FXML
+    private TableColumn<MediaItem, String> colResultIsbn;
+    @FXML
+    private TableColumn<MediaItem, String> colResultAvailability;
 
-    @FXML private ComboBox<String> cmbSearchType;
-    @FXML private TextField txtSearchQuery;
-    @FXML private TableView<MediaItem> tblSearchResults;
-    @FXML private TableColumn<MediaItem, String> colResultType;
-    @FXML private TableColumn<MediaItem, String> colResultTitle;
-    @FXML private TableColumn<MediaItem, String> colResultAuthor;
-    @FXML private TableColumn<MediaItem, String> colResultIsbn;
-    @FXML private TableColumn<MediaItem, String> colResultAvailability;
+    @FXML
+    private TableView<MediaItem> tblBorrowed;
+    @FXML
+    private TableColumn<MediaItem, String> colBorrowedType;
+    @FXML
+    private TableColumn<MediaItem, String> colBorrowedTitle;
+    @FXML
+    private TableColumn<MediaItem, String> colBorrowedDueDate;
+    @FXML
+    private TableColumn<MediaItem, String> colBorrowedStatus;
+    @FXML
+    private Label lblBorrowedCount;
 
-    @FXML private TableView<MediaItem> tblBorrowed;
-    @FXML private TableColumn<MediaItem, String> colBorrowedType;
-    @FXML private TableColumn<MediaItem, String> colBorrowedTitle;
-    @FXML private TableColumn<MediaItem, String> colBorrowedDueDate;
-    @FXML private TableColumn<MediaItem, String> colBorrowedStatus;
-    @FXML private Label lblBorrowedCount;
-
-    @FXML private Label lblFineTotal;
-    @FXML private Label lblOverdueBooks;
-    @FXML private Label lblOverdueCds;
-    @FXML private TextField txtFinePayment;
-    @FXML private TextArea txtFineHistory;
+    @FXML
+    private Label lblFineTotal;
+    @FXML
+    private Label lblOverdueBooks;
+    @FXML
+    private Label lblOverdueCds;
+    @FXML
+    private TextField txtFinePayment;
+    @FXML
+    private TextArea txtFineHistory;
 
     private final ObservableList<MediaItem> allMedia = FXCollections.observableArrayList();
     private final ObservableList<MediaItem> searchResults = FXCollections.observableArrayList();
@@ -66,7 +97,8 @@ public class UserDashboardController implements Initializable {
     private final int borrowLimit = 3;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location,ResourceBundle resources)
+    {
         initPanesVisibility();
         initSearchTypeCombo();
         initTables();
@@ -75,18 +107,19 @@ public class UserDashboardController implements Initializable {
         updateAllStatusLabels();
     }
 
-    private void initPanesVisibility() {
+    private void initPanesVisibility()
+    {
         showOnly(paneHome);
     }
 
-    private void initSearchTypeCombo() {
-        cmbSearchType.setItems(FXCollections.observableArrayList(
-                "Title", "Author", "ISBN", "Media Type"
-        ));
+    private void initSearchTypeCombo()
+    {
+        cmbSearchType.setItems(FXCollections.observableArrayList("Title","Author","ISBN","Media Type"));
         cmbSearchType.getSelectionModel().selectFirst();
     }
 
-    private void initTables() {
+    private void initTables()
+    {
 
         colResultType.setCellValueFactory(new PropertyValueFactory<>("type"));
         colResultTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -102,23 +135,20 @@ public class UserDashboardController implements Initializable {
         tblBorrowed.setItems(borrowedItems);
     }
 
-    private void initDemoData() {
+    private void initDemoData()
+    {
         // available + borrowed + overdue for demo
-        allMedia.addAll(
-                new MediaItem("Book", "Clean Code", "Robert C. Martin",
-                        "9780132350884", "Available", "-"),
-                new MediaItem("Book", "Operating System Concepts", "Silberschatz",
-                        "9781118063330", "Borrowed", "2025-12-20"),
-                new MediaItem("Book", "Digital Image Processing", "Gonzalez",
-                        "9780133002324", "Overdue", "2025-11-20"),
-                new MediaItem("CD", "Java Master Course", "MOBO Library",
-                        "CD-001", "Available", "-"),
-                new MediaItem("CD", "Algorithms Practice", "MOBO Library",
-                        "CD-002", "Overdue", "2025-11-15")
-        );
+        allMedia.addAll(new MediaItem("Book", "Clean Code", "Robert C. Martin", "9780132350884", "Available", "-"),
+                new MediaItem("Book", "Operating System Concepts", "Silberschatz", "9781118063330", "Borrowed",
+                        "2025-12-20"),
+                new MediaItem("Book", "Digital Image Processing", "Gonzalez", "9780133002324", "Overdue", "2025-11-20"),
+                new MediaItem("CD", "Java Master Course", "MOBO Library", "CD-001", "Available", "-"),
+                new MediaItem("CD", "Algorithms Practice", "MOBO Library", "CD-002", "Overdue", "2025-11-15"));
 
-        for (MediaItem m : allMedia) {
-            if (!"Available".equalsIgnoreCase(m.getStatus())) {
+        for (MediaItem m : allMedia)
+        {
+            if (!"Available".equalsIgnoreCase(m.getStatus()))
+            {
                 borrowedItems.add(m);
             }
         }
@@ -126,37 +156,35 @@ public class UserDashboardController implements Initializable {
         searchResults.setAll(allMedia);
     }
 
-    private void initUserInfo() {
+    private void initUserInfo()
+    {
         lblUserEmail.setText(currentUserEmail);
     }
 
-    private void updateAllStatusLabels() {
+    private void updateAllStatusLabels()
+    {
         int borrowedCount = borrowedItems.size();
         lblBorrowStatus.setText("Borrowed: " + borrowedCount + " / " + borrowLimit + " items");
         lblBorrowedCount.setText("You have " + borrowedCount + " items borrowed.");
 
-        lblHomeFine.setText(String.format(Locale.ENGLISH, "Total fines: %.2f NIS", currentFine));
-        lblFineTotal.setText(String.format(Locale.ENGLISH, "Total fines: %.2f NIS", currentFine));
+        lblHomeFine.setText(String.format(Locale.ENGLISH,"Total fines: %.2f NIS",currentFine));
+        lblFineTotal.setText(String.format(Locale.ENGLISH,"Total fines: %.2f NIS",currentFine));
 
-        long overBooks = borrowedItems.stream()
-                .filter(m -> "Book".equalsIgnoreCase(m.getType()))
-                .filter(m -> "Overdue".equalsIgnoreCase(m.getStatus()))
-                .count();
+        long overBooks = borrowedItems.stream().filter(m -> "Book".equalsIgnoreCase(m.getType()))
+                .filter(m -> "Overdue".equalsIgnoreCase(m.getStatus())).count();
 
-        long overCds = borrowedItems.stream()
-                .filter(m -> "CD".equalsIgnoreCase(m.getType()))
-                .filter(m -> "Overdue".equalsIgnoreCase(m.getStatus()))
-                .count();
+        long overCds = borrowedItems.stream().filter(m -> "CD".equalsIgnoreCase(m.getType()))
+                .filter(m -> "Overdue".equalsIgnoreCase(m.getStatus())).count();
 
         lblOverdueBooks.setText("Overdue books: " + overBooks);
         lblOverdueCds.setText("Overdue CDs: " + overCds);
     }
 
-
-
-    private void showOnly(Pane target) {
-        List<Pane> panes = Arrays.asList(paneHome, paneSearch, paneBorrowed, paneFines);
-        for (Pane p : panes) {
+    private void showOnly(Pane target)
+    {
+        List<Pane> panes = Arrays.asList(paneHome,paneSearch,paneBorrowed,paneFines);
+        for (Pane p : panes)
+        {
             boolean visible = (p == target);
             p.setVisible(visible);
             p.setManaged(visible);
@@ -164,79 +192,92 @@ public class UserDashboardController implements Initializable {
     }
 
     @FXML
-    private void onShowHome() {
+    private void onShowHome()
+    {
         showOnly(paneHome);
     }
 
     @FXML
-    private void onShowSearch() {
+    private void onShowSearch()
+    {
         showOnly(paneSearch);
     }
 
     @FXML
-    private void onShowBorrowed() {
+    private void onShowBorrowed()
+    {
         showOnly(paneBorrowed);
     }
 
     @FXML
-    private void onShowFines() {
+    private void onShowFines()
+    {
         showOnly(paneFines);
     }
 
-
     @FXML
-    private void onSearchMedia() {
+    private void onSearchMedia()
+    {
         String q = txtSearchQuery.getText();
-        if (q == null) q = "";
+        if (q == null)
+            q = "";
         String query = q.toLowerCase(Locale.ENGLISH);
 
         String type = cmbSearchType.getSelectionModel().getSelectedItem();
-        if (type == null) type = "Title";
+        if (type == null)
+            type = "Title";
         String searchType = type.toLowerCase(Locale.ENGLISH);
 
         final String finalQuery = query;
 
         searchResults.setAll(allMedia.filtered(m -> {
-            if (finalQuery.isBlank()) return true;
+            if (finalQuery.isBlank())
+                return true;
             switch (searchType) {
-                case "title":
+                case "title" :
                     return m.getTitle().toLowerCase(Locale.ENGLISH).contains(finalQuery);
-                case "author":
+                case "author" :
                     return m.getAuthor().toLowerCase(Locale.ENGLISH).contains(finalQuery);
-                case "isbn":
+                case "isbn" :
                     return m.getIsbn().toLowerCase(Locale.ENGLISH).contains(finalQuery);
-                case "media type":
+                case "media type" :
                     return m.getType().toLowerCase(Locale.ENGLISH).contains(finalQuery);
-                default:
+                default :
                     return true;
             }
         }));
     }
 
     @FXML
-    private void onClearSearch() {
+    private void onClearSearch()
+    {
         txtSearchQuery.clear();
         searchResults.setAll(allMedia);
         tblSearchResults.getSelectionModel().clearSelection();
     }
 
     @FXML
-    private void onBorrowBook() {
+    private void onBorrowBook()
+    {
         MediaItem selected = tblSearchResults.getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            info("Borrow Book", "Please select a media item.");
+        if (selected == null)
+        {
+            info("Borrow Book","Please select a media item.");
             return;
         }
-        if (!"Book".equalsIgnoreCase(selected.getType())) {
-            info("Borrow Book", "Selected item is not a book.");
+        if (!"Book".equalsIgnoreCase(selected.getType()))
+        {
+            info("Borrow Book","Selected item is not a book.");
             return;
         }
-        if (!"Available".equalsIgnoreCase(selected.getStatus())) {
-            info("Borrow Book", "Item is not available.");
+        if (!"Available".equalsIgnoreCase(selected.getStatus()))
+        {
+            info("Borrow Book","Item is not available.");
             return;
         }
-        if (borrowedItems.size() >= borrowLimit) {
-            info("Borrow Book", "You reached your borrow limit (" + borrowLimit + ").");
+        if (borrowedItems.size() >= borrowLimit)
+        {
+            info("Borrow Book","You reached your borrow limit (" + borrowLimit + ").");
             return;
         }
 
@@ -246,26 +287,31 @@ public class UserDashboardController implements Initializable {
         tblSearchResults.refresh();
         tblBorrowed.refresh();
         updateAllStatusLabels();
-        info("Borrow Book", "Book borrowed successfully (demo).");
+        info("Borrow Book","Book borrowed successfully (demo).");
     }
 
     @FXML
-    private void onBorrowCD() {
+    private void onBorrowCD()
+    {
         MediaItem selected = tblSearchResults.getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            info("Borrow CD", "Please select a media item.");
+        if (selected == null)
+        {
+            info("Borrow CD","Please select a media item.");
             return;
         }
-        if (!"CD".equalsIgnoreCase(selected.getType())) {
-            info("Borrow CD", "Selected item is not a CD.");
+        if (!"CD".equalsIgnoreCase(selected.getType()))
+        {
+            info("Borrow CD","Selected item is not a CD.");
             return;
         }
-        if (!"Available".equalsIgnoreCase(selected.getStatus())) {
-            info("Borrow CD", "Item is not available.");
+        if (!"Available".equalsIgnoreCase(selected.getStatus()))
+        {
+            info("Borrow CD","Item is not available.");
             return;
         }
-        if (borrowedItems.size() >= borrowLimit) {
-            info("Borrow CD", "You reached your borrow limit (" + borrowLimit + ").");
+        if (borrowedItems.size() >= borrowLimit)
+        {
+            info("Borrow CD","You reached your borrow limit (" + borrowLimit + ").");
             return;
         }
 
@@ -275,14 +321,16 @@ public class UserDashboardController implements Initializable {
         tblSearchResults.refresh();
         tblBorrowed.refresh();
         updateAllStatusLabels();
-        info("Borrow CD", "CD borrowed successfully (demo).");
+        info("Borrow CD","CD borrowed successfully (demo).");
     }
 
     @FXML
-    private void onReturnItem() {
+    private void onReturnItem()
+    {
         MediaItem selected = tblBorrowed.getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            info("Return Item", "Please select a borrowed item.");
+        if (selected == null)
+        {
+            info("Return Item","Please select a borrowed item.");
             return;
         }
 
@@ -292,51 +340,54 @@ public class UserDashboardController implements Initializable {
         tblBorrowed.refresh();
         tblSearchResults.refresh();
         updateAllStatusLabels();
-        info("Return Item", "Item returned (demo).");
+        info("Return Item","Item returned (demo).");
     }
 
-
-
     @FXML
-    private void onPayFine() {
+    private void onPayFine()
+    {
         String text = txtFinePayment.getText();
-        if (text == null || text.isBlank()) {
-            info("Pay Fine", "Enter payment amount.");
+        if (text == null || text.isBlank())
+        {
+            info("Pay Fine","Enter payment amount.");
             return;
         }
 
         double amount;
-        try {
+        try
+        {
             amount = Double.parseDouble(text);
-        } catch (NumberFormatException ex) {
-            info("Pay Fine", "Invalid amount.");
+        } catch (NumberFormatException ex)
+        {
+            info("Pay Fine","Invalid amount.");
             return;
         }
 
-        if (amount <= 0) {
-            info("Pay Fine", "Amount must be positive.");
+        if (amount <= 0)
+        {
+            info("Pay Fine","Amount must be positive.");
             return;
         }
 
-        if (amount > currentFine) {
-            info("Pay Fine", "Amount greater than current fine (demo).");
+        if (amount > currentFine)
+        {
+            info("Pay Fine","Amount greater than current fine (demo).");
             return;
         }
 
         currentFine -= amount;
         txtFinePayment.clear();
-        txtFineHistory.appendText(String.format(
-                Locale.ENGLISH, "Paid %.2f NIS. Remaining: %.2f NIS%n", amount, currentFine
-        ));
+        txtFineHistory
+                .appendText(String.format(Locale.ENGLISH,"Paid %.2f NIS. Remaining: %.2f NIS%n",amount,currentFine));
         updateAllStatusLabels();
-        info("Pay Fine", "Payment applied (demo).");
+        info("Pay Fine","Payment applied (demo).");
     }
 
-
-
     @FXML
-    private void onLogout() {
-        try {
+    private void onLogout()
+    {
+        try
+        {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
             Parent root = loader.load();
@@ -344,7 +395,8 @@ public class UserDashboardController implements Initializable {
             stage.setScene(new Scene(root));
             stage.setTitle("MOBO Library · Login");
             stage.show();
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setTitle("Logout Error");
@@ -354,8 +406,8 @@ public class UserDashboardController implements Initializable {
         }
     }
 
-
-    private void info(String title, String message) {
+    private void info(String title,String message)
+    {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setTitle(title);
         a.setHeaderText(null);
@@ -363,7 +415,8 @@ public class UserDashboardController implements Initializable {
         a.showAndWait();
     }
 
-    public static class MediaItem {
+    public static class MediaItem
+    {
         private String type;
         private String title;
         private String author;
@@ -371,8 +424,8 @@ public class UserDashboardController implements Initializable {
         private String status;
         private String dueDate;
 
-        public MediaItem(String type, String title, String author,
-                         String isbn, String status, String dueDate) {
+        public MediaItem(String type, String title, String author, String isbn, String status, String dueDate)
+        {
             this.type = type;
             this.title = title;
             this.author = author;
@@ -381,22 +434,64 @@ public class UserDashboardController implements Initializable {
             this.dueDate = dueDate;
         }
 
-        public String getType() { return type; }
-        public void setType(String type) { this.type = type; }
+        public String getType()
+        {
+            return type;
+        }
 
-        public String getTitle() { return title; }
-        public void setTitle(String title) { this.title = title; }
+        public void setType(String type)
+        {
+            this.type = type;
+        }
 
-        public String getAuthor() { return author; }
-        public void setAuthor(String author) { this.author = author; }
+        public String getTitle()
+        {
+            return title;
+        }
 
-        public String getIsbn() { return isbn; }
-        public void setIsbn(String isbn) { this.isbn = isbn; }
+        public void setTitle(String title)
+        {
+            this.title = title;
+        }
 
-        public String getStatus() { return status; }
-        public void setStatus(String status) { this.status = status; }
+        public String getAuthor()
+        {
+            return author;
+        }
 
-        public String getDueDate() { return dueDate; }
-        public void setDueDate(String dueDate) { this.dueDate = dueDate; }
+        public void setAuthor(String author)
+        {
+            this.author = author;
+        }
+
+        public String getIsbn()
+        {
+            return isbn;
+        }
+
+        public void setIsbn(String isbn)
+        {
+            this.isbn = isbn;
+        }
+
+        public String getStatus()
+        {
+            return status;
+        }
+
+        public void setStatus(String status)
+        {
+            this.status = status;
+        }
+
+        public String getDueDate()
+        {
+            return dueDate;
+        }
+
+        public void setDueDate(String dueDate)
+        {
+            this.dueDate = dueDate;
+        }
     }
 }

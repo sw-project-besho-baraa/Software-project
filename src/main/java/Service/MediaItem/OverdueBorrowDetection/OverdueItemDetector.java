@@ -1,22 +1,21 @@
-package Service.Book.OverdueBorrowDetection;
+package Service.MediaItem.OverdueBorrowDetection;
 
 import Repository.UserRepository;
+import lombok.NonNull;
 
 import java.util.List;
 
-public abstract class OverdueItemDetector
+public class OverdueItemDetector
 {
-    private final int limit;
     private final UserRepository userRepository;
 
-    public OverdueItemDetector(int limit, UserRepository userRepository)
+    public OverdueItemDetector(@NonNull UserRepository userRepository)
     {
         this.userRepository = userRepository;
-        this.limit = limit;
     }
 
     public List<OverdueBorrowedItemsData> detectUsersWithOverdueBooks()
     {
-        return userRepository.findUsersWithBookingsExceedingDuration(limit);
+        return null;
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BookRepository extends MediaItemRepository<Book>, JpaRepository<@NonNull Book,@NonNull String >
+public interface BookRepository extends MediaItemRepository<Book>, JpaRepository<@NonNull Book, @NonNull String>
 {
 
     List<Book> findByTitleContainingIgnoreCase(@NonNull String title);

@@ -1,72 +1,75 @@
 package Util.MessageFormater;
 
 import DTO.UserDTO.UserContactDTO;
-import Entity.Item;
-import Service.Book.OverdueBorrowDetection.OverdueBorrowedItem;
-import Service.Book.OverdueBorrowDetection.OverdueBorrowedItemsData;
+import Entity.MediaItem;
+import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItem;
+import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItemsData;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<OverdueBorrowedItemsData> {
-    private static final SimpleDateFormat BORROWED_DATE_FORMAT =
-            new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
+public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<OverdueBorrowedItemsData>
+{
+    private static final SimpleDateFormat BORROWED_DATE_FORMAT = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
     @Override
-    public String formatMessage(OverdueBorrowedItemsData overdueBorrowedItemsData) {
-        if (overdueBorrowedItemsData == null) {
+    public String formatMessage(OverdueBorrowedItemsData overdueBorrowedItemsData)
+    {
+        if (overdueBorrowedItemsData == null)
+        {
             return "";
         }
         UserContactDTO user = overdueBorrowedItemsData.userContactDTO();
         List<OverdueBorrowedItem> items = overdueBorrowedItemsData.items();
-        String userName = user != null && user.getName() != null && !user.getName().isBlank() ? user.getName() : "Valued Reader";
+        String userName = user != null && user.getName() != null && !user.getName().isBlank()
+                ? user.getName()
+                : "Valued Reader";
         String userEmail = user != null ? nullSafe(user.getEmail()) : "-";
         String userPhone = user != null ? nullSafe(user.getPhoneNumber()) : "-";
         int overdueCount = (items == null) ? 0 : items.size();
         StringBuilder rowsBuilder = new StringBuilder();
-        if (items != null && !items.isEmpty()) {
-            for (OverdueBorrowedItem overdueItem : items) {
-                if (overdueItem == null) continue;
+        if (items != null && !items.isEmpty())
+        {
+            for (OverdueBorrowedItem overdueItem : items)
+            {
+                if (overdueItem == null)
+                    continue;
 
-                Item item = overdueItem.item();
+                MediaItem item = overdueItem.item();
                 String title = (item != null) ? nullSafe(item.getTitle()) : "Unknown item";
                 String borrowedDateStr = "-";
 
-                if (item != null) {
+                if (item != null)
+                {
                     Date borrowedDate = item.getBorrowedDate();
-                    if (borrowedDate != null) {
+                    if (borrowedDate != null)
+                    {
                         borrowedDateStr = BORROWED_DATE_FORMAT.format(borrowedDate);
                     }
                 }
                 String detectedAtStr = (overdueItem.detectedAt() != null) ? overdueItem.detectedAt().toString() : "-";
                 int overdueDays = overdueItem.overdueDays();
                 rowsBuilder.append("""
-                       <tr class="item-row">
-                       <td class="item-title">
-                       <div class="item-main-title">""").append(escapeHtml(title))
-                        .append("""
-                            </div>
-                            </td>
-                            <td class="item-date">""")
-                        .append(escapeHtml(borrowedDateStr))
-                        .append("""
-                            </td>
-                            <td class="item-overdue">
-                            """)
-                        .append(overdueDays)
-                        .append("""
-                            days
-                            </td>
-                            <td class="item-detected">
-                            """)
-                        .append(escapeHtml(detectedAtStr))
-                        .append("""
+                        <tr class="item-row">
+                        <td class="item-title">
+                        <div class="item-main-title">""").append(escapeHtml(title)).append("""
+                        </div>
+                        </td>
+                        <td class="item-date">""").append(escapeHtml(borrowedDateStr)).append("""
+                        </td>
+                        <td class="item-overdue">
+                        """).append(overdueDays).append("""
+                        days
+                        </td>
+                        <td class="item-detected">
+                        """).append(escapeHtml(detectedAtStr)).append("""
                             </td>
                         </tr>
                         """);
             }
-        } else {
+        } else
+        {
             rowsBuilder.append("""
                     <tr class="item-row empty-row">
                         <td colspan="4" class="empty-text">
@@ -518,24 +521,21 @@ public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<Ove
                 </html>
                 """;
 
-        return htmlTemplate
-                .replace("__USER_NAME__", escapeHtml(userName))
-                .replace("__OVERDUE_COUNT__", String.valueOf(overdueCount))
-                .replace("__USER_EMAIL__", escapeHtml(userEmail))
-                .replace("__USER_PHONE__", escapeHtml(userPhone))
-                .replace("__ITEM_ROWS__", rowsBuilder.toString());
+        return htmlTemplate.replace("__USER_NAME__",escapeHtml(userName))
+                .replace("__OVERDUE_COUNT__",String.valueOf(overdueCount))
+                .replace("__USER_EMAIL__",escapeHtml(userEmail)).replace("__USER_PHONE__",escapeHtml(userPhone))
+                .replace("__ITEM_ROWS__",rowsBuilder.toString());
     }
 
-    private static String nullSafe(String value) {
+    private static String nullSafe(String value)
+    {
         return value == null || value.isBlank() ? "-" : value;
     }
 
-    private static String escapeHtml(String input) {
-        if (input == null) return "";
-        return input
-                .replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;")
-                .replace("\"", "&quot;");
+    private static String escapeHtml(String input)
+    {
+        if (input == null)
+            return "";
+        return input.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;").replace("\"","&quot;");
     }
 }

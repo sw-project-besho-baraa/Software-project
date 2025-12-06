@@ -1,12 +1,15 @@
 package Util.MessageFormater;
 
-import Service.Book.Payment.PaymentConfirmationData;
+import Service.MediaItem.Payment.PaymentConfirmationData;
 
-public class PaymentConfirmationMessageFormater implements IMessageFormater<PaymentConfirmationData> {
+public class PaymentConfirmationMessageFormater implements IMessageFormater<PaymentConfirmationData>
+{
 
     @Override
-    public String formatMessage(PaymentConfirmationData data) {
-        if (data == null) {
+    public String formatMessage(PaymentConfirmationData data)
+    {
+        if (data == null)
+        {
             return "";
         }
 
@@ -383,20 +386,20 @@ public class PaymentConfirmationMessageFormater implements IMessageFormater<Paym
                 </html>
                 """;
 
-        return htmlTemplate
-                .replace("{{patronName}}",       nullSafe(data.patronName()))
-                .replace("{{amountPaid}}",       nullSafe(data.amountPaid()))
-                .replace("{{paymentDate}}",      nullSafe(data.paymentDate()))
-                .replace("{{receiptId}}",        nullSafe(data.receiptId()))
-                .replace("{{paymentMethod}}",    nullSafe(data.paymentMethod()))
-                .replace("{{transactionId}}",    nullSafe(data.transactionId()))
-                .replace("{{processedBy}}",      nullSafe(data.processedBy()))
-                .replace("{{previousBalance}}",  nullSafe(data.previousBalance()))
-                .replace("{{remainingBalance}}", nullSafe(data.remainingBalance()))
-                .replace("{{currency}}",         nullSafe(data.currency()));
+        return htmlTemplate.replace("{{patronName}}",nullSafe(data.patronName()))
+                .replace("{{amountPaid}}",nullSafe(data.amountPaid()))
+                .replace("{{paymentDate}}",nullSafe(data.paymentDate()))
+                .replace("{{receiptId}}",nullSafe(data.receiptId()))
+                .replace("{{paymentMethod}}",nullSafe(data.paymentMethod()))
+                .replace("{{transactionId}}",nullSafe(data.transactionId()))
+                .replace("{{processedBy}}",nullSafe(data.processedBy()))
+                .replace("{{previousBalance}}",nullSafe(data.previousBalance()))
+                .replace("{{remainingBalance}}",nullSafe(data.remainingBalance()))
+                .replace("{{currency}}",nullSafe(data.currency()));
     }
 
-    private static String nullSafe(Object value) {
+    private static String nullSafe(Object value)
+    {
         return value == null ? "" : String.valueOf(value);
     }
 }

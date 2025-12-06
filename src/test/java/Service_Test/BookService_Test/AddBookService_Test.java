@@ -2,7 +2,7 @@ package Service_Test.BookService_Test;
 
 import Entity.Book;
 import Repository.BookRepository;
-import Service.Book.AddBookService;
+import Service.MediaItem.AddMediaItemService;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,20 +12,20 @@ public class AddBookService_Test
 {
 
     private BookRepository bookRepository;
-    private AddBookService addBookService;
+    private AddMediaItemService addBookService;
 
     @BeforeEach
     void setup()
     {
         bookRepository = mock(BookRepository.class);
-        addBookService = new AddBookService(bookRepository);
+        addBookService = new AddMediaItemService(bookRepository);
     }
 
     @Test
     void addBook_ValidBook_SavesBook()
     {
         Book book = mock(Book.class);
-        addBookService.addBook(book);
+        addBookService.addItem(book);
         verify(bookRepository,times(1)).save(book);
 
     }
@@ -33,6 +33,6 @@ public class AddBookService_Test
     @Test
     void addBook_NullBook_ThrowsException()
     {
-        assertThrows(NullPointerException.class,() -> addBookService.addBook(null));
+        assertThrows(NullPointerException.class,() -> addBookService.addItem(null));
     }
 }
