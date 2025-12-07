@@ -2,6 +2,7 @@ package Presentation;
 
 
 
+import Service.LogoutService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,10 +12,24 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import Util.FxmlMapper.RoleToFxmlMapper;
+import Util.FxmlNavigator.FxmlNavigator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class LibrarianController {
 
+    private final LogoutService logoutService;
+    private final FxmlNavigator fxmlNavigator;
 
+
+
+    @Autowired
+    public LibrarianController(LogoutService logoutService, FxmlNavigator fxmlNavigator) {
+        this.logoutService = logoutService;
+        this.fxmlNavigator = fxmlNavigator;
+    }
 
     @FXML
     private TableColumn<?, ?> customerBirthDateColumn;
@@ -64,6 +79,8 @@ public class LibrarianController {
     @FXML
     private Label userNameTestField;
 
+
+
     @FXML
     void detectOverDue(ActionEvent event) {
 
@@ -76,7 +93,9 @@ public class LibrarianController {
 
     @FXML
     void logoutButton(ActionEvent event) {
-
+        logoutService.logout();
+        System.out.println("Logout button clicked");
+        fxmlNavigator.logout((javafx.stage.Stage) logoutButton.getScene().getWindow(), "/fxml/Login.fxml");
     }
 
     @FXML

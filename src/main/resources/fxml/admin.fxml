@@ -41,7 +41,7 @@
                                 <Font name="Arial Bold" size="10.0" />
                             </font>
                         </Button>
-                        <Button id="button" layoutX="14.0" layoutY="233.0" mnemonicParsing="false" onAction="#viewItemButton" prefHeight="23.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="View Items" textFill="WHITE">
+                        <Button id="button" layoutX="14.0" layoutY="233.0" mnemonicParsing="false" onAction="#viewItemPageButton" prefHeight="23.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="View Items" textFill="WHITE">
                             <font>
                                 <Font name="Arial Bold" size="10.0" />
                             </font>
@@ -71,28 +71,28 @@
                                 <Font name="Tahoma" size="17.0" />
                             </font>
                         </Label>
-                        <Label fx:id="AdminNameDisplay" alignment="CENTER" contentDisplay="CENTER" layoutX="7.0" layoutY="133.0" prefHeight="23.0" prefWidth="198.0" text="mohammad bishawi" textFill="WHITE">
+                        <Label fx:id="adminNameDisplay" alignment="CENTER" contentDisplay="CENTER" layoutX="7.0" layoutY="133.0" prefHeight="23.0" prefWidth="198.0" text="mohammad bishawi" textFill="WHITE">
                             <font>
                                 <Font name="Arial Bold" size="20.0" />
                             </font>
                         </Label>
                         <Line endX="65.0" layoutX="128.0" layoutY="163.0" startX="-110.0" stroke="WHITE" />
-                        <Button id="button" layoutX="14.0" layoutY="325.0" mnemonicParsing="false" onAction="#sendEmailPageButton" prefHeight="23.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Send Email With Message" textFill="WHITE">
+                        <Button id="button" layoutX="14.0" layoutY="357.0" mnemonicParsing="false" onAction="#sendEmailPageButton" prefHeight="23.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Send Email With Message" textFill="WHITE">
                             <font>
                                 <Font name="Arial Bold" size="10.0" />
                             </font>
                         </Button>
-                        <Button id="button" layoutX="14.0" layoutY="295.0" mnemonicParsing="false" onAction="#sendOverDueButton" prefHeight="23.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Send OverDue Email" textFill="WHITE">
+                        <Button id="button" layoutX="14.0" layoutY="327.0" mnemonicParsing="false" onAction="#sendOverDueButton" prefHeight="23.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Send OverDue Email" textFill="WHITE">
                             <font>
                                 <Font name="Arial Bold" size="10.0" />
                             </font>
                         </Button>
-                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="24.0" layoutY="299.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="24.0" layoutY="331.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/add.png" />
                             </image>
                         </ImageView>
-                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="22.0" layoutY="328.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="22.0" layoutY="360.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/add.png" />
                             </image>
@@ -107,6 +107,16 @@
                                 <Image url="@img/add.png" />
                             </image>
                         </ImageView>
+                  <Button id="button" layoutX="14.0" layoutY="296.0" mnemonicParsing="false" onAction="#addCdPageButton" prefHeight="23.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Add Cd" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Bold" size="10.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="24.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@img/add.png" />
+                     </image>
+                  </ImageView>
                     </children>
                 </AnchorPane>
             </left>
@@ -218,27 +228,27 @@
                         </AnchorPane>
                         <AnchorPane fx:id="addUserPage" layoutX="334.0" layoutY="157.0" prefHeight="558.0" prefWidth="888.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
-                                <AnchorPane id="1e" layoutX="208.0" layoutY="122.0" prefHeight="246.0" prefWidth="397.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 40px;" stylesheets="@css/ooo.css">
+                                <AnchorPane id="1e" layoutX="208.0" layoutY="122.0" prefHeight="275.0" prefWidth="397.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 40px;" stylesheets="@css/ooo.css">
                                     <children>
-                                        <Label layoutX="157.0" layoutY="14.0" text="ADD USER" textFill="WHITE">
+                                        <Label layoutX="156.0" layoutY="3.0" text="ADD USER" textFill="WHITE">
                                             <font>
                                                 <Font name="Arial Narrow" size="20.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="addUserEmail" layoutX="110.0" layoutY="51.0" prefHeight="25.0" prefWidth="214.0" style="-fx-background-radius: 20px;" />
-                                        <TextField fx:id="addUserPassword" layoutX="110.0" layoutY="92.0" prefHeight="25.0" prefWidth="214.0" style="-fx-background-radius: 20px;" />
-                                        <TextField fx:id="addUserRole" layoutX="111.0" layoutY="136.0" prefHeight="25.0" prefWidth="214.0" style="-fx-background-radius: 20px;" />
-                                        <Label layoutX="33.0" layoutY="53.0" text="Email" textFill="#f2f2f2">
+                                        <TextField fx:id="addUserEmail" layoutX="110.0" layoutY="84.0" prefHeight="25.0" prefWidth="214.0" style="-fx-background-radius: 20px;" />
+                                        <TextField fx:id="addUserPassword" layoutX="110.0" layoutY="123.0" prefHeight="25.0" prefWidth="214.0" style="-fx-background-radius: 20px;" />
+                                        <TextField fx:id="addUserRole" layoutX="111.0" layoutY="163.0" prefHeight="25.0" prefWidth="214.0" style="-fx-background-radius: 20px;" />
+                                        <Label layoutX="33.0" layoutY="86.0" text="Email" textFill="#f2f2f2">
                                             <font>
                                                 <Font size="14.0" />
                                             </font>
                                         </Label>
-                                        <Label layoutX="33.0" layoutY="94.0" text="Password" textFill="WHITE">
+                                        <Label layoutX="33.0" layoutY="125.0" text="Password" textFill="WHITE">
                                             <font>
                                                 <Font size="14.0" />
                                             </font>
                                         </Label>
-                                        <Label layoutX="33.0" layoutY="138.0" text="Role" textFill="WHITE">
+                                        <Label layoutX="33.0" layoutY="165.0" text="Role" textFill="WHITE">
                                             <font>
                                                 <Font size="14.0" />
                                             </font>
@@ -248,6 +258,13 @@
                                                 <Font size="13.0" />
                                             </font>
                                         </Button>
+                              <TextField fx:id="addUserName" layoutX="109.0" layoutY="45.0" prefHeight="25.0" prefWidth="214.0" style="-fx-background-radius: 20px;" />
+                              <Label layoutX="32.0" layoutY="47.0" text="Name" textFill="#f2f2f2">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="errorLabelAddBook" layoutX="142.0" layoutY="244.0" prefHeight="17.0" prefWidth="114.0" textAlignment="CENTER" textFill="#009cff" />
                                     </children>
                                 </AnchorPane>
                             </children>
@@ -262,12 +279,14 @@
                                                 <TableColumn prefWidth="75.0" />
                                             </columns>
                                         </TableView>
-                                        <TableView fx:id="itemTable" layoutX="26.0" layoutY="151.0" maxHeight="1.7976931348623157E308" prefHeight="276.0" prefWidth="738.0" style="-fx-background-size: 4500;">
+                                        <TableView fx:id="itemTable" layoutX="14.0" layoutY="153.0" maxHeight="1.7976931348623157E308" prefHeight="276.0" prefWidth="738.0" style="-fx-background-size: 4500;">
                                             <columns>
-                                                <TableColumn fx:id="selectEmployeeComlumn" prefWidth="141.0" text="ISBN" />
-                                                <TableColumn fx:id="employeeIdColumn" prefWidth="184.0" text="Title" />
-                                                <TableColumn fx:id="employeeFirstNameColumn" prefWidth="270.0" text="Author" />
-                                                <TableColumn fx:id="employeeFirstNameColumn1" prefWidth="142.0" text="Is Borrow" />
+                                                <TableColumn fx:id="selectEmployeeComlumn" prefWidth="51.0" text="ID" />
+                                                <TableColumn fx:id="employeeIdColumn" prefWidth="122.0" text="Title" />
+                                                <TableColumn fx:id="employeeFirstNameColumn" prefWidth="137.0" text="Is Borrowd" />
+                                                <TableColumn fx:id="employeeFirstNameColumn1" prefWidth="152.0" text="Borrowd Date" />
+                                    <TableColumn fx:id="employeeFirstNameColumn11" prefWidth="160.0" text="Due To Date" />
+                                    <TableColumn fx:id="employeeFirstNameColumn111" prefWidth="115.0" text="User" />
                                             </columns>
                                         </TableView>
                                         <Label layoutX="338.0" layoutY="45.0" prefHeight="23.0" prefWidth="156.0" text="VIEW ITEMS" textFill="WHITE">
@@ -296,9 +315,9 @@
                                 </AnchorPane>
                             </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="SendEmailPage" layoutX="336.0" layoutY="219.0" prefHeight="558.0" prefWidth="888.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="sendEmailPage" layoutX="4.0" prefHeight="558.0" prefWidth="888.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="0.0">
                             <children>
-                                <AnchorPane id="1e" fx:id="AddProduct" layoutX="237.0" layoutY="115.0" prefHeight="270.0" prefWidth="375.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 40px;" stylesheets="@css/ooo.css">
+                                <AnchorPane id="1e" fx:id="addProduct" layoutX="237.0" layoutY="115.0" prefHeight="270.0" prefWidth="375.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 40px;" stylesheets="@css/ooo.css">
                                     <children>
                                         <Label layoutX="138.0" layoutY="14.0" text="SEND EMAIL" textFill="WHITE">
                                             <font>
@@ -320,6 +339,76 @@
                                 </AnchorPane>
                             </children>
                         </AnchorPane>
+                  <AnchorPane fx:id="addBookPage" layoutX="8.0" layoutY="4.0" prefHeight="558.0" prefWidth="888.0" visible="false">
+                     <children>
+                        <AnchorPane id="1e" layoutX="208.0" layoutY="122.0" prefHeight="252.0" prefWidth="397.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 40px;" stylesheets="@css/ooo.css">
+                           <children>
+                              <Label layoutX="157.0" layoutY="14.0" text="ADD BOOK" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Narrow" size="20.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="addBookIsbn" layoutX="110.0" layoutY="51.0" prefHeight="25.0" prefWidth="214.0" style="-fx-background-radius: 20px;" />
+                              <TextField fx:id="addBookAuthor" layoutX="110.0" layoutY="92.0" prefHeight="25.0" prefWidth="214.0" style="-fx-background-radius: 20px;" />
+                              <Label layoutX="33.0" layoutY="53.0" text="ISBN" textFill="#f2f2f2">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="33.0" layoutY="94.0" text="Author" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button id="button" layoutX="94.0" layoutY="203.0" mnemonicParsing="false" onAction="#addBookSaveButton" prefHeight="25.0" prefWidth="214.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="save" textFill="WHITE">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                              <TextField fx:id="addBookTitle" layoutX="110.0" layoutY="133.0" prefHeight="25.0" prefWidth="214.0" style="-fx-background-radius: 20px;" />
+                              <Label layoutX="33.0" layoutY="135.0" text="Title" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="errorLabelAddBook" layoutX="140.0" layoutY="175.0" prefHeight="20.0" prefWidth="118.0" textAlignment="CENTER" textFill="#00b2f5">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="addCdPage" layoutX="-6.0" layoutY="4.0" prefHeight="558.0" prefWidth="888.0" visible="false">
+                     <children>
+                        <AnchorPane id="1e" layoutX="208.0" layoutY="122.0" prefHeight="224.0" prefWidth="397.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 40px;" stylesheets="@css/ooo.css">
+                           <children>
+                              <Label layoutX="167.0" layoutY="14.0" text="ADD CD" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial Narrow" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Button id="button" layoutX="61.0" layoutY="162.0" mnemonicParsing="false" onAction="#addCdSaveButton" prefHeight="27.0" prefWidth="276.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="save" textFill="WHITE">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                              <TextField fx:id="addCdTitle" layoutX="140.0" layoutY="80.0" prefHeight="25.0" prefWidth="214.0" style="-fx-background-radius: 20px;" />
+                              <Label layoutX="75.0" layoutY="83.0" text="Title" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="errorLabelAddCd" layoutX="140.0" layoutY="131.0" prefHeight="20.0" prefWidth="118.0" textAlignment="CENTER" textFill="#00b2f5">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
                     </children>
                 </AnchorPane>
             </center>

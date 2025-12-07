@@ -3,6 +3,9 @@ package Service.Email;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import lombok.NonNull;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Properties;
 
@@ -11,7 +14,7 @@ public class EmailService
     private final String username;
     private final String password;
 
-    public EmailService(String username, String password)
+    public EmailService( String username, String password)
     {
         this.username = username;
         this.password = password;

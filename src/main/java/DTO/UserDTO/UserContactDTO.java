@@ -1,9 +1,11 @@
 package DTO.UserDTO;
 
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
+@Component
 public class UserContactDTO
 {
     private int id;

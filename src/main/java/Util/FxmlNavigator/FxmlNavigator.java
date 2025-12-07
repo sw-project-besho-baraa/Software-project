@@ -1,6 +1,7 @@
 package Util.FxmlNavigator;
 
 import Util.FxmlMapper.RoleToFxmlMapper;
+import Util.SpringFXMLLoader;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,11 +23,7 @@ public class FxmlNavigator {
 
     public void navigateTo(Stage stage, String fxmlPath, String title) {
         try {
-            URL fxmlResource = getClass().getResource(fxmlPath);
-            if (fxmlResource == null) {
-                throw new IllegalArgumentException("FXML file not found: " + fxmlPath);
-            }
-            FXMLLoader loader = new FXMLLoader(fxmlResource);
+            FXMLLoader loader = SpringFXMLLoader.load(fxmlPath);
             Parent root = loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -34,11 +31,6 @@ public class FxmlNavigator {
             stage.show();
         } catch (IOException e) {
             System.err.println("Error loading FXML file: " + fxmlPath);
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
-        } catch (Exception e) {
-            System.err.println("Unexpected error during navigation: " + fxmlPath);
             e.printStackTrace();
         }
     }

@@ -84,6 +84,9 @@ public class UserController {
     @FXML
     private Label userNameTestField;
 
+
+
+
     void setAllVisibleFalse(){
         homePage.setVisible(false);
         searchPage.setVisible(false);

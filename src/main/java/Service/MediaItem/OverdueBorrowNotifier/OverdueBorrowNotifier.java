@@ -4,6 +4,7 @@ import DTO.UserDTO.UserContactDTO;
 import Service.MediaItem.OverdueBorrowDetection.OverdueItemDetector;
 import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItem;
 import Service.NotificationSender.INotificationSender;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
