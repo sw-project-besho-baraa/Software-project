@@ -1,12 +1,13 @@
 package Presentation;
 
 import DTO.UserDTO.UserCredentialsDTO;
+import Entity.User;
 import Service.LoginService;
+import Session.ISessionManager;
+import Util.FxmlMapper.RoleToFxmlMapper;
+import Util.FxmlNavigator.FxmlNavigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -31,53 +32,33 @@ public class LoginController {
     private Label wrongUsernameOrPassword;
 
     private final LoginService loginService;
+    private final RoleToFxmlMapper roleToFxmlMapper;
+    private final ISessionManager sessionManager;
+    private final FxmlNavigator fxmlNavigator;
 
     @Autowired
-    public LoginController(LoginService loginService) {
+    public LoginController(LoginService loginService, RoleToFxmlMapper roleToFxmlMapper, ISessionManager sessionManager, FxmlNavigator fxmlNavigator) {
         this.loginService = loginService;
+        this.roleToFxmlMapper = roleToFxmlMapper;
+        this.sessionManager = sessionManager;
+        this.fxmlNavigator = fxmlNavigator;
     }
 
     @FXML
     void onSignIn(ActionEvent event) {
-        String email = emailTextField.getText() != null ? emailTextField.getText().trim() : "";
-        String password = passwordTextField.getText() != null ? passwordTextField.getText() : "";
-
-        if (email.isEmpty() || password.isEmpty()) {
-            showError("Please enter both email and password.");
-            return;
-        }
-
-        UserCredentialsDTO credentials = new UserCredentialsDTO(email, password);
-
-        boolean success = loginService.login(credentials);
-
-        if (!success) {
-            showError("Wrong email or password.");
-            return;
-        }
-
-        openUserScreen();
-    }
-
-    private void showError(String message) {
-        if (wrongUsernameOrPassword != null) {
-            wrongUsernameOrPassword.setText(message);
-            wrongUsernameOrPassword.setVisible(true);
-        }
-    }
-
-    private void openUserScreen() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/User.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) signInButton.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("User Dashboard");
-            stage.centerOnScreen();
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            showError("Error loading user screen.");
+        System.out.println("Sign In button clicked");
+        String email = emailTextField.getText();
+        String password = passwordTextField.getText();
+        UserCredentialsDTO userDTO = new UserCredentialsDTO(email, password);
+        boolean loginSuccessful = loginService.login(userDTO);
+        if (loginSuccessful) {
+            wrongUsernameOrPassword.setText("Login successful!");
+            User currentUser = sessionManager.getUser();
+            System.out.println(currentUser.getUserRole());
+            String fxmlPath = roleToFxmlMapper.getFxmlFileForRole(currentUser.getUserRole()).orElse("/fxml/Login.fxml");
+            fxmlNavigator.navigateTo((Stage) signInButton.getScene().getWindow(), fxmlPath, "Main Application");
+        } else {
+            wrongUsernameOrPassword.setText("Wrong username or password.");
         }
     }
 }

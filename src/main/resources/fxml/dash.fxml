@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="defualt.databaseproject.dashboard">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Presentation.UserController">
     <children>
         <AnchorPane prefHeight="200.0" prefWidth="200.0">
             <children>
@@ -25,12 +25,14 @@
                             <children>
                                 <AnchorPane layoutX="154.0" layoutY="-77.0" prefHeight="35.0" prefWidth="1100.0" style="-fx-background-color: #1f2a42;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
-                                        <ImageView fitHeight="46.0" fitWidth="1105.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 35px; -fx-fit-width: 1100px;">
+                                        <!-- Banner image -->
+                                        <ImageView fitHeight="46.0" fitWidth="1105.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@img/image.png" />
                                             </image>
                                         </ImageView>
-                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="21.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
+                                        <!-- Small logo -->
+                                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="21.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@img/group.png" />
                                             </image>
@@ -50,7 +52,8 @@
                             <children>
                                 <AnchorPane id="1e" layoutX="14.0" layoutY="78.0" prefHeight="555.0" prefWidth="211.0" style="-fx-background-color: #1f2a42;" stylesheets="@css/ooo.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
-                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="75.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 64px; -fx-fit-width: 64px;">
+                                        <!-- User avatar -->
+                                        <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="75.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@img/user (11).png" />
                                             </image>
@@ -81,17 +84,18 @@
                                                 <Font name="Arial Bold" size="10.0" />
                                             </font>
                                         </Button>
-                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="27.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
+                                        <!-- Sidebar icons -->
+                                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="27.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@img/home.png" />
                                             </image>
                                         </ImageView>
-                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="27.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
+                                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="27.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@img/add.png" />
                                             </image>
                                         </ImageView>
-                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="27.0" layoutY="342.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
+                                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="27.0" layoutY="342.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@img/target.png" />
                                             </image>
@@ -101,7 +105,7 @@
                                                 <Font name="Arial Bold" size="10.0" />
                                             </font>
                                         </Button>
-                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="27.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
+                                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="27.0" layoutY="522.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@img/logout.png" />
                                             </image>
@@ -130,7 +134,7 @@
                                                                 <Font size="36.0" />
                                                             </font>
                                                         </Label>
-                                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="24.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 32px;">
+                                                        <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="24.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
                                                             <image>
                                                                 <Image url="@img/clipboard.png" />
                                                             </image>
@@ -149,7 +153,7 @@
                                                                 <Font size="36.0" />
                                                             </font>
                                                         </Label>
-                                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="27.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 32px;">
+                                                        <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="27.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
                                                             <image>
                                                                 <Image url="@img/box.png" />
                                                             </image>
@@ -172,7 +176,7 @@
                                                                 <URL value="@css/ooo.css" />
                                                             </stylesheets>
                                                         </Label>
-                                                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="27.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 32px;">
+                                                        <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="27.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                                                             <image>
                                                                 <Image url="@img/customer (1).png" />
                                                             </image>
@@ -181,16 +185,16 @@
                                                 </AnchorPane>
                                             </children>
                                         </AnchorPane>
-                              <Label id="text" alignment="CENTER" contentDisplay="CENTER" layoutX="278.0" layoutY="25.0" prefHeight="23.0" prefWidth="309.0" stylesheets="@css/ooo.css" text="Libray Mangement System" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <ImageView fitHeight="265.0" fitWidth="232.0" layoutX="329.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@img/book.png" />
-                                 </image>
-                              </ImageView>
+                                        <Label id="text" alignment="CENTER" contentDisplay="CENTER" layoutX="278.0" layoutY="25.0" prefHeight="23.0" prefWidth="309.0" stylesheets="@css/ooo.css" text="Libray Mangement System" textFill="WHITE">
+                                            <font>
+                                                <Font name="Arial Bold" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <ImageView fitHeight="265.0" fitWidth="232.0" layoutX="329.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@img/book.png" />
+                                            </image>
+                                        </ImageView>
                                     </children>
                                 </AnchorPane>
                                 <AnchorPane fx:id="searchPage" layoutX="345.0" layoutY="157.0" prefHeight="551.0" prefWidth="889.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -205,12 +209,12 @@
                                                 </TableView>
                                                 <TableView fx:id="itemTable" layoutX="32.0" layoutY="168.0" prefHeight="194.0" prefWidth="738.0" style="-fx-background-size: 4500;">
                                                     <columns>
-                                          <TableColumn fx:id="selectCustomerColumn" prefWidth="74.0" text="ISBN" />
+                                                        <TableColumn fx:id="selectCustomerColumn" prefWidth="74.0" text="ISBN" />
                                                         <TableColumn fx:id="customerIdColumn" minWidth="7.0" prefWidth="77.0" text="Title" />
-                                          <TableColumn fx:id="customerFirstNameColumn" prefWidth="122.0" text="Author" />
+                                                        <TableColumn fx:id="customerFirstNameColumn" prefWidth="122.0" text="Author" />
                                                         <TableColumn fx:id="customerCityColumn" minWidth="0.0" prefWidth="85.0" text="Type" />
-                                          <TableColumn fx:id="customerGenderColumn" prefWidth="180.0" text="##" />
-                                          <TableColumn fx:id="customerBirthDateColumn" prefWidth="199.0" text="Is Borrowed" />
+                                                        <TableColumn fx:id="customerGenderColumn" prefWidth="180.0" text="##" />
+                                                        <TableColumn fx:id="customerBirthDateColumn" prefWidth="199.0" text="Is Borrowed" />
                                                     </columns>
                                                 </TableView>
                                                 <Label id="text" layoutX="284.0" layoutY="37.0" prefHeight="39.0" prefWidth="194.0" stylesheets="@css/ooo.css" text="        Our Items " textAlignment="CENTER" textFill="WHITE">
@@ -218,18 +222,18 @@
                                                         <Font name="Franklin Gothic Medium Cond" size="32.0" />
                                                     </font>
                                                 </Label>
-                                    <ComboBox id="e3" fx:id="searchList" layoutX="50.0" layoutY="121.0" prefHeight="25.0" prefWidth="225.0" promptText="Choose your search method" stylesheets="@css/ooo.css" />
-                                    <TextField id="e3" fx:id="searchBar" layoutX="305.0" layoutY="121.0" prefHeight="25.0" prefWidth="291.0" promptText="Type what you are looking for" style="-fx-background-radius: 15px;" stylesheets="@css/ooo.css" />
-                                    <Button id="button" layoutX="608.0" layoutY="122.0" mnemonicParsing="false" onAction="#searchByButton" prefHeight="28.0" prefWidth="67.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Search" textFill="WHITE">
-                                       <font>
-                                          <Font name="Arial Bold" size="10.0" />
-                                       </font>
-                                    </Button>
-                                    <Button id="button" layoutX="689.0" layoutY="122.0" mnemonicParsing="false" onAction="#viewAllButton" prefHeight="29.0" prefWidth="67.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="View All" textFill="WHITE">
-                                       <font>
-                                          <Font name="Arial Bold" size="10.0" />
-                                       </font>
-                                    </Button>
+                                                <ComboBox id="e3" fx:id="searchList" layoutX="50.0" layoutY="121.0" prefHeight="25.0" prefWidth="225.0" promptText="Choose your search method" stylesheets="@css/ooo.css" />
+                                                <TextField id="e3" fx:id="searchBar" layoutX="305.0" layoutY="121.0" prefHeight="25.0" prefWidth="291.0" promptText="Type what you are looking for" style="-fx-background-radius: 15px;" stylesheets="@css/ooo.css" />
+                                                <Button id="button" layoutX="608.0" layoutY="122.0" mnemonicParsing="false" onAction="#searchByButton" prefHeight="28.0" prefWidth="67.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Search" textFill="WHITE">
+                                                    <font>
+                                                        <Font name="Arial Bold" size="10.0" />
+                                                    </font>
+                                                </Button>
+                                                <Button id="button" layoutX="689.0" layoutY="122.0" mnemonicParsing="false" onAction="#viewAllButton" prefHeight="29.0" prefWidth="67.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="View All" textFill="WHITE">
+                                                    <font>
+                                                        <Font name="Arial Bold" size="10.0" />
+                                                    </font>
+                                                </Button>
                                             </children>
                                         </AnchorPane>
                                         <AnchorPane id="2e" layoutX="44.0" layoutY="453.0" prefHeight="65.0" prefWidth="802.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 30px;" stylesheets="@css/ooo.css">
@@ -244,11 +248,11 @@
                                                         <Font name="Arial Bold" size="10.0" />
                                                     </font>
                                                 </Button>
-                                    <Button id="button" layoutX="558.0" layoutY="18.0" mnemonicParsing="false" onAction="#returnItemButton" prefHeight="30.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Return Item" textFill="WHITE">
-                                       <font>
-                                          <Font name="Arial Bold" size="10.0" />
-                                       </font>
-                                    </Button>
+                                                <Button id="button" layoutX="558.0" layoutY="18.0" mnemonicParsing="false" onAction="#returnItemButton" prefHeight="30.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Return Item" textFill="WHITE">
+                                                    <font>
+                                                        <Font name="Arial Bold" size="10.0" />
+                                                    </font>
+                                                </Button>
                                             </children>
                                         </AnchorPane>
                                     </children>
@@ -287,19 +291,19 @@
                                                         <Font name="Arial Bold" size="10.0" />
                                                     </font>
                                                 </Button>
-                                    <TextField id="e3" fx:id="payValueTextField" layoutX="179.0" layoutY="9.0" prefHeight="19.0" prefWidth="152.0" stylesheets="@css/ooo.css" />
+                                                <TextField id="e3" fx:id="payValueTextField" layoutX="179.0" layoutY="9.0" prefHeight="19.0" prefWidth="152.0" stylesheets="@css/ooo.css" />
                                             </children>
                                         </AnchorPane>
-                                          <Button id="button" alignment="CENTER" layoutX="386.0" layoutY="424.0" mnemonicParsing="false" onAction="#PrintDetails" prefHeight="30.0" prefWidth="117.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="    Print Details" textAlignment="RIGHT" textFill="WHITE">
-                                              <font>
-                                                  <Font name="Arial Bold" size="10.0" />
-                                              </font>
-                                          </Button>
-                                          <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="395.0" layoutY="431.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
-                                              <image>
-                                                  <Image url="@img/printing.png" />
-                                              </image>
-                                          </ImageView>
+                                        <Button id="button" alignment="CENTER" layoutX="386.0" layoutY="424.0" mnemonicParsing="false" onAction="#printDetails" prefHeight="30.0" prefWidth="117.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="    Print Details" textAlignment="RIGHT" textFill="WHITE">
+                                            <font>
+                                                <Font name="Arial Bold" size="10.0" />
+                                            </font>
+                                        </Button>
+                                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="395.0" layoutY="431.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@img/printing.png" />
+                                            </image>
+                                        </ImageView>
                                     </children>
                                 </AnchorPane>
                             </children>

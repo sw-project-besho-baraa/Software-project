@@ -1,8 +1,10 @@
 package Util.HashingPassword;
 
 import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.stereotype.Component;
 
 
+@Component
 public class BCryptHashingPassword implements IHashingPassword
 {
     @Override

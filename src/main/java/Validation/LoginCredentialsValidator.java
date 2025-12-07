@@ -3,7 +3,9 @@ package Validation;
 import DTO.UserDTO.UserCredentialsDTO;
 import Entity.User;
 import Util.HashingPassword.IHashingPassword;
+import org.springframework.stereotype.Component;
 
+@Component
 public class LoginCredentialsValidator
 {
     private final IHashingPassword hashingPassword;

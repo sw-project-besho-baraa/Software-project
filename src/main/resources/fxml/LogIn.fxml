@@ -12,45 +12,86 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="348.0" prefWidth="599.0" style="-fx-background-color: #11192c;" stylesheets="@css/ooo.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Presentation.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="348.0" prefWidth="599.0"
+            style="-fx-background-color: #11192c;"
+            stylesheets="@css/ooo.css"
+            xmlns="http://javafx.com/javafx/22"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Presentation.LoginController">
+
     <children>
-        <ImageView fitHeight="309.0" fitWidth="1281.0" layoutX="-682.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 100%;">
+        <ImageView fitHeight="309.0" fitWidth="1281.0"
+                   layoutX="-682.0" layoutY="-2.0"
+                   pickOnBounds="true" preserveRatio="true"
+                   style="-fx-opacity: 100%;">
             <image>
                 <Image url="@img/ddd.png" />
             </image>
         </ImageView>
-        <Pane id="ee" layoutX="172.0" layoutY="28.0" prefHeight="257.0" prefWidth="255.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 40PX; -fx-opacity: 100%;" stylesheets="@css/ooo.css">
+
+        <Pane id="ee"
+              layoutX="172.0" layoutY="28.0"
+              prefHeight="257.0" prefWidth="255.0"
+              style="-fx-background-color: #1f2a42; -fx-background-radius: 40PX; -fx-opacity: 100%;"
+              stylesheets="@css/ooo.css">
             <children>
                 <Label layoutX="95.0" layoutY="269.0" textFill="WHITE">
                     <font>
                         <Font name="Arial Narrow Italic" size="14.0" />
                     </font>
                 </Label>
-                <Label contentDisplay="TOP" layoutX="69.0" layoutY="73.0" textFill="WHITE">
+
+                <Label contentDisplay="TOP"
+                       layoutX="69.0" layoutY="73.0"
+                       textFill="WHITE">
                     <font>
                         <Font name="Berlin Sans FB" size="22.0" />
                     </font>
                 </Label>
-                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="108.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-width: 32px;">
+
+                <ImageView fitHeight="32.0" fitWidth="32.0"
+                           layoutX="108.0" layoutY="34.0"
+                           pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@img/user-interface (2).png" />
+                        <Image url="@img/useruser.png" />
                     </image>
                 </ImageView>
-                <TextField fx:id="emailTextField" layoutX="53.0" layoutY="86.0" promptText="Email" style="-fx-background-radius: 15; -fx-border-color: #4a81fd; -fx-border-radius: 15;">
+
+                <TextField fx:id="emailTextField"
+                           layoutX="53.0" layoutY="86.0"
+                           promptText="Email"
+                           style="-fx-background-radius: 15; -fx-border-color: #4a81fd; -fx-border-radius: 15;">
                     <opaqueInsets>
                         <Insets />
                     </opaqueInsets>
                 </TextField>
-                <PasswordField fx:id="passwordTextField" layoutX="53.0" layoutY="122.0" promptText="Passowrd" style="-fx-background-radius: 15px; -fx-border-color: #4a81fd; -fx-border-radius: 15;" />
-                <Button id="button" fx:id="signInButton" layoutX="95.0" layoutY="166.0" mnemonicParsing="false" onAction="#onSignIn" prefHeight="23.0" prefWidth="59.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Sign in" textFill="WHITE">
+
+                <PasswordField fx:id="passwordTextField"
+                               layoutX="53.0" layoutY="122.0"
+                               promptText="Password"
+                               style="-fx-background-radius: 15px; -fx-border-color: #4a81fd; -fx-border-radius: 15;" />
+
+                <Button id="button" fx:id="signInButton"
+                        layoutX="95.0" layoutY="166.0"
+                        mnemonicParsing="false"
+                        onAction="#onSignIn"
+                        prefHeight="23.0" prefWidth="59.0"
+                        style="-fx-background-radius: 20px;"
+                        stylesheets="@css/ooo.css"
+                        text="Sign in" textFill="WHITE">
                     <font>
                         <Font name="Arial Bold" size="10.0" />
                     </font>
                 </Button>
-                <Label fx:id="wrongUsernameOrPassword" layoutX="16.0" layoutY="200.0" text="" textFill="RED" />
+
+                <Label fx:id="wrongUsernameOrPassword"
+                       layoutX="16.0" layoutY="200.0"
+                       text="" textFill="RED" />
             </children>
         </Pane>
     </children>
+
     <cursor>
         <Cursor fx:constant="OPEN_HAND" />
     </cursor>

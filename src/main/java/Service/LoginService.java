@@ -4,6 +4,7 @@ import DTO.UserDTO.UserCredentialsDTO;
 import Repository.UserRepository;
 import Session.ISessionManager;
 import Validation.LoginCredentialsValidator;
+import org.springframework.stereotype.Service;
 
 /**
  * Service responsible for authenticating users and establishing a session.
@@ -11,7 +12,7 @@ import Validation.LoginCredentialsValidator;
  * It validates provided credentials, checks the user repository, and delegates
  * session establishment to an {@link ISessionManager}.
  */
-
+@Service
 public class LoginService
 {
 

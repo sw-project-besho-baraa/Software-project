@@ -15,13 +15,13 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="defualt.databaseproject.AdminSiteController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Presentation.AdminController">
     <children>
         <BorderPane prefHeight="600.0" prefWidth="1100.0">
             <left>
                 <AnchorPane id="1e" prefHeight="538.0" prefWidth="212.0" style="-fx-background-color: #1f2a42;" stylesheets="@css/ooo.css" BorderPane.alignment="CENTER">
                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="74.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-width: 64px;">
+                        <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="74.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/user (11).png" />
                             </image>
@@ -31,7 +31,7 @@
                                 <Font name="Arial Bold" size="10.0" />
                             </font>
                         </Button>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="25.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
+                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="25.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/home.png" />
                             </image>
@@ -46,12 +46,12 @@
                                 <Font name="Arial Bold" size="10.0" />
                             </font>
                         </Button>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="24.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
+                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="24.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/add.png" />
                             </image>
                         </ImageView>
-                        <ImageView fitHeight="15.0" fitWidth="16.0" layoutX="24.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
+                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="24.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/target.png" />
                             </image>
@@ -61,7 +61,7 @@
                                 <Font name="Arial Bold" size="10.0" />
                             </font>
                         </Button>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="24.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
+                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="24.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/logout.png" />
                             </image>
@@ -87,38 +87,38 @@
                                 <Font name="Arial Bold" size="10.0" />
                             </font>
                         </Button>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="24.0" layoutY="299.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
+                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="24.0" layoutY="299.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/add.png" />
                             </image>
                         </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="22.0" layoutY="328.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
-                     <image>
-                        <Image url="@img/add.png" />
-                     </image>
-                  </ImageView>
-                  <Button id="button" layoutX="14.0" layoutY="264.0" mnemonicParsing="false" onAction="#addBookPageButton" prefHeight="23.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Add Book" textFill="WHITE">
-                     <font>
-                        <Font name="Arial Bold" size="10.0" />
-                     </font>
-                  </Button>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="24.0" layoutY="268.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
-                     <image>
-                        <Image url="@img/add.png" />
-                     </image>
-                  </ImageView>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="22.0" layoutY="328.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/add.png" />
+                            </image>
+                        </ImageView>
+                        <Button id="button" layoutX="14.0" layoutY="264.0" mnemonicParsing="false" onAction="#addBookPageButton" prefHeight="23.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Add Book" textFill="WHITE">
+                            <font>
+                                <Font name="Arial Bold" size="10.0" />
+                            </font>
+                        </Button>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="24.0" layoutY="268.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/add.png" />
+                            </image>
+                        </ImageView>
                     </children>
                 </AnchorPane>
             </left>
             <top>
                 <AnchorPane prefHeight="35.0" prefWidth="1100.0" style="-fx-background-color: #1f2a42;" BorderPane.alignment="CENTER">
                     <children>
-                        <ImageView fitHeight="46.0" fitWidth="1105.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 35px; -fx-fit-width: 1100px;">
+                        <ImageView fitHeight="46.0" fitWidth="1105.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/image.png" />
                             </image>
                         </ImageView>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="21.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
+                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="21.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@img/group.png" />
                             </image>
@@ -134,7 +134,7 @@
             <center>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #11192c;" BorderPane.alignment="CENTER">
                     <children>
-                        <AnchorPane fx:id="AdminMainPage" layoutX="311.0" layoutY="163.0" prefHeight="558.0" prefWidth="888.0" style="-fx-background-color: #11192c;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="adminMainPage" layoutX="311.0" layoutY="163.0" prefHeight="558.0" prefWidth="888.0" style="-fx-background-color: #11192c;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <AnchorPane id="ee" layoutX="14.0" layoutY="291.0" prefHeight="194.0" prefWidth="837.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 30px;" stylesheets="@css/ooo.css">
                                     <children>
@@ -150,7 +150,7 @@
                                                         <Font size="36.0" />
                                                     </font>
                                                 </Label>
-                                                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="21.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 32px;">
+                                                <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="21.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
                                                     <image>
                                                         <Image url="@img/clipboard.png" />
                                                     </image>
@@ -169,7 +169,7 @@
                                                         <Font size="36.0" />
                                                     </font>
                                                 </Label>
-                                                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="17.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 32px;">
+                                                <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="17.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
                                                     <image>
                                                         <Image url="@img/box.png" />
                                                     </image>
@@ -192,7 +192,7 @@
                                                         <URL value="@css/ooo.css" />
                                                     </stylesheets>
                                                 </Label>
-                                                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="27.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 32px;">
+                                                <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="27.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                                                     <image>
                                                         <Image url="@img/customer (1).png" />
                                                     </image>
@@ -201,22 +201,22 @@
                                         </AnchorPane>
                                     </children>
                                 </AnchorPane>
-                        <ImageView fitHeight="265.0" fitWidth="232.0" layoutX="310.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@img/book.png" />
-                           </image>
-                        </ImageView>
-                        <Label id="text" alignment="CENTER" contentDisplay="CENTER" layoutX="272.0" layoutY="48.0" prefHeight="23.0" prefWidth="309.0" stylesheets="@css/ooo.css" text="Libray Mangement System" textFill="WHITE">
-                           <font>
-                              <Font name="Arial Bold" size="20.0" />
-                           </font>
-                        </Label>
+                                <ImageView fitHeight="265.0" fitWidth="232.0" layoutX="310.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@img/book.png" />
+                                    </image>
+                                </ImageView>
+                                <Label id="text" alignment="CENTER" contentDisplay="CENTER" layoutX="272.0" layoutY="48.0" prefHeight="23.0" prefWidth="309.0" stylesheets="@css/ooo.css" text="Libray Mangement System" textFill="WHITE">
+                                    <font>
+                                        <Font name="Arial Bold" size="20.0" />
+                                    </font>
+                                </Label>
                             </children>
                             <cursor>
                                 <Cursor fx:constant="MOVE" />
                             </cursor>
                         </AnchorPane>
-                        <AnchorPane fx:id="AddUserPage" layoutX="334.0" layoutY="157.0" prefHeight="558.0" prefWidth="888.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="addUserPage" layoutX="334.0" layoutY="157.0" prefHeight="558.0" prefWidth="888.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <AnchorPane id="1e" layoutX="208.0" layoutY="122.0" prefHeight="246.0" prefWidth="397.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 40px;" stylesheets="@css/ooo.css">
                                     <children>
@@ -252,7 +252,7 @@
                                 </AnchorPane>
                             </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="ViewItemPage" layoutX="317.0" layoutY="154.0" prefHeight="558.0" prefWidth="888.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="viewItemPage" layoutX="317.0" layoutY="154.0" prefHeight="558.0" prefWidth="888.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <AnchorPane id="2e" layoutX="43.0" layoutY="31.0" prefHeight="455.0" prefWidth="802.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 30;" stylesheets="@css/ooo.css">
                                     <children>
@@ -264,10 +264,10 @@
                                         </TableView>
                                         <TableView fx:id="itemTable" layoutX="26.0" layoutY="151.0" maxHeight="1.7976931348623157E308" prefHeight="276.0" prefWidth="738.0" style="-fx-background-size: 4500;">
                                             <columns>
-                                    <TableColumn fx:id="selectEmployeeComlumn" prefWidth="141.0" text="ISBN" />
+                                                <TableColumn fx:id="selectEmployeeComlumn" prefWidth="141.0" text="ISBN" />
                                                 <TableColumn fx:id="employeeIdColumn" prefWidth="184.0" text="Title" />
                                                 <TableColumn fx:id="employeeFirstNameColumn" prefWidth="270.0" text="Author" />
-                                    <TableColumn fx:id="employeeFirstNameColumn1" prefWidth="142.0" text="Is Borrow" />
+                                                <TableColumn fx:id="employeeFirstNameColumn1" prefWidth="142.0" text="Is Borrow" />
                                             </columns>
                                         </TableView>
                                         <Label layoutX="338.0" layoutY="45.0" prefHeight="23.0" prefWidth="156.0" text="VIEW ITEMS" textFill="WHITE">
@@ -277,12 +277,12 @@
                                         </Label>
                                         <ComboBox id="e3" fx:id="searchList" layoutX="26.0" layoutY="110.0" onAction="#itemSearchMethod" prefHeight="25.0" prefWidth="225.0" promptText="Choose your search method" stylesheets="@css/ooo.css" />
                                         <TextField fx:id="itemSearch" layoutX="270.0" layoutY="110.0" prefHeight="25.0" prefWidth="291.0" promptText="Type what you are looking for" style="-fx-background-radius: 15px;" />
-                                        <Button id="button" layoutX="576.0" layoutY="112.0" mnemonicParsing="false" onAction="#SearchButton" prefHeight="23.0" prefWidth="67.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Search" textFill="WHITE">
+                                        <Button id="button" layoutX="576.0" layoutY="112.0" mnemonicParsing="false" onAction="#searchButton" prefHeight="23.0" prefWidth="67.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Search" textFill="WHITE">
                                             <font>
                                                 <Font name="Arial Bold" size="10.0" />
                                             </font>
                                         </Button>
-                                        <ImageView fitHeight="10.0" fitWidth="12.0" layoutX="542.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" style="-fx-fit-height: 16px;">
+                                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="542.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@img/magnifying-glass (1).png" />
                                             </image>
@@ -296,30 +296,30 @@
                                 </AnchorPane>
                             </children>
                         </AnchorPane>
-                  <AnchorPane fx:id="SendEmailPage" layoutX="336.0" layoutY="219.0" prefHeight="558.0" prefWidth="888.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <AnchorPane id="1e" fx:id="AddProduct" layoutX="237.0" layoutY="115.0" prefHeight="270.0" prefWidth="375.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 40px;" stylesheets="@css/ooo.css">
-                           <children>
-                              <Label layoutX="138.0" layoutY="14.0" text="SEND EMAIL" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Narrow" size="20.0" />
-                                 </font>
-                              </Label>
-                              <TextField fx:id="emailMessage" layoutX="33.0" layoutY="97.0" prefHeight="112.0" prefWidth="310.0" style="-fx-background-radius: 20px;" />
-                              <Button id="button" layoutX="64.0" layoutY="229.0" mnemonicParsing="false" onAction="#sendEmail" prefHeight="27.0" prefWidth="248.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Send" textFill="WHITE">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </Button>
-                              <Label layoutX="152.0" layoutY="66.0" text="Message " textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Narrow" size="20.0" />
-                                 </font>
-                              </Label>
-                           </children>
+                        <AnchorPane fx:id="SendEmailPage" layoutX="336.0" layoutY="219.0" prefHeight="558.0" prefWidth="888.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <children>
+                                <AnchorPane id="1e" fx:id="AddProduct" layoutX="237.0" layoutY="115.0" prefHeight="270.0" prefWidth="375.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 40px;" stylesheets="@css/ooo.css">
+                                    <children>
+                                        <Label layoutX="138.0" layoutY="14.0" text="SEND EMAIL" textFill="WHITE">
+                                            <font>
+                                                <Font name="Arial Narrow" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField fx:id="emailMessage" layoutX="33.0" layoutY="97.0" prefHeight="112.0" prefWidth="310.0" style="-fx-background-radius: 20px;" />
+                                        <Button id="button" layoutX="64.0" layoutY="229.0" mnemonicParsing="false" onAction="#sendEmail" prefHeight="27.0" prefWidth="248.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Send" textFill="WHITE">
+                                            <font>
+                                                <Font size="13.0" />
+                                            </font>
+                                        </Button>
+                                        <Label layoutX="152.0" layoutY="66.0" text="Message " textFill="WHITE">
+                                            <font>
+                                                <Font name="Arial Narrow" size="20.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </AnchorPane>
+                            </children>
                         </AnchorPane>
-                     </children>
-                  </AnchorPane>
                     </children>
                 </AnchorPane>
             </center>
