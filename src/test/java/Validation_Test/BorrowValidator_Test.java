@@ -1,6 +1,6 @@
 package Validation_Test;
 
-import Entity.Item;
+import Entity.MediaItem;
 import Entity.User;
 import Validation.BorrowValidator;
 import Validation.OverdueBorrowValidator.IOverdueBorrowValidation;
@@ -25,7 +25,7 @@ public class BorrowValidator_Test
     void validate_ItemAlreadyBorrowed_ThrowsException() throws Exception
     {
         User user = mock(User.class);
-        Item item = mock(Item.class);
+        MediaItem item = mock(MediaItem.class);
         when(item.isBorrowed()).thenReturn(true);
         assertThrows(IllegalArgumentException.class,() -> borrowValidator.validate(user,item));
     }
@@ -34,7 +34,7 @@ public class BorrowValidator_Test
     void validate_ItemNotBorrowed_DoseNotThrows() throws Exception
     {
         User user = mock(User.class);
-        Item item = mock(Item.class);
+        MediaItem item = mock(MediaItem.class);
         when(item.isBorrowed()).thenReturn(false);
         assertDoesNotThrow(() -> borrowValidator.validate(user,item));
     }

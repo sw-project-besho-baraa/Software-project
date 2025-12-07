@@ -2,6 +2,7 @@ package Service;
 
 import Session.ISessionManager;
 import lombok.Getter;
+import org.springframework.stereotype.Service;
 
 /**
  * Service responsible for terminating the current user session.
@@ -9,7 +10,9 @@ import lombok.Getter;
  * This service delegates the logout operation to the configured
  * {@link ISessionManager}.
  */
+
 @Getter
+@Service
 public class LogoutService
 {
 

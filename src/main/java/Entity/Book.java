@@ -1,4 +1,5 @@
 package Entity;
+
 import lombok.*;
 import Enum.MediaItemType;
 import jakarta.persistence.*;
@@ -16,7 +17,8 @@ public class Book extends MediaItem
     private String author;
 
     @Override
-    public MediaItemType getMediaType() {
+    public MediaItemType getMediaType()
+    {
         return MediaItemType.Book;
     }
 

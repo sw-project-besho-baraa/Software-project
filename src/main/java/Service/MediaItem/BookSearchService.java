@@ -1,10 +1,9 @@
-package Service.Book;
+package Service.MediaItem;
 
-import Repository.CdRepository;
 import lombok.NonNull;
 import Entity.Book;
 import Repository.BookRepository;
-import Service.Book.SearchStrategy.IBookSearchStrategy;
+import Service.MediaItem.SearchStrategy.IBookSearchStrategy;
 
 import java.util.List;
 

@@ -2,6 +2,7 @@ package Session;
 
 import Entity.User;
 import lombok.NonNull;
+import org.springframework.stereotype.Component;
 
 /**
  * Simple in-memory session manager that stores the current user in a local
@@ -9,7 +10,9 @@ import lombok.NonNull;
  * <p>
  * Suitable for desktop applications, CLI tools, or simple prototypes. Not
  * suitable for multi-user server environments.
+ *
  */
+@Component
 public class LocalSessionManager implements ISessionManager
 {
     private User user;

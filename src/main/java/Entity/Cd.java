@@ -1,4 +1,5 @@
 package Entity;
+
 import Enum.MediaItemType;
 import jakarta.persistence.Entity;
 import lombok.NoArgsConstructor;
@@ -8,13 +9,15 @@ import lombok.NoArgsConstructor;
 public class Cd extends MediaItem
 {
 
-    public Cd(String title){
+    public Cd(String title)
+    {
         super(title);
 
     }
 
     @Override
-    public MediaItemType getMediaType() {
+    public MediaItemType getMediaType()
+    {
         return MediaItemType.Cd;
     }
 

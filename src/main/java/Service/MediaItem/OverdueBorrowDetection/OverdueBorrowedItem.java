@@ -1,4 +1,4 @@
-package Service.Book.OverdueBorrowDetection;
+package Service.MediaItem.OverdueBorrowDetection;
 
 import Entity.MediaItem;
 

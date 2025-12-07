@@ -36,8 +36,7 @@ public class User
     @OneToMany(mappedBy = "borrower", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MediaItem> borrowedItems = new ArrayList<>();
 
-
-    public User( String name, String email, String hashedPassword)
+    public User(String name, String email, String hashedPassword)
     {
         this.name = name;
         this.email = email;
@@ -49,8 +48,10 @@ public class User
     {
         return ToStringBuilder.reflectionToString(this,ToStringStyle.MULTI_LINE_STYLE);
     }
+
     @PrePersist
-    protected void onCreate() {
+    protected void onCreate()
+    {
         creationDate = new Date();
     }
 }

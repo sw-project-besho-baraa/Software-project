@@ -20,8 +20,7 @@ public abstract class MediaItem
     private String title;
 
     @Column(name = "is_borrowed")
-    private boolean borrowed ;
-
+    private boolean borrowed;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -31,7 +30,9 @@ public abstract class MediaItem
 
     private Date dueDate;
 
-    public MediaItem() {}
+    public MediaItem()
+    {
+    }
 
     public MediaItem(String title)
     {
@@ -39,8 +40,10 @@ public abstract class MediaItem
     }
 
     public abstract MediaItemType getMediaType();
+
     @PrePersist
-    protected void onCreate() {
+    protected void onCreate()
+    {
         borrowedDate = new Date();
     }
 }
