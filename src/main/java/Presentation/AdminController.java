@@ -6,13 +6,16 @@ import Entity.MediaItem;
 import Repository.BookRepository;
 import Repository.CdRepository;
 import Repository.UserRepository;
+import Service.AdminBroadcastNotifierService.AdminBroadcastNotifier;
 import Service.BookService.AddBookService;
 import Service.BookService.AllBookService;
 import Service.BookService.BookCountService;
+import Service.BroadcastMessage.AdminBroadcastMessageData;
 import Service.CDService.AddCdService;
 import Service.CDService.AllCdService;
 import Service.CDService.CdCountService;
 import Service.LogoutService;
+import Service.MediaItem.OverdueBorrowNotifier.OverdueBorrowNotifier;
 import Service.UserService.AddUserService;
 import Service.UserService.UserCountService;
 import Session.ISessionManager;
@@ -59,9 +62,11 @@ public class AdminController {
 
     @FXML
     private Label adminNameDisplay;
+    @FXML
+    private Label errorMessagesForSendEmail;
 
     @FXML
-    private AnchorPane sendEmailPage;
+    private AnchorPane sendEmailMassagePage;
 
     @FXML
     private AnchorPane viewItemPage;
@@ -136,6 +141,8 @@ public class AdminController {
     private AddBookService addBookService;
     private AllBookService allBookService;
     private AllCdService allCdService;
+    private OverdueBorrowNotifier overdueBorrowNotifier;
+    private AdminBroadcastNotifier adminBroadcastNotifier;
     @Autowired
     public AdminController(LogoutService logoutService, FxmlNavigator fxmlNavigator,
                            BookCountService bookCountService, CdCountService cdCountService,
@@ -145,7 +152,9 @@ public class AdminController {
                            AddBookService addBookService,
                            AddCdService addCdService,
                             AllBookService allBookService,
-                            AllCdService allCdService
+                            AllCdService allCdService,
+                            OverdueBorrowNotifier overdueBorrowNotifier,
+                            AdminBroadcastNotifier adminBroadcastNotifier
     )
     {
         this.logoutService = logoutService;
@@ -159,6 +168,8 @@ public class AdminController {
         this.addCdService = addCdService;
         this.allBookService = allBookService;
         this.allCdService = allCdService;
+        this.overdueBorrowNotifier = overdueBorrowNotifier;
+        this.adminBroadcastNotifier = adminBroadcastNotifier;
 
 
     }
@@ -237,10 +248,9 @@ public class AdminController {
 
 
         void setAllVisibleFalse(){
-        addProduct.setVisible(false);
         addUserPage.setVisible(false);
         adminMainPage.setVisible(false);
-        sendEmailPage.setVisible(false);
+        sendEmailMassagePage.setVisible(false);
         viewItemPage.setVisible(false);
         addBookPage.setVisible(false);
         addCdPage.setVisible(false);
@@ -330,18 +340,26 @@ public class AdminController {
 
     @FXML
     void sendEmail(ActionEvent event) {
+        String message = emailMessage.getText();
+        System.out.println("Email message to be sent: " + message);
+        errorMessagesForSendEmail.setText("Broadcast email sent successfully!");
+        adminBroadcastNotifier.sendToAll(message);
+        emailMessage.clear();
+        System.out.println("Broadcast email sent.");
+
 
     }
 
     @FXML
-    void sendEmailPageButton(ActionEvent event) {
+    void sendEmailMassagePageButton(ActionEvent event) {
         setAllVisibleFalse();
-        sendEmailPage.setVisible(true);
+        sendEmailMassagePage.setVisible(true);
     }
 
     @FXML
     void sendOverDueButton(ActionEvent event) {
-
+        overdueBorrowNotifier.send();
+        System.out.println("Overdue notifications sent.");
     }
 
     @FXML

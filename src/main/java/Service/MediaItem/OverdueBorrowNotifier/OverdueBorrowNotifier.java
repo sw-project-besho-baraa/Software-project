@@ -4,10 +4,12 @@ import DTO.UserDTO.UserContactDTO;
 import Service.MediaItem.OverdueBorrowDetection.OverdueItemDetector;
 import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItem;
 import Service.NotificationSender.INotificationSender;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
-
+@Component
 public class OverdueBorrowNotifier
 {
     private final INotificationSender<UserContactDTO, List<OverdueBorrowedItem>> notifier;
@@ -22,6 +24,9 @@ public class OverdueBorrowNotifier
     public void send()
     {
         var overBorrows = overdueBookDetector.detectUsersWithOverdueBooks();
+        if (overBorrows == null) {
+            overBorrows = Collections.emptyList();
+        }
         for (var overBorrow : overBorrows)
         {
             notifier.send(overBorrow.userContactDTO(),overBorrow.items());

@@ -77,7 +77,7 @@
                             </font>
                         </Label>
                         <Line endX="65.0" layoutX="128.0" layoutY="163.0" startX="-110.0" stroke="WHITE" />
-                        <Button id="button" layoutX="14.0" layoutY="357.0" mnemonicParsing="false" onAction="#sendEmailPageButton" prefHeight="23.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Send Email With Message" textFill="WHITE">
+                        <Button id="button" layoutX="14.0" layoutY="357.0" mnemonicParsing="false" onAction="#sendEmailMassagePageButton" prefHeight="23.0" prefWidth="184.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Send Email With Message" textFill="WHITE">
                             <font>
                                 <Font name="Arial Bold" size="10.0" />
                             </font>
@@ -269,7 +269,7 @@
                                 </AnchorPane>
                             </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="viewItemPage" layoutX="317.0" layoutY="154.0" prefHeight="558.0" prefWidth="888.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="viewItemPage" layoutX="317.0" layoutY="154.0" prefHeight="558.0" prefWidth="888.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <AnchorPane id="2e" layoutX="43.0" layoutY="31.0" prefHeight="455.0" prefWidth="802.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 30;" stylesheets="@css/ooo.css">
                                     <children>
@@ -315,7 +315,7 @@
                                 </AnchorPane>
                             </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="sendEmailPage" layoutX="4.0" prefHeight="558.0" prefWidth="888.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="sendEmailMassagePage" layoutX="4.0" prefHeight="558.0" prefWidth="888.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="-4.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <AnchorPane id="1e" fx:id="addProduct" layoutX="237.0" layoutY="115.0" prefHeight="270.0" prefWidth="375.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 40px;" stylesheets="@css/ooo.css">
                                     <children>
@@ -324,7 +324,7 @@
                                                 <Font name="Arial Narrow" size="20.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="emailMessage" layoutX="33.0" layoutY="97.0" prefHeight="112.0" prefWidth="310.0" style="-fx-background-radius: 20px;" />
+                                        <TextField fx:id="emailMessage" layoutX="33.0" layoutY="97.0" prefHeight="88.0" prefWidth="310.0" style="-fx-background-radius: 20px;" />
                                         <Button id="button" layoutX="64.0" layoutY="229.0" mnemonicParsing="false" onAction="#sendEmail" prefHeight="27.0" prefWidth="248.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Send" textFill="WHITE">
                                             <font>
                                                 <Font size="13.0" />
@@ -335,6 +335,7 @@
                                                 <Font name="Arial Narrow" size="20.0" />
                                             </font>
                                         </Label>
+                              <Label fx:id="errorMessagesForSendEmail" layoutX="86.0" layoutY="196.0" prefHeight="17.0" prefWidth="204.0" textAlignment="CENTER" textFill="#00d6ff" />
                                     </children>
                                 </AnchorPane>
                             </children>
