@@ -279,7 +279,7 @@
                                 </AnchorPane>
                             </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="viewItemPage" layoutX="317.0" layoutY="154.0" prefHeight="558.0" prefWidth="888.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="viewItemPage" layoutX="317.0" layoutY="154.0" prefHeight="558.0" prefWidth="888.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <AnchorPane id="2e" layoutX="43.0" layoutY="31.0" prefHeight="455.0" prefWidth="802.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 30;" stylesheets="@css/ooo.css">
                                     <children>
@@ -423,7 +423,7 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="unregisterPage" layoutX="8.0" layoutY="-10.0" prefHeight="558.0" prefWidth="888.0">
+                  <AnchorPane fx:id="unregisterPage" layoutX="8.0" layoutY="-10.0" prefHeight="558.0" prefWidth="888.0" visible="false">
                      <children>
                         <AnchorPane id="1e" layoutX="208.0" layoutY="122.0" prefHeight="224.0" prefWidth="397.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 40px;" stylesheets="@css/ooo.css">
                            <children>

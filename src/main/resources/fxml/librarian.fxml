@@ -193,33 +193,36 @@
                                                         <TableColumn prefWidth="75.0" />
                                                     </columns>
                                                 </TableView>
-                                                <TableView fx:id="itemTable" layoutX="32.0" layoutY="168.0" prefHeight="194.0" prefWidth="738.0" style="-fx-background-size: 4500;">
-                                                    <columns>
-                                                        <TableColumn fx:id="selectCustomerColumn" prefWidth="74.0" text="ISBN" />
-                                                        <TableColumn fx:id="customerIdColumn" minWidth="7.0" prefWidth="77.0" text="Title" />
-                                                        <TableColumn fx:id="customerFirstNameColumn" prefWidth="122.0" text="Author" />
-                                                        <TableColumn fx:id="customerCityColumn" minWidth="0.0" prefWidth="85.0" text="Type" />
-                                                        <TableColumn fx:id="customerGenderColumn" prefWidth="180.0" text="##" />
-                                                        <TableColumn fx:id="customerBirthDateColumn" prefWidth="199.0" text="Is Borrowed" />
-                                                    </columns>
-                                                </TableView>
-                                                <Label id="text" layoutX="284.0" layoutY="37.0" prefHeight="39.0" prefWidth="194.0" stylesheets="@css/ooo.css" text="        Our Items " textAlignment="CENTER" textFill="WHITE">
+                                                <Label id="text" layoutX="283.0" layoutY="14.0" prefHeight="39.0" prefWidth="194.0" stylesheets="@css/ooo.css" text="        Our Items " textAlignment="CENTER" textFill="WHITE">
                                                     <font>
                                                         <Font name="Franklin Gothic Medium Cond" size="32.0" />
                                                     </font>
                                                 </Label>
-                                                <ComboBox id="e3" fx:id="searchList" layoutX="50.0" layoutY="121.0" prefHeight="25.0" prefWidth="225.0" promptText="Choose your search method" stylesheets="@css/ooo.css" />
-                                                <TextField id="e3" fx:id="searchBar" layoutX="305.0" layoutY="121.0" prefHeight="25.0" prefWidth="291.0" promptText="Type what you are looking for" style="-fx-background-radius: 15px;" stylesheets="@css/ooo.css" />
-                                                <Button id="button" layoutX="608.0" layoutY="122.0" mnemonicParsing="false" onAction="#searchByButton" prefHeight="28.0" prefWidth="67.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Search" textFill="WHITE">
+                                                <ComboBox id="e3" fx:id="searchList" layoutX="50.0" layoutY="81.0" prefHeight="25.0" prefWidth="225.0" promptText="Choose your search method" stylesheets="@css/ooo.css" />
+                                                <TextField id="e3" fx:id="searchBar" layoutX="305.0" layoutY="81.0" prefHeight="25.0" prefWidth="291.0" promptText="Type what you are looking for" style="-fx-background-radius: 15px;" stylesheets="@css/ooo.css" />
+                                                <Button id="button" layoutX="608.0" layoutY="82.0" mnemonicParsing="false" onAction="#searchByButton" prefHeight="28.0" prefWidth="67.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Search" textFill="WHITE">
                                                     <font>
                                                         <Font name="Arial Bold" size="10.0" />
                                                     </font>
                                                 </Button>
-                                                <Button id="button" layoutX="689.0" layoutY="122.0" mnemonicParsing="false" onAction="#viewAllButton" prefHeight="29.0" prefWidth="67.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="View All" textFill="WHITE">
+                                                <Button id="button" layoutX="689.0" layoutY="82.0" mnemonicParsing="false" onAction="#viewAllButton" prefHeight="29.0" prefWidth="67.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="View All" textFill="WHITE">
                                                     <font>
                                                         <Font name="Arial Bold" size="10.0" />
                                                     </font>
                                                 </Button>
+                                    <TableView fx:id="itemTable" layoutX="32.0" layoutY="121.0" maxHeight="1.7976931348623157E308" prefHeight="235.0" prefWidth="738.0" style="-fx-background-size: 4500;">
+                                       <columns>
+                                          <TableColumn id="id" fx:id="viewId" prefWidth="50.0" text="ID" />
+                                          <TableColumn id="id" fx:id="viewType" prefWidth="50.0" text="Type" />
+                                          <TableColumn id="title" fx:id="viewTitle" prefWidth="95.0" text="Title" />
+                                          <TableColumn id="isBorrowd" fx:id="viewIsBorrowd" prefWidth="74.0" text="Is Borrowd" />
+                                          <TableColumn id="borrowdDate" fx:id="viewBorrowedDate" prefWidth="113.0" text="Borrowd Date" />
+                                          <TableColumn id="dueToDate" fx:id="viewDueToDate" prefWidth="105.0" text="Due To Date" />
+                                          <TableColumn id="dueToDate" fx:id="viewIsbn" prefWidth="96.0" text="ISBN" />
+                                          <TableColumn fx:id="viewAuthor" prefWidth="83.0" text="Author" />
+                                          <TableColumn id="user" fx:id="viewUser" prefWidth="71.0" text="User" />
+                                       </columns>
+                                    </TableView>
                                             </children>
                                         </AnchorPane>
                                         <AnchorPane id="2e" layoutX="44.0" layoutY="453.0" prefHeight="65.0" prefWidth="802.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 30px;" stylesheets="@css/ooo.css">

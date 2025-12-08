@@ -1,36 +1,32 @@
 package Presentation;
+
+import Entity.Book;
+import Entity.MediaItem;
+import Entity.User;
+import Repository.UserRepository;
+import Service.BorrowService;
+import Service.ReturnService;
 import Service.LogoutService;
+import Service.BookService.AllBookService;
+import Service.CDService.AllCdService;
+import Service.MediaItem.MediaItemSearchService;
+import Service.UserService.UserBorrowedItemsService;
+import Session.LocalSessionManager;
 import Util.FxmlNavigator.FxmlNavigator;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 @Component
 public class UserController {
-
-
-
-    @FXML
-    private TableColumn<?, ?> customerBirthDateColumn;
-
-    @FXML
-    private TableColumn<?, ?> customerCityColumn;
-
-    @FXML
-    private TableColumn<?, ?> customerFirstNameColumn;
-
-    @FXML
-    private TableColumn<?, ?> customerGenderColumn;
-
-    @FXML
-    private TableColumn<?, ?> customerIdColumn;
 
     @FXML
     private Label feinInDollar;
@@ -45,7 +41,7 @@ public class UserController {
     private AnchorPane homePage;
 
     @FXML
-    private TableView<?> itemTable;
+    private TableView<MediaItem> itemTable;
 
     @FXML
     private Button logoutButton;
@@ -72,13 +68,10 @@ public class UserController {
     private TextField searchBar;
 
     @FXML
-    private ComboBox<?> searchList;
+    private ComboBox<String> searchList;
 
     @FXML
     private AnchorPane searchPage;
-
-    @FXML
-    private TableColumn<?, ?> selectCustomerColumn;
 
     @FXML
     private Label userEmailField;
@@ -86,86 +79,341 @@ public class UserController {
     @FXML
     private Label userNameTestField;
 
-    LogoutService logoutService;
-    FxmlNavigator fxmlNavigator;
-    public UserController( LogoutService logoutService, FxmlNavigator fxmlNavigator) {
-        this.logoutService = logoutService;
-        this.fxmlNavigator = fxmlNavigator;
-
-
-
-    }
-
-
-
-    void setAllVisibleFalse(){
-        homePage.setVisible(false);
-        searchPage.setVisible(false);
-        payFinePage.setVisible(false);
-    }
-
+    @FXML
+    private TableColumn<MediaItem, String> viewAuthor;
 
     @FXML
-    void printDetails(ActionEvent event) {
+    private TableColumn<MediaItem, Date> viewBorrowedDate;
+
+    @FXML
+    private TableColumn<MediaItem, Date> viewDueToDate;
+
+    @FXML
+    private TableColumn<MediaItem, Integer> viewId;
+
+    @FXML
+    private TableColumn<MediaItem, Boolean> viewIsBorrowd;
+
+    @FXML
+    private TableColumn<MediaItem, String> viewIsbn;
+
+    @FXML
+    private TableColumn<MediaItem, String> viewTitle;
+
+    @FXML
+    private TableColumn<MediaItem, String> viewType;
+
+    @FXML
+    private TableColumn<MediaItem, String> viewUser;
+
+    private final LogoutService logoutService;
+    private final FxmlNavigator fxmlNavigator;
+    private final MediaItemSearchService mediaItemSearchService;
+    private final AllBookService allBookService;
+    private final AllCdService allCdService;
+    private final LocalSessionManager sessionManager;
+    private final BorrowService borrowService;
+    private final ReturnService returnService;
+    private final UserBorrowedItemsService userBorrowedItemsService;
+    private final UserRepository userRepository;
+
+    @Autowired
+    public UserController(LogoutService logoutService,
+                          FxmlNavigator fxmlNavigator,
+                          MediaItemSearchService mediaItemSearchService,
+                          AllBookService allBookService,
+                          AllCdService allCdService,
+                          LocalSessionManager sessionManager,
+                          BorrowService borrowService,
+                          ReturnService returnService,
+                          UserBorrowedItemsService userBorrowedItemsService,
+                          UserRepository userRepository) {
+        this.logoutService = logoutService;
+        this.fxmlNavigator = fxmlNavigator;
+        this.mediaItemSearchService = mediaItemSearchService;
+        this.allBookService = allBookService;
+        this.allCdService = allCdService;
+        this.sessionManager = sessionManager;
+        this.borrowService = borrowService;
+        this.returnService = returnService;
+        this.userBorrowedItemsService = userBorrowedItemsService;
+        this.userRepository = userRepository;
+    }
+
+    @FXML
+    private void initialize() {
+        setupViewTable();
+        initSearchList();
+        initUserHeader();
+        updateUserStats();
+        setAllVisibleFalse();
+        if (homePage != null) {
+            homePage.setVisible(true);
+        }
+    }
+
+    private void setupViewTable() {
+        if (itemTable == null) return;
+
+        if (viewId != null) {
+            viewId.setCellValueFactory(cellData ->
+                    new javafx.beans.property.SimpleObjectProperty<>(cellData.getValue().getId()));
+        }
+
+        if (viewTitle != null) {
+            viewTitle.setCellValueFactory(cellData ->
+                    new javafx.beans.property.SimpleStringProperty(cellData.getValue().getTitle()));
+        }
+
+        if (viewAuthor != null) {
+            viewAuthor.setCellValueFactory(cellData -> {
+                MediaItem item = cellData.getValue();
+                if (item instanceof Book book) {
+                    String author = book.getAuthor();
+                    return new javafx.beans.property.SimpleStringProperty(author != null ? author : "");
+                }
+                return new javafx.beans.property.SimpleStringProperty("");
+            });
+        }
+
+        if (viewIsbn != null) {
+            viewIsbn.setCellValueFactory(cellData -> {
+                MediaItem item = cellData.getValue();
+                if (item instanceof Book book) {
+                    String isbn = book.getIsbn();
+                    return new javafx.beans.property.SimpleStringProperty(isbn != null ? isbn : "");
+                }
+                return new javafx.beans.property.SimpleStringProperty("");
+            });
+        }
+
+        if (viewIsBorrowd != null) {
+            viewIsBorrowd.setCellValueFactory(cellData ->
+                    new javafx.beans.property.SimpleBooleanProperty(cellData.getValue().isBorrowed()));
+        }
+
+        if (viewUser != null) {
+            viewUser.setCellValueFactory(cellData -> {
+                MediaItem item = cellData.getValue();
+                if (!item.isBorrowed() || item.getBorrower() == null) {
+                    return new javafx.beans.property.SimpleStringProperty("");
+                }
+
+                int borrowerId;
+                try {
+                    borrowerId = item.getBorrower().getId();
+                } catch (Exception e) {
+                    return new javafx.beans.property.SimpleStringProperty("");
+                }
+
+                User sessionUser = sessionManager.getUser();
+                if (sessionUser != null && sessionUser.getId() == borrowerId) {
+                    return new javafx.beans.property.SimpleStringProperty(sessionUser.getName());
+                }
+
+                return userRepository.findById(borrowerId)
+                        .map(u -> new javafx.beans.property.SimpleStringProperty(u.getName()))
+                        .orElseGet(() -> new javafx.beans.property.SimpleStringProperty("User #" + borrowerId));
+            });
+        }
+
+        if (viewBorrowedDate != null) {
+            viewBorrowedDate.setCellValueFactory(cellData ->
+                    new javafx.beans.property.SimpleObjectProperty<>(cellData.getValue().getBorrowedDate()));
+        }
+
+        if (viewDueToDate != null) {
+            viewDueToDate.setCellValueFactory(cellData ->
+                    new javafx.beans.property.SimpleObjectProperty<>(cellData.getValue().getDueDate()));
+        }
+
+        if (viewType != null) {
+            viewType.setCellValueFactory(cellData ->
+                    new javafx.beans.property.SimpleStringProperty(
+                            cellData.getValue().getMediaType().name()
+                    ));
+        }
+    }
+
+    private void initSearchList() {
+        if (searchList != null) {
+            searchList.setItems(FXCollections.observableArrayList(
+                    "Title (Books & CDs)",
+                    "Book Author",
+                    "Book ISBN"
+            ));
+            searchList.setValue("Title (Books & CDs)");
+        }
+    }
+
+    private void initUserHeader() {
+        User user = sessionManager.getUser();
+        if (user == null) return;
+
+        if (userNameTestField != null) {
+            userNameTestField.setText(user.getName());
+        }
+        if (userEmailField != null) {
+            userEmailField.setText(user.getEmail());
+        }
+    }
+
+    private void updateUserStats() {
+        User sessionUser = sessionManager.getUser();
+        if (sessionUser == null) return;
+
+        int borrowedCount = userBorrowedItemsService.countBorrowedItems(sessionUser);
+        long overdueCount = userBorrowedItemsService.countOverdueItems(sessionUser);
+
+        if (numberOfBooks != null) {
+            numberOfBooks.setText(String.valueOf(borrowedCount));
+        }
+        if (numberOfOverDue != null) {
+            numberOfOverDue.setText(String.valueOf(overdueCount));
+        }
+    }
+
+    private void setAllVisibleFalse() {
+        if (homePage != null) homePage.setVisible(false);
+        if (searchPage != null) searchPage.setVisible(false);
+        if (payFinePage != null) payFinePage.setVisible(false);
 
     }
 
     @FXML
     void borrowItemButton(ActionEvent event) {
+        MediaItem selected = itemTable != null ? itemTable.getSelectionModel().getSelectedItem() : null;
+        if (selected == null) {
+            System.out.println("No item selected to borrow.");
+            return;
+        }
 
+        User sessionUser = sessionManager.getUser();
+        if (sessionUser == null) {
+            System.out.println("No logged-in user in session.");
+            return;
+        }
+
+        try {
+            var currentBorrowed = userBorrowedItemsService.getBorrowedItems(sessionUser);
+            sessionUser.setBorrowedItems(new ArrayList<>(currentBorrowed));
+            borrowService.borrow(sessionUser, selected);
+            System.out.println("Item borrowed successfully: " + selected.getTitle());
+            updateUserStats();
+            if (itemTable != null) {
+                itemTable.refresh();
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to borrow item: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    void returnItemButton(ActionEvent event) {
+        MediaItem selected = itemTable != null ? itemTable.getSelectionModel().getSelectedItem() : null;
+        if (selected == null) {
+            System.out.println("No item selected to return.");
+            return;
+        }
+
+        User sessionUser = sessionManager.getUser();
+        if (sessionUser == null) {
+            System.out.println("No logged-in user in session.");
+            return;
+        }
+
+        try {
+            returnService.returnItem(sessionUser, selected);
+            System.out.println("Item returned successfully: " + selected.getTitle());
+            updateUserStats();
+            if (itemTable != null) {
+                var items = userBorrowedItemsService.getBorrowedItems(sessionUser);
+                itemTable.setItems(FXCollections.observableArrayList(items));
+                itemTable.refresh();
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to return item: " + e.getMessage());
+        }
     }
 
     @FXML
     void homeButtonClick(ActionEvent event) {
         setAllVisibleFalse();
-        homePage.setVisible(true);
-
+        if (homePage != null) {
+            homePage.setVisible(true);
+        }
     }
 
     @FXML
     void logoutButton(ActionEvent event) {
-        System.out.println("Logout button clicked");
         logoutService.logout();
-        fxmlNavigator.logout((javafx.stage.Stage) homePage.getScene().getWindow(), "/fxml/Login.fxml");
-
+        Stage stage = (Stage) homePage.getScene().getWindow();
+        fxmlNavigator.logout(stage, "/fxml/Login.fxml");
     }
 
     @FXML
     void myItemsButton(ActionEvent event) {
+        setAllVisibleFalse();
+        if (searchPage != null) {
+            searchPage.setVisible(true);
+        }
 
+        User sessionUser = sessionManager.getUser();
+        if (sessionUser == null || itemTable == null) {
+            return;
+        }
+
+        var items = userBorrowedItemsService.getBorrowedItems(sessionUser);
+        itemTable.setItems(FXCollections.observableArrayList(items));
     }
 
     @FXML
     void payButton(ActionEvent event) {
-
     }
 
     @FXML
     void payFineButton(ActionEvent event) {
         setAllVisibleFalse();
-        payFinePage.setVisible(true);
+        if (payFinePage != null) {
+            payFinePage.setVisible(true);
+        }
     }
 
     @FXML
-    void returnItemButton(ActionEvent event) {
+    void printDetails(ActionEvent event) {
+    }
 
+    @FXML
+    void searchByButton(ActionEvent event) {
+        if (itemTable == null) return;
+
+        String keyword = searchBar != null ? searchBar.getText() : "";
+        String mode = searchList != null ? searchList.getValue() : "Title (Books & CDs)";
+
+        var items = mediaItemSearchService.searchByMode(mode, keyword);
+        itemTable.setItems(FXCollections.observableArrayList(items));
     }
 
     @FXML
     void searchButton(ActionEvent event) {
         setAllVisibleFalse();
-        searchPage.setVisible(true);
-    }
-
-    @FXML
-    void searchByButton(ActionEvent event) {
-
+        if (searchPage != null) {
+            searchPage.setVisible(true);
+        }
     }
 
     @FXML
     void viewAllButton(ActionEvent event) {
+        setAllVisibleFalse();
+        if (searchPage != null) {
+            searchPage.setVisible(true);
+        }
 
+        if (itemTable == null) return;
+
+        var allItems = new java.util.ArrayList<MediaItem>();
+        allItems.addAll(allBookService.getAllBooks());
+        allItems.addAll(allCdService.getAllCds());
+        itemTable.setItems(FXCollections.observableArrayList(allItems));
     }
-
-
 }
