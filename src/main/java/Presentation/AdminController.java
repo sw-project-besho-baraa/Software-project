@@ -3,16 +3,16 @@ package Presentation;
 import Entity.Book;
 import Entity.Cd;
 import Entity.MediaItem;
-import Entity.User;
 import Repository.BookRepository;
 import Repository.CdRepository;
 import Repository.UserRepository;
 import Service.BookService.AddBookService;
+import Service.BookService.AllBookService;
 import Service.BookService.BookCountService;
 import Service.CDService.AddCdService;
+import Service.CDService.AllCdService;
 import Service.CDService.CdCountService;
 import Service.LogoutService;
-import Service.MediaItem.OverdueBorrowNotifier.OverdueBorrowNotifier;
 import Service.UserService.AddUserService;
 import Service.UserService.UserCountService;
 import Session.ISessionManager;
@@ -20,7 +20,11 @@ import Session.LocalSessionManager;
 import Util.FxmlNavigator.FxmlNavigator;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -29,15 +33,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import Enum.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import Enum.MediaItemType;
-
-import java.util.Date;
 
 @Component
 public class AdminController {
@@ -88,41 +88,11 @@ public class AdminController {
     @FXML
     private TextField emailMessage;
 
-    @FXML
-    private TableColumn<?, ?> employeeFirstNameColumn;
 
-    @FXML
-    private TableColumn<?, ?> employeeFirstNameColumn1;
-
-    @FXML
-    private TableColumn<?, ?> employeeIdColumn;
 
     @FXML
     private TextField itemSearch;
 
-    @FXML
-    private TableView<MediaItem> itemTable;
-
-    @FXML
-    private TableColumn<MediaItem, Integer> idColumn;
-
-    @FXML
-    private TableColumn<MediaItem, String> titleColumn;
-
-    @FXML
-    private TableColumn<MediaItem, Boolean> borrowedColumn;
-
-    @FXML
-    private TableColumn<MediaItem, String> borrowerColumn;
-
-    @FXML
-    private TableColumn<MediaItem, Date> borrowedDateColumn;
-
-    @FXML
-    private TableColumn<MediaItem, Date> dueDateColumn;
-
-    @FXML
-    private TableColumn<MediaItem, String> mediaTypeColumn;
 
     @FXML
     private Label numberOfBooks;
@@ -144,8 +114,15 @@ public class AdminController {
     @FXML
     private ComboBox<?> searchList;
 
+    @FXML private TableColumn<MediaItem, Integer> viewId;
+    @FXML private TableColumn<MediaItem, String> viewTitle;
+    @FXML private TableColumn<MediaItem, Boolean> viewIsBorrowd;
+    @FXML private TableColumn<MediaItem, String> viewUser;
+    @FXML private TableColumn<MediaItem, java.util.Date> viewBorrowedDate;
+    @FXML private TableColumn<MediaItem, java.util.Date> viewDueToDate;
+
     @FXML
-    private TableColumn<?, ?> selectEmployeeComlumn;
+    private TableView<MediaItem> itemTable;
 
     private final LogoutService logoutService;
     private final FxmlNavigator fxmlNavigator;
@@ -157,7 +134,8 @@ public class AdminController {
     private LocalSessionManager sessionManager;
     private AddCdService addCdService;
     private AddBookService addBookService;
-
+    private AllBookService allBookService;
+    private AllCdService allCdService;
     @Autowired
     public AdminController(LogoutService logoutService, FxmlNavigator fxmlNavigator,
                            BookCountService bookCountService, CdCountService cdCountService,
@@ -165,10 +143,9 @@ public class AdminController {
                            AddUserService addUserService,
                            LocalSessionManager sessionManager,
                            AddBookService addBookService,
-                           AddCdService addCdService
-
-
-
+                           AddCdService addCdService,
+                            AllBookService allBookService,
+                            AllCdService allCdService
     )
     {
         this.logoutService = logoutService;
@@ -180,6 +157,8 @@ public class AdminController {
         this.sessionManager = sessionManager;
         this.addBookService = addBookService;
         this.addCdService = addCdService;
+        this.allBookService = allBookService;
+        this.allCdService = allCdService;
 
 
     }
@@ -195,21 +174,7 @@ public class AdminController {
         updateCDCount();
         updateCustomersCount();
         setUserNameDisplay ();
-
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        borrowedColumn.setCellValueFactory(new PropertyValueFactory<>("borrowed"));
-
-        borrowerColumn.setCellValueFactory(cellData -> {
-            User borrower = cellData.getValue().getBorrower();
-            return new SimpleStringProperty(borrower != null ? borrower.getName() : "None");
-        });
-        borrowedDateColumn.setCellValueFactory(new PropertyValueFactory<>("borrowedDate"));
-        dueDateColumn.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
-        mediaTypeColumn.setCellValueFactory(cellData -> {
-            MediaItemType mediaType = cellData.getValue().getMediaType();
-            return new SimpleStringProperty(mediaType != null ? mediaType.name() : "Unknown");
-        });
+        setupViewTable();
     }
     private void updateBookCount() {
         long bookCount = bookCountService.countBooks();
@@ -227,6 +192,49 @@ public class AdminController {
         long userCount = userCountService.countUsersByRole(UserRole.User);
         numberOfCustomers.setText(String.valueOf(userCount));
     }
+
+
+    private void setupViewTable() {
+        if (itemTable == null) return;
+
+        viewId.setCellValueFactory(cellData ->
+                new SimpleObjectProperty<>(cellData.getValue().getId()));
+
+        viewTitle.setCellValueFactory(cellData ->
+                new SimpleStringProperty(cellData.getValue().getTitle()));
+
+        viewIsBorrowd.setCellValueFactory(cellData ->
+                new SimpleBooleanProperty(cellData.getValue().isBorrowed()));
+
+        viewUser.setCellValueFactory(cellData -> {
+            var borrower = cellData.getValue().getBorrower();
+            String name = (borrower != null) ? borrower.getName() : "";
+            return new SimpleStringProperty(name);
+        });
+
+        viewBorrowedDate.setCellValueFactory(cellData ->
+                new SimpleObjectProperty<>(cellData.getValue().getBorrowedDate()));
+
+        viewDueToDate.setCellValueFactory(cellData ->
+                new SimpleObjectProperty<>(cellData.getValue().getDueDate()));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         void setAllVisibleFalse(){
         addProduct.setVisible(false);
@@ -257,6 +265,7 @@ public class AdminController {
         addBookTitle.clear();
         addBookAuthor.clear();
         addBookIsbn.clear();
+
     }
 
 
@@ -337,9 +346,15 @@ public class AdminController {
 
     @FXML
     void viewAllButton(ActionEvent event) {
+        setAllVisibleFalse();
+        viewItemPage.setVisible(true);
+        var allItems = new java.util.ArrayList<MediaItem>();
+        allItems.addAll(allBookService.getAllBooks());
+        allItems.addAll(allCdService.getAllCds());
+        ObservableList<MediaItem> observableItems = FXCollections.observableArrayList(allItems);
+        itemTable.setItems(observableItems);
 
     }
-
     @FXML
     void viewItemPageButton(ActionEvent event) {
         setAllVisibleFalse();

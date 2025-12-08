@@ -1,4 +1,6 @@
 package Presentation;
+import Service.LogoutService;
+import Util.FxmlNavigator.FxmlNavigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -84,6 +86,15 @@ public class UserController {
     @FXML
     private Label userNameTestField;
 
+    LogoutService logoutService;
+    FxmlNavigator fxmlNavigator;
+    public UserController( LogoutService logoutService, FxmlNavigator fxmlNavigator) {
+        this.logoutService = logoutService;
+        this.fxmlNavigator = fxmlNavigator;
+
+
+
+    }
 
 
 
@@ -114,8 +125,8 @@ public class UserController {
     @FXML
     void logoutButton(ActionEvent event) {
         System.out.println("Logout button clicked");
-
-
+        logoutService.logout();
+        fxmlNavigator.logout((javafx.stage.Stage) homePage.getScene().getWindow(), "/fxml/Login.fxml");
 
     }
 

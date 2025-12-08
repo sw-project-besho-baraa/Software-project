@@ -281,12 +281,12 @@
                                         </TableView>
                                         <TableView fx:id="itemTable" layoutX="14.0" layoutY="153.0" maxHeight="1.7976931348623157E308" prefHeight="276.0" prefWidth="738.0" style="-fx-background-size: 4500;">
                                             <columns>
-                                                <TableColumn fx:id="selectEmployeeComlumn" prefWidth="51.0" text="ID" />
-                                                <TableColumn fx:id="employeeIdColumn" prefWidth="122.0" text="Title" />
-                                                <TableColumn fx:id="employeeFirstNameColumn" prefWidth="137.0" text="Is Borrowd" />
-                                                <TableColumn fx:id="employeeFirstNameColumn1" prefWidth="152.0" text="Borrowd Date" />
-                                    <TableColumn fx:id="employeeFirstNameColumn11" prefWidth="160.0" text="Due To Date" />
-                                    <TableColumn fx:id="employeeFirstNameColumn111" prefWidth="115.0" text="User" />
+                                                <TableColumn id="id" fx:id="viewId" prefWidth="51.0" text="ID" />
+                                                <TableColumn id="title" fx:id="viewTitle" prefWidth="122.0" text="Title" />
+                                                <TableColumn id="isBorrowd" fx:id="viewIsBorrowd" prefWidth="137.0" text="Is Borrowd" />
+                                                <TableColumn id="borrowdDate" fx:id="viewBorrowedDate" prefWidth="152.0" text="Borrowd Date" />
+                                    <TableColumn id="dueToDate" fx:id="viewDueToDate" prefWidth="160.0" text="Due To Date" />
+                                    <TableColumn id="user" fx:id="viewUser" prefWidth="115.0" text="User" />
                                             </columns>
                                         </TableView>
                                         <Label layoutX="338.0" layoutY="45.0" prefHeight="23.0" prefWidth="156.0" text="VIEW ITEMS" textFill="WHITE">
@@ -371,7 +371,7 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="errorLabelAddBook" layoutX="140.0" layoutY="175.0" prefHeight="20.0" prefWidth="118.0" textAlignment="CENTER" textFill="#00b2f5">
+                              <Label fx:id="errorLabelAddBook1" layoutX="140.0" layoutY="175.0" prefHeight="20.0" prefWidth="118.0" textAlignment="CENTER" textFill="#00b2f5">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
