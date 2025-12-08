@@ -25,13 +25,13 @@
                             <children>
                                 <AnchorPane layoutX="154.0" layoutY="-77.0" prefHeight="35.0" prefWidth="1100.0" style="-fx-background-color: #1f2a42;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
-                                        <!-- Banner image -->
+
                                         <ImageView fitHeight="46.0" fitWidth="1105.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@img/image.png" />
                                             </image>
                                         </ImageView>
-                                        <!-- Small logo -->
+
                                         <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="21.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@img/group.png" />
@@ -52,7 +52,7 @@
                             <children>
                                 <AnchorPane id="1e" layoutX="14.0" layoutY="78.0" prefHeight="555.0" prefWidth="211.0" style="-fx-background-color: #1f2a42;" stylesheets="@css/ooo.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
-                                        <!-- User avatar -->
+
                                         <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="75.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@img/user (11).png" />
@@ -84,7 +84,7 @@
                                                 <Font name="Arial Bold" size="10.0" />
                                             </font>
                                         </Button>
-                                        <!-- Sidebar icons -->
+
                                         <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="27.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@img/home.png" />
@@ -197,7 +197,7 @@
                                         </ImageView>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane fx:id="searchPage" layoutX="345.0" layoutY="157.0" prefHeight="551.0" prefWidth="889.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane fx:id="searchPage" layoutX="345.0" layoutY="157.0" prefHeight="551.0" prefWidth="889.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <AnchorPane id="2e" layoutX="44.0" layoutY="33.0" prefHeight="376.0" prefWidth="802.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 30;" stylesheets="@css/ooo.css">
                                             <children>
@@ -207,33 +207,36 @@
                                                         <TableColumn prefWidth="75.0" />
                                                     </columns>
                                                 </TableView>
-                                                <TableView fx:id="itemTable" layoutX="32.0" layoutY="168.0" prefHeight="194.0" prefWidth="738.0" style="-fx-background-size: 4500;">
-                                                    <columns>
-                                                        <TableColumn fx:id="selectCustomerColumn" prefWidth="74.0" text="ISBN" />
-                                                        <TableColumn fx:id="customerIdColumn" minWidth="7.0" prefWidth="77.0" text="Title" />
-                                                        <TableColumn fx:id="customerFirstNameColumn" prefWidth="122.0" text="Author" />
-                                                        <TableColumn fx:id="customerCityColumn" minWidth="0.0" prefWidth="85.0" text="Type" />
-                                                        <TableColumn fx:id="customerGenderColumn" prefWidth="180.0" text="##" />
-                                                        <TableColumn fx:id="customerBirthDateColumn" prefWidth="199.0" text="Is Borrowed" />
-                                                    </columns>
-                                                </TableView>
                                                 <Label id="text" layoutX="284.0" layoutY="37.0" prefHeight="39.0" prefWidth="194.0" stylesheets="@css/ooo.css" text="        Our Items " textAlignment="CENTER" textFill="WHITE">
                                                     <font>
                                                         <Font name="Franklin Gothic Medium Cond" size="32.0" />
                                                     </font>
                                                 </Label>
-                                                <ComboBox id="e3" fx:id="searchList" layoutX="50.0" layoutY="121.0" prefHeight="25.0" prefWidth="225.0" promptText="Choose your search method" stylesheets="@css/ooo.css" />
-                                                <TextField id="e3" fx:id="searchBar" layoutX="305.0" layoutY="121.0" prefHeight="25.0" prefWidth="291.0" promptText="Type what you are looking for" style="-fx-background-radius: 15px;" stylesheets="@css/ooo.css" />
-                                                <Button id="button" layoutX="608.0" layoutY="122.0" mnemonicParsing="false" onAction="#searchByButton" prefHeight="28.0" prefWidth="67.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Search" textFill="WHITE">
+                                                <ComboBox id="e3" fx:id="searchList" layoutX="38.0" layoutY="85.0" prefHeight="25.0" prefWidth="225.0" promptText="Choose your search method" stylesheets="@css/ooo.css" />
+                                                <TextField id="e3" fx:id="searchBar" layoutX="291.0" layoutY="86.0" prefHeight="25.0" prefWidth="291.0" promptText="Type what you are looking for" style="-fx-background-radius: 15px;" stylesheets="@css/ooo.css" />
+                                                <Button id="button" layoutX="599.0" layoutY="85.0" mnemonicParsing="false" onAction="#searchByButton" prefHeight="28.0" prefWidth="67.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Search" textFill="WHITE">
                                                     <font>
                                                         <Font name="Arial Bold" size="10.0" />
                                                     </font>
                                                 </Button>
-                                                <Button id="button" layoutX="689.0" layoutY="122.0" mnemonicParsing="false" onAction="#viewAllButton" prefHeight="29.0" prefWidth="67.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="View All" textFill="WHITE">
+                                                <Button id="button" layoutX="674.0" layoutY="85.0" mnemonicParsing="false" onAction="#viewAllButton" prefHeight="29.0" prefWidth="67.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="View All" textFill="WHITE">
                                                     <font>
                                                         <Font name="Arial Bold" size="10.0" />
                                                     </font>
                                                 </Button>
+                                    <TableView fx:id="itemTable" layoutX="31.0" layoutY="134.0" maxHeight="1.7976931348623157E308" prefHeight="211.0" prefWidth="740.0" style="-fx-background-size: 4500;">
+                                       <columns>
+                                          <TableColumn id="id" fx:id="viewId" prefWidth="50.0" text="ID" />
+                                          <TableColumn id="id" fx:id="viewType" prefWidth="50.0" text="Type" />
+                                          <TableColumn id="title" fx:id="viewTitle" prefWidth="95.0" text="Title" />
+                                          <TableColumn id="isBorrowd" fx:id="viewIsBorrowd" prefWidth="74.0" text="Is Borrowd" />
+                                          <TableColumn id="borrowdDate" fx:id="viewBorrowedDate" prefWidth="113.0" text="Borrowd Date" />
+                                          <TableColumn id="dueToDate" fx:id="viewDueToDate" prefWidth="105.0" text="Due To Date" />
+                                          <TableColumn id="dueToDate" fx:id="viewIsbn" prefWidth="96.0" text="ISBN" />
+                                          <TableColumn fx:id="viewAuthor" prefWidth="83.0" text="Author" />
+                                          <TableColumn id="user" fx:id="viewUser" prefWidth="71.0" text="User" />
+                                       </columns>
+                                    </TableView>
                                             </children>
                                         </AnchorPane>
                                         <AnchorPane id="2e" layoutX="44.0" layoutY="453.0" prefHeight="65.0" prefWidth="802.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 30px;" stylesheets="@css/ooo.css">
@@ -257,7 +260,7 @@
                                         </AnchorPane>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane fx:id="payFinePage" layoutX="332.0" layoutY="159.0" prefHeight="551.0" prefWidth="889.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane fx:id="payFinePage" layoutX="332.0" layoutY="159.0" prefHeight="551.0" prefWidth="889.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <AnchorPane id="1e" layoutX="69.0" layoutY="112.0" prefHeight="164.0" prefWidth="751.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 30px;" stylesheets="@css/ooo.css">
                                             <children>

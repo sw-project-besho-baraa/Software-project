@@ -5,10 +5,11 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import Exception.OverdueItemsException;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
-
+@Component
 public class StandardOverdueBorrowValidator implements IOverdueBorrowValidation
 {
 

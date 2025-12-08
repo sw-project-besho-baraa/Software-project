@@ -33,7 +33,7 @@ public class User
     @Column(nullable = false)
     private UserRole userRole;
 
-    @OneToMany(mappedBy = "borrower", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "borrower", cascade = CascadeType.ALL)
     private List<MediaItem> borrowedItems = new ArrayList<>();
 
     public User(String name, String email, String hashedPassword)

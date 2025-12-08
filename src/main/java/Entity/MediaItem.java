@@ -22,7 +22,7 @@ public abstract class MediaItem
     @Column(name = "is_borrowed")
     private boolean borrowed;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User borrower;
 

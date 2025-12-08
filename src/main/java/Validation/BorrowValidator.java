@@ -3,7 +3,10 @@ package Validation;
 import Entity.MediaItem;
 import Entity.User;
 import Validation.OverdueBorrowValidator.IOverdueBorrowValidation;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BorrowValidator
 {
 

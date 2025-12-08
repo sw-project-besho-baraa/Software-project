@@ -25,4 +25,6 @@ public interface UserRepository extends JpaRepository<@NonNull User, @NonNull In
     // List<OverdueBorrowedItemsData>
     // findUsersWithBookingsExceedingDuration(@Param("minMinutes") Integer
     // minMinutes);
+    @Query("select u from User u left join fetch u.borrowedItems where u.id = :id")
+    Optional<User> findByIdWithBorrowedItems(@Param("id") Integer id);
 }
