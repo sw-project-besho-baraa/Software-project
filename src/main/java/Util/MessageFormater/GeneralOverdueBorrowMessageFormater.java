@@ -4,12 +4,13 @@ import DTO.UserDTO.UserContactDTO;
 import Entity.MediaItem;
 import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItem;
 import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItemsData;
+import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
+@Component
 public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<OverdueBorrowedItemsData>
 {
     private static final SimpleDateFormat BORROWED_DATE_FORMAT = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);

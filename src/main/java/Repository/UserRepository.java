@@ -11,11 +11,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import Enum.UserRole;
 
 @Repository
 public interface UserRepository extends JpaRepository<@NonNull User, @NonNull Integer>
 {
     Optional<User> findByEmail(@NonNull String email);
+
+    long countByUserRole(@NonNull UserRole userRole);
 
     // @Query("select distinct u from User u join u.bookings b where
     // b.durationMinutes > :minMinutes")

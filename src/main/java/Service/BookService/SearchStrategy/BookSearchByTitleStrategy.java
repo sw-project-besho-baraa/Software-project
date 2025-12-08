@@ -1,4 +1,4 @@
-package Service.MediaItem.SearchStrategy;
+package Service.BookService.SearchStrategy;
 
 import Entity.Book;
 import Repository.BookRepository;
