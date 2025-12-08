@@ -285,4 +285,9 @@ public class LibrarianController {
         allItems.addAll(allCdService.getAllCds());
         itemTable.setItems(FXCollections.observableArrayList(allItems));
     }
+
+    @FXML
+    void applyFineOnItem(ActionEvent event) {
+
+    }
 }
