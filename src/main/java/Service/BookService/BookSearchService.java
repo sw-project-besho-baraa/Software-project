@@ -1,12 +1,15 @@
-package Service.MediaItem;
+package Service.BookService;
 
 import lombok.NonNull;
 import Entity.Book;
 import Repository.BookRepository;
-import Service.MediaItem.SearchStrategy.IBookSearchStrategy;
+import Service.BookService.SearchStrategy.IBookSearchStrategy;
+import lombok.Setter;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class BookSearchService
 {
     private final BookRepository bookRepository;

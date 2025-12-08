@@ -2,8 +2,8 @@ package Service_Test.BookService_Test;
 
 import Entity.Book;
 import Repository.BookRepository;
-import Service.MediaItem.BookSearchService;
-import Service.MediaItem.SearchStrategy.IBookSearchStrategy;
+import Service.BookService.BookSearchService;
+import Service.BookService.SearchStrategy.IBookSearchStrategy;
 
 import org.junit.jupiter.api.*;
 import java.util.*;

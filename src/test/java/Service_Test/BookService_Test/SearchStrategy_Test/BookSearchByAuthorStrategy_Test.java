@@ -2,7 +2,7 @@ package Service_Test.BookService_Test.SearchStrategy_Test;
 
 import Entity.Book;
 import Repository.BookRepository;
-import Service.MediaItem.SearchStrategy.BookSearchByAuthorStrategy;
+import Service.BookService.SearchStrategy.BookSearchByAuthorStrategy;
 
 import org.junit.jupiter.api.*;
 import java.util.*;

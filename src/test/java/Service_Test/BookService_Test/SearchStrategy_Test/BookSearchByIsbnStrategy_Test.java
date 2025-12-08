@@ -2,7 +2,7 @@ package Service_Test.BookService_Test.SearchStrategy_Test;
 
 import Entity.Book;
 import Repository.BookRepository;
-import Service.MediaItem.SearchStrategy.BookSearchByIsbnStrategy;
+import Service.BookService.SearchStrategy.BookSearchByIsbnStrategy;
 import org.junit.jupiter.api.*;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;

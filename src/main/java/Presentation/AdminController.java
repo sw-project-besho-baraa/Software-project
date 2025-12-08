@@ -3,6 +3,7 @@ package Presentation;
 import Entity.Book;
 import Entity.Cd;
 import Entity.MediaItem;
+import Entity.User;
 import Repository.BookRepository;
 import Repository.CdRepository;
 import Repository.UserRepository;
@@ -15,8 +16,11 @@ import Service.CDService.AddCdService;
 import Service.CDService.AllCdService;
 import Service.CDService.CdCountService;
 import Service.LogoutService;
+import Service.MediaItem.MediaItemSearchService;
 import Service.MediaItem.OverdueBorrowNotifier.OverdueBorrowNotifier;
 import Service.UserService.AddUserService;
+import Service.UserService.GetAllUsersService;
+import Service.UserService.UnregisterUserService;
 import Service.UserService.UserCountService;
 import Session.ISessionManager;
 import Session.LocalSessionManager;
@@ -41,6 +45,8 @@ import javafx.util.Duration;
 import Enum.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import static Enum.UserRole.User;
 
 @Component
 public class AdminController {
@@ -70,7 +76,8 @@ public class AdminController {
 
     @FXML
     private AnchorPane viewItemPage;
-
+    @FXML
+    private AnchorPane unregisterPage;
     @FXML
     private TextField addUserEmail;
     @FXML
@@ -84,7 +91,6 @@ public class AdminController {
     private TextField addBookAuthor;
     @FXML
     private TextField addBookTitle;
-
 
 
     @FXML
@@ -117,7 +123,12 @@ public class AdminController {
     @FXML
     private Label errorLabelAddCd;
     @FXML
-    private ComboBox<?> searchList;
+    private Label unregisterLable;
+
+    @FXML
+    private ComboBox<String> searchList;
+    @FXML
+    private ComboBox<String> usersNamesCombo;
 
     @FXML private TableColumn<MediaItem, Integer> viewId;
     @FXML private TableColumn<MediaItem, String> viewTitle;
@@ -125,7 +136,9 @@ public class AdminController {
     @FXML private TableColumn<MediaItem, String> viewUser;
     @FXML private TableColumn<MediaItem, java.util.Date> viewBorrowedDate;
     @FXML private TableColumn<MediaItem, java.util.Date> viewDueToDate;
-
+    @FXML private TableColumn<MediaItem, String> viewAuthor;
+    @FXML private TableColumn<MediaItem, String> viewIsbn;
+    @FXML private TableColumn<MediaItem, String> viewType;
     @FXML
     private TableView<MediaItem> itemTable;
 
@@ -143,6 +156,9 @@ public class AdminController {
     private AllCdService allCdService;
     private OverdueBorrowNotifier overdueBorrowNotifier;
     private AdminBroadcastNotifier adminBroadcastNotifier;
+    private MediaItemSearchService mediaItemSearchService;
+    private UnregisterUserService unregisterUserService;
+    private GetAllUsersService getAllUsersService;
     @Autowired
     public AdminController(LogoutService logoutService, FxmlNavigator fxmlNavigator,
                            BookCountService bookCountService, CdCountService cdCountService,
@@ -154,7 +170,10 @@ public class AdminController {
                             AllBookService allBookService,
                             AllCdService allCdService,
                             OverdueBorrowNotifier overdueBorrowNotifier,
-                            AdminBroadcastNotifier adminBroadcastNotifier
+                            AdminBroadcastNotifier adminBroadcastNotifier,
+                            MediaItemSearchService mediaItemSearchService,
+                            UnregisterUserService unregisterUserService,
+                            GetAllUsersService getAllUsersService
     )
     {
         this.logoutService = logoutService;
@@ -170,6 +189,10 @@ public class AdminController {
         this.allCdService = allCdService;
         this.overdueBorrowNotifier = overdueBorrowNotifier;
         this.adminBroadcastNotifier = adminBroadcastNotifier;
+        this.mediaItemSearchService = mediaItemSearchService;
+        this.unregisterUserService = unregisterUserService;
+        this.getAllUsersService = getAllUsersService;
+
 
 
     }
@@ -186,6 +209,14 @@ public class AdminController {
         updateCustomersCount();
         setUserNameDisplay ();
         setupViewTable();
+        if (searchList != null) {
+            searchList.setItems(FXCollections.observableArrayList(
+                    "Title (Books & CDs)",
+                    "Book Author",
+                    "Book ISBN"
+            ));
+            searchList.setValue("Title (Books & CDs)");
+        }
     }
     private void updateBookCount() {
         long bookCount = bookCountService.countBooks();
@@ -200,7 +231,7 @@ public class AdminController {
         adminNameDisplay.setText(sessionManager.getUser().getName());
     }
     private void updateCustomersCount(){
-        long userCount = userCountService.countUsersByRole(UserRole.User);
+        long userCount = userCountService.countUsersByRole(User);
         numberOfCustomers.setText(String.valueOf(userCount));
     }
 
@@ -213,6 +244,27 @@ public class AdminController {
 
         viewTitle.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getTitle()));
+
+        if (viewAuthor != null) {
+            viewAuthor.setCellValueFactory(cellData -> {
+                MediaItem item = cellData.getValue();
+                if (item instanceof Book book) {
+                    String author = book.getAuthor();
+                    return new SimpleStringProperty(author != null ? author : "");
+                }
+                return new SimpleStringProperty("");
+            });
+        }
+        if (viewIsbn != null) {
+            viewIsbn.setCellValueFactory(cellData -> {
+                MediaItem item = cellData.getValue();
+                if (item instanceof Book book) {
+                    String isbn = book.getIsbn();
+                    return new SimpleStringProperty(isbn != null ? isbn : "");
+                }
+                return new SimpleStringProperty("");
+            });
+        }
 
         viewIsBorrowd.setCellValueFactory(cellData ->
                 new SimpleBooleanProperty(cellData.getValue().isBorrowed()));
@@ -228,8 +280,22 @@ public class AdminController {
 
         viewDueToDate.setCellValueFactory(cellData ->
                 new SimpleObjectProperty<>(cellData.getValue().getDueDate()));
-    }
 
+        if (viewType != null) {
+            viewType.setCellValueFactory(cellData ->
+                    new SimpleStringProperty(cellData.getValue().getMediaType().name()));
+        }
+
+        if (usersNamesCombo != null) {
+            var users = getAllUsersService.getAllUsers()
+                    .stream()
+                    .filter(u -> u.getUserRole() == UserRole.User)
+                    .map(Entity.User::getName)
+                    .toList();
+            usersNamesCombo.setItems(FXCollections.observableArrayList(users));
+        }
+
+    }
 
 
 
@@ -254,13 +320,18 @@ public class AdminController {
         viewItemPage.setVisible(false);
         addBookPage.setVisible(false);
         addCdPage.setVisible(false);
+        unregisterPage.setVisible(false);
 
     }
 
 
     @FXML
     void searchButton(ActionEvent event) {
+        String keyword = itemSearch.getText();
+        String mode = searchList.getValue();
 
+        var items = mediaItemSearchService.searchByMode(mode, keyword);
+        itemTable.setItems(FXCollections.observableArrayList(items));
     }
 
     @FXML
@@ -346,8 +417,6 @@ public class AdminController {
         adminBroadcastNotifier.sendToAll(message);
         emailMessage.clear();
         System.out.println("Broadcast email sent.");
-
-
     }
 
     @FXML
@@ -391,8 +460,50 @@ public class AdminController {
         System.out.println("CD added: " + title);
         errorLabelAddCd.setText("CD added successfully!");
         addCdTitle.clear();
+    }
+    @FXML
+    void unregisterUserPageButton (ActionEvent event) {
+        setAllVisibleFalse();
+        unregisterPage.setVisible(true);
 
     }
+    @FXML
+    void unregisterButton(ActionEvent event) {
+        Object selected = usersNamesCombo.getValue();
+        if (selected == null) {
+            unregisterLable.setText("Please select a user to unregister.");
+            unregisterLable.setStyle("-fx-text-fill: #dc2626; -fx-font-weight: bold;");
+            return;
+        }
+
+        String userName = selected.toString();
+        try {
+            var userOpt = getAllUsersService.getAllUsers().stream()
+                    .filter(u -> u.getName().equalsIgnoreCase(userName))
+                    .findFirst();
+
+            if (userOpt.isEmpty()) {
+                unregisterLable.setText("User not found: " + userName);
+                unregisterLable.setStyle("-fx-text-fill: #dc2626; -fx-font-weight: bold;");
+                return;
+            }
+
+            unregisterUserService.unregisterUser(userOpt.get());
+            unregisterLable.setText("User '" + userName + "' unregistered successfully!");
+            unregisterLable.setStyle("-fx-text-fill: #16a34a; -fx-font-weight: bold;");
+            usersNamesCombo.getItems().remove(userName);
+
+        } catch (IllegalStateException e) {
+            unregisterLable.setText("Cannot unregister user: " + e.getMessage());
+            unregisterLable.setStyle("-fx-text-fill: #dc2626; -fx-font-weight: bold;");
+        } catch (Exception e) {
+            unregisterLable.setText("Unexpected error occurred while unregistering.");
+            unregisterLable.setStyle("-fx-text-fill: #dc2626; -fx-font-weight: bold;");
+            e.printStackTrace();
+        }
+    }
+
+
 
 
 }
