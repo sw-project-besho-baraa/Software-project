@@ -39,32 +39,3 @@ public class Main extends javafx.application.Application {
     }
 }
 
-//@Component
-//class DataLoader implements CommandLineRunner
-//{
-//
-//    private final UserRepository userRepo;
-//    private final CdRepository cdRepo;
-//    public DataLoader(UserRepository userRepo, BookRepository bookRepo, CdRepository cdRepo)
-//    {
-//        this.userRepo = userRepo;
-//        this.cdRepo = cdRepo;
-//        // this.itemRepo = itemRepo;
-//    }
-//
-//    @Override
-//    @Transactional
-//    public void run(String... args) throws Exception
-//    {
-//        User user = new User("Alice", "alice@exadmsfsdffdfdspsfdsfdfffle.com", "SDf");
-//        user.setUserRole(UserRole.User);
-//
-//        Cd cd = new Cd("The Dark Tower");
-//
-//        // cd.setBorrower(user);
-//        cd.setBorrowed(false);
-//        cdRepo.save(cd);
-//        // user.getBorrowedItems().add(cd);
-//        // userRepo.save(user);
-//    }
-//}
