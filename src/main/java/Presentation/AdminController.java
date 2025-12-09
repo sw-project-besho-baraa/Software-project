@@ -157,10 +157,10 @@ public class AdminController
     @Autowired
     public AdminController(LogoutService logoutService, FxmlNavigator fxmlNavigator, BooksService bookCountService,
             CdCountService cdCountService, UserCountService userCountService, AddUserService addUserService,
-            LocalSessionManager sessionManager, MediaItemService mediaItemService,
-             AllCdService allCdService, OverdueBorrowNotifier overdueBorrowNotifier,
-            AdminBroadcastNotifier adminBroadcastNotifier, MediaItemSearchService mediaItemSearchService,
-            UnregisterUserService unregisterUserService, GetAllUsersService getAllUsersService)
+            LocalSessionManager sessionManager, MediaItemService mediaItemService, AllCdService allCdService,
+            OverdueBorrowNotifier overdueBorrowNotifier, AdminBroadcastNotifier adminBroadcastNotifier,
+            MediaItemSearchService mediaItemSearchService, UnregisterUserService unregisterUserService,
+            GetAllUsersService getAllUsersService)
     {
         this.logoutService = logoutService;
         this.fxmlNavigator = fxmlNavigator;

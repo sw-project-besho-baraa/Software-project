@@ -21,9 +21,10 @@ public class ReturnItemService
 
     @Transactional
     public void returnItem(@NonNull User user,@NonNull MediaItem item)
-    {   
-        if(!user.getBorrowedItems().contains(item)){
-           throw new ItemNotBorrowedByUserException("User has not borrowed the provided item.");
+    {
+        if (!user.getBorrowedItems().contains(item))
+        {
+            throw new ItemNotBorrowedByUserException("User has not borrowed the provided item.");
         }
         item.setBorrowed(false);
         item.setBorrowedDate(null);

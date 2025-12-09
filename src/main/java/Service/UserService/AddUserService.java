@@ -12,8 +12,8 @@ import Enum.UserRole;
 @Service
 public class AddUserService
 {
-   private final UserRepository userRepository;
-   private final IHashingPassword hashingPassword;
+    private final UserRepository userRepository;
+    private final IHashingPassword hashingPassword;
     public AddUserService(UserRepository userRepository, BCryptHashingPassword hashingPassword)
     {
         this.userRepository = userRepository;

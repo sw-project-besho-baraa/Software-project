@@ -2,7 +2,7 @@ package Presentation;
 
 import Entity.Book;
 import Entity.MediaItem;
-import Service.BookService.AllBookService;
+import Service.MediaItem.MediaItemService;
 import Service.BookService.BooksService;
 import Service.CDService.AllCdService;
 import Service.CDService.CdCountService;
@@ -25,6 +25,7 @@ import javafx.scene.layout.AnchorPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -39,7 +40,7 @@ public class LibrarianController
     private final LocalSessionManager sessionManager;
     private final BooksService bookCountService;
     private final CdCountService cdCountService;
-    private final AllBookService allBookService;
+    private final MediaItemService mediaItemService;
     private final AllCdService allCdService;
     private final MediaItemSearchService mediaItemSearchService;
     private final UserCountService userCountService;
@@ -48,17 +49,17 @@ public class LibrarianController
 
     @Autowired
     public LibrarianController(LogoutService logoutService, FxmlNavigator fxmlNavigator,
-                               LocalSessionManager sessionManager, BooksService bookCountService, CdCountService cdCountService,
-                               AllBookService allBookService, AllCdService allCdService, MediaItemSearchService mediaItemSearchService,
-                               UserCountService userCountService, OverDueCountService overDueCountService,
-                               OverdueItemDetector overdueItemDetector)
+            LocalSessionManager sessionManager, BooksService bookCountService, CdCountService cdCountService,
+            MediaItemService mediaItemService, AllCdService allCdService, MediaItemSearchService mediaItemSearchService,
+            UserCountService userCountService, OverDueCountService overDueCountService,
+            OverdueItemDetector overdueItemDetector)
     {
         this.logoutService = logoutService;
         this.fxmlNavigator = fxmlNavigator;
         this.sessionManager = sessionManager;
         this.bookCountService = bookCountService;
         this.cdCountService = cdCountService;
-        this.allBookService = allBookService;
+        this.mediaItemService = mediaItemService;
         this.allCdService = allCdService;
         this.mediaItemSearchService = mediaItemSearchService;
         this.userCountService = userCountService;
@@ -106,10 +107,10 @@ public class LibrarianController
     private TableColumn<MediaItem, String> viewAuthor;
 
     @FXML
-    private TableColumn<MediaItem, Date> viewBorrowedDate;
+    private TableColumn<MediaItem, LocalDateTime> viewBorrowedDate;
 
     @FXML
-    private TableColumn<MediaItem, Date> viewDueToDate;
+    private TableColumn<MediaItem, LocalDateTime> viewDueToDate;
 
     @FXML
     private TableColumn<MediaItem, Integer> viewId;
@@ -289,9 +290,7 @@ public class LibrarianController
     @FXML
     void viewAllButton(ActionEvent event)
     {
-        var allItems = new ArrayList<MediaItem>();
-        allItems.addAll(allBookService.getAllBooks());
-        allItems.addAll(allCdService.getAllCds());
+        var allItems = mediaItemService.getAllItems();
         itemTable.setItems(FXCollections.observableArrayList(allItems));
     }
 

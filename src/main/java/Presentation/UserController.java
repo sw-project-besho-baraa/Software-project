@@ -8,7 +8,7 @@ import Service.BorrowService;
 import Service.Fine.FineService;
 import Service.ReturnItemService;
 import Service.LogoutService;
-import Service.BookService.AllBookService;
+import Service.MediaItem.MediaItemService;
 import Service.CDService.AllCdService;
 import Service.MediaItem.MediaItemSearchService;
 import Service.UserService.GetUserBalanceService;
@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -90,10 +91,10 @@ public class UserController
     private TableColumn<MediaItem, String> viewAuthor;
 
     @FXML
-    private TableColumn<MediaItem, Date> viewBorrowedDate;
+    private TableColumn<MediaItem, LocalDateTime> viewBorrowedDate;
 
     @FXML
-    private TableColumn<MediaItem, Date> viewDueToDate;
+    private TableColumn<MediaItem, LocalDateTime> viewDueToDate;
 
     @FXML
     private TableColumn<MediaItem, Integer> viewId;
@@ -116,7 +117,7 @@ public class UserController
     private final LogoutService logoutService;
     private final FxmlNavigator fxmlNavigator;
     private final MediaItemSearchService mediaItemSearchService;
-    private final AllBookService allBookService;
+    private final MediaItemService mediaItemService;
     private final AllCdService allCdService;
     private final LocalSessionManager sessionManager;
     private final BorrowService borrowService;
@@ -128,7 +129,7 @@ public class UserController
 
     @Autowired
     public UserController(LogoutService logoutService, FxmlNavigator fxmlNavigator,
-            MediaItemSearchService mediaItemSearchService, AllBookService allBookService, AllCdService allCdService,
+            MediaItemSearchService mediaItemSearchService, MediaItemService mediaItemService, AllCdService allCdService,
             LocalSessionManager sessionManager, BorrowService borrowService, ReturnItemService returnService,
             UserBorrowedItemsService userBorrowedItemsService, UserRepository userRepository,
             GetUserBalanceService getUserBalanceService, FineService fineService)
@@ -136,7 +137,7 @@ public class UserController
         this.logoutService = logoutService;
         this.fxmlNavigator = fxmlNavigator;
         this.mediaItemSearchService = mediaItemSearchService;
-        this.allBookService = allBookService;
+        this.mediaItemService = mediaItemService;
         this.allCdService = allCdService;
         this.sessionManager = sessionManager;
         this.borrowService = borrowService;
@@ -293,7 +294,7 @@ public class UserController
             return;
 
         int borrowedCount = userBorrowedItemsService.countBorrowedItems(sessionUser);
-        var currentTime=new CurrentLocalDateTimeResolver();
+        var currentTime = new CurrentLocalDateTimeResolver();
         long overdueCount = userBorrowedItemsService.countOverdueItems(sessionUser,currentTime);
 
         if (numberOfBooks != null)
@@ -557,9 +558,7 @@ public class UserController
         if (itemTable == null)
             return;
 
-        var allItems = new java.util.ArrayList<MediaItem>();
-        allItems.addAll(allBookService.getAllBooks());
-        allItems.addAll(allCdService.getAllCds());
+        var allItems = mediaItemService.getAllItems();
         itemTable.setItems(FXCollections.observableArrayList(allItems));
     }
 }

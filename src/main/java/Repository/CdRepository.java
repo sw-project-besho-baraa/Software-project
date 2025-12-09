@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CdRepository extends  JpaRepository<@NonNull Cd, @NonNull String>
+public interface CdRepository extends JpaRepository<@NonNull Cd, @NonNull String>
 {
     long count();
 

@@ -1,19 +1,24 @@
 package Exception;
 
-public class ItemNotBorrowedByUserException extends RuntimeException {
-    public ItemNotBorrowedByUserException() {
+public class ItemNotBorrowedByUserException extends RuntimeException
+{
+    public ItemNotBorrowedByUserException()
+    {
         super();
     }
 
-    public ItemNotBorrowedByUserException(String message) {
+    public ItemNotBorrowedByUserException(String message)
+    {
         super(message);
     }
 
-    public ItemNotBorrowedByUserException(String message, Throwable cause) {
+    public ItemNotBorrowedByUserException(String message, Throwable cause)
+    {
         super(message, cause);
     }
 
-    public ItemNotBorrowedByUserException(Throwable cause) {
+    public ItemNotBorrowedByUserException(Throwable cause)
+    {
         super(cause);
     }
 }

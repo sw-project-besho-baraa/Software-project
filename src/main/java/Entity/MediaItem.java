@@ -29,6 +29,7 @@ public abstract class MediaItem
     private LocalDateTime borrowedDate;
 
     private LocalDateTime dueDate;
+    private LocalDateTime lastTimeFineCalculated;
 
     public MediaItem()
     {
@@ -44,6 +45,6 @@ public abstract class MediaItem
     @PrePersist
     protected void onCreate()
     {
-        borrowedDate =  LocalDateTime.now();
+        borrowedDate = LocalDateTime.now();
     }
 }

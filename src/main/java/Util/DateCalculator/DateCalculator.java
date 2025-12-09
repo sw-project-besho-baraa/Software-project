@@ -16,9 +16,9 @@ public class DateCalculator
         return dateTime.plusDays(days);
     }
 
-    public static long daysDifference(LocalDateTime date1, LocalDateTime date2)
+    public static long daysDifference(LocalDateTime date1,LocalDateTime date2)
     {
 
-        return ChronoUnit.DAYS.between(date1.toLocalDate(), date2.toLocalDate());
+        return ChronoUnit.DAYS.between(date1.toLocalDate(),date2.toLocalDate());
     }
 }

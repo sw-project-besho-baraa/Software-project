@@ -39,10 +39,10 @@ public class User
     @Column(name = "fine_balance", precision = 10, scale = 2, columnDefinition = "DECIMAL(10,2) DEFAULT 0.00")
     private BigDecimal fineBalance = BigDecimal.ZERO;
 
-    @OneToMany(mappedBy = "borrower", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "borrower", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<MediaItem> borrowedItems = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<FineHistory> fineHistoryList = new ArrayList<>();
 
     public void increaseFine(@NonNull BigDecimal amount)
@@ -84,6 +84,6 @@ public class User
     @PrePersist
     protected void onCreate()
     {
-        creationDate =  LocalDateTime.now();
+        creationDate = LocalDateTime.now();
     }
 }
