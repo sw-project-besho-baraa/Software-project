@@ -2,15 +2,15 @@ package Presentation;
 
 import Entity.Book;
 import Entity.MediaItem;
-import Service.BookService.AllBookService;
-import Service.BookService.BookCountService;
+import Service.MediaItem.MediaItemService;
+import Service.BookService.BooksService;
 import Service.CDService.AllCdService;
 import Service.CDService.CdCountService;
 import Service.LogoutService;
 import Service.MediaItem.MediaItemSearchService;
 import Service.MediaItem.OverDueCountService;
-import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItem;
-import Service.MediaItem.OverdueBorrowDetection.OverdueItemDetector;
+import Service.OverdueBorrowDetection.OverdueBorrowedItem;
+import Service.OverdueBorrowDetection.OverdueItemDetector;
 import Service.UserService.UserCountService;
 import Session.LocalSessionManager;
 import Util.FxmlNavigator.FxmlNavigator;
@@ -25,20 +25,22 @@ import javafx.scene.layout.AnchorPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
 import static Enum.UserRole.User;
 
 @Component
-public class LibrarianController {
+public class LibrarianController
+{
 
     private final LogoutService logoutService;
     private final FxmlNavigator fxmlNavigator;
     private final LocalSessionManager sessionManager;
-    private final BookCountService bookCountService;
+    private final BooksService bookCountService;
     private final CdCountService cdCountService;
-    private final AllBookService allBookService;
+    private final MediaItemService mediaItemService;
     private final AllCdService allCdService;
     private final MediaItemSearchService mediaItemSearchService;
     private final UserCountService userCountService;
@@ -46,23 +48,18 @@ public class LibrarianController {
     private final OverdueItemDetector overdueItemDetector;
 
     @Autowired
-    public LibrarianController(LogoutService logoutService,
-                               FxmlNavigator fxmlNavigator,
-                               LocalSessionManager sessionManager,
-                               BookCountService bookCountService,
-                               CdCountService cdCountService,
-                               AllBookService allBookService,
-                               AllCdService allCdService,
-                               MediaItemSearchService mediaItemSearchService,
-                               UserCountService userCountService,
-                               OverDueCountService overDueCountService,
-                               OverdueItemDetector overdueItemDetector) {
+    public LibrarianController(LogoutService logoutService, FxmlNavigator fxmlNavigator,
+            LocalSessionManager sessionManager, BooksService bookCountService, CdCountService cdCountService,
+            MediaItemService mediaItemService, AllCdService allCdService, MediaItemSearchService mediaItemSearchService,
+            UserCountService userCountService, OverDueCountService overDueCountService,
+            OverdueItemDetector overdueItemDetector)
+    {
         this.logoutService = logoutService;
         this.fxmlNavigator = fxmlNavigator;
         this.sessionManager = sessionManager;
         this.bookCountService = bookCountService;
         this.cdCountService = cdCountService;
-        this.allBookService = allBookService;
+        this.mediaItemService = mediaItemService;
         this.allCdService = allCdService;
         this.mediaItemSearchService = mediaItemSearchService;
         this.userCountService = userCountService;
@@ -110,10 +107,10 @@ public class LibrarianController {
     private TableColumn<MediaItem, String> viewAuthor;
 
     @FXML
-    private TableColumn<MediaItem, Date> viewBorrowedDate;
+    private TableColumn<MediaItem, LocalDateTime> viewBorrowedDate;
 
     @FXML
-    private TableColumn<MediaItem, Date> viewDueToDate;
+    private TableColumn<MediaItem, LocalDateTime> viewDueToDate;
 
     @FXML
     private TableColumn<MediaItem, Integer> viewId;
@@ -134,7 +131,8 @@ public class LibrarianController {
     private TableColumn<MediaItem, String> viewUser;
 
     @FXML
-    private void initialize() {
+    private void initialize()
+    {
         setUserNameDisplay();
         updateBookCount();
         updateOverdueCount();
@@ -144,51 +142,56 @@ public class LibrarianController {
         showHomePage();
     }
 
-    private void setUserNameDisplay() {
-        if (sessionManager != null && sessionManager.getUser() != null) {
+    private void setUserNameDisplay()
+    {
+        if (sessionManager != null && sessionManager.getUser() != null)
+        {
             userNameTestField.setText(sessionManager.getUser().getName());
         }
     }
 
-    private void updateBookCount() {
+    private void updateBookCount()
+    {
         long bookCount = bookCountService.countBooks();
         numberOfBooks.setText(String.valueOf(bookCount));
     }
 
-    private void updateOverdueCount() {
+    private void updateOverdueCount()
+    {
         long overdue = overDueCountService.countOverdueItems();
         numberOfOverDue.setText(String.valueOf(overdue));
     }
 
-    private void updateCustomersCount() {
+    private void updateCustomersCount()
+    {
         long userCount = userCountService.countUsersByRole(User);
         numberOfCustomers.setText(String.valueOf(userCount));
     }
 
-    private void setupSearchList() {
-        if (searchList != null) {
-            searchList.setItems(FXCollections.observableArrayList(
-                    "Title (Books & CDs)",
-                    "Book Author",
-                    "Book ISBN"
-            ));
+    private void setupSearchList()
+    {
+        if (searchList != null)
+        {
+            searchList.setItems(FXCollections.observableArrayList("Title (Books & CDs)","Book Author","Book ISBN"));
             searchList.setValue("Title (Books & CDs)");
         }
     }
 
-    private void setupViewTable() {
-        if (itemTable == null) return;
+    private void setupViewTable()
+    {
+        if (itemTable == null)
+            return;
 
-        viewId.setCellValueFactory(cellData ->
-                new SimpleObjectProperty<>(cellData.getValue().getId()));
+        viewId.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getId()));
 
-        viewTitle.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getTitle()));
+        viewTitle.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
 
-        if (viewAuthor != null) {
+        if (viewAuthor != null)
+        {
             viewAuthor.setCellValueFactory(cellData -> {
                 MediaItem item = cellData.getValue();
-                if (item instanceof Book book) {
+                if (item instanceof Book book)
+                {
                     String author = book.getAuthor();
                     return new SimpleStringProperty(author != null ? author : "");
                 }
@@ -196,10 +199,12 @@ public class LibrarianController {
             });
         }
 
-        if (viewIsbn != null) {
+        if (viewIsbn != null)
+        {
             viewIsbn.setCellValueFactory(cellData -> {
                 MediaItem item = cellData.getValue();
-                if (item instanceof Book book) {
+                if (item instanceof Book book)
+                {
                     String isbn = book.getIsbn();
                     return new SimpleStringProperty(isbn != null ? isbn : "");
                 }
@@ -207,8 +212,7 @@ public class LibrarianController {
             });
         }
 
-        viewIsBorrowd.setCellValueFactory(cellData ->
-                new SimpleBooleanProperty(cellData.getValue().isBorrowed()));
+        viewIsBorrowd.setCellValueFactory(cellData -> new SimpleBooleanProperty(cellData.getValue().isBorrowed()));
 
         viewUser.setCellValueFactory(cellData -> {
             var borrower = cellData.getValue().getBorrower();
@@ -216,40 +220,45 @@ public class LibrarianController {
             return new SimpleStringProperty(name);
         });
 
-        viewBorrowedDate.setCellValueFactory(cellData ->
-                new SimpleObjectProperty<>(cellData.getValue().getBorrowedDate()));
+        viewBorrowedDate
+                .setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getBorrowedDate()));
 
-        viewDueToDate.setCellValueFactory(cellData ->
-                new SimpleObjectProperty<>(cellData.getValue().getDueDate()));
+        viewDueToDate.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDueDate()));
 
-        if (viewType != null) {
-            viewType.setCellValueFactory(cellData ->
-                    new SimpleStringProperty(cellData.getValue().getMediaType().name()));
+        if (viewType != null)
+        {
+            viewType.setCellValueFactory(
+                    cellData -> new SimpleStringProperty(cellData.getValue().getMediaType().name()));
         }
     }
 
-    private void showHomePage() {
-        if (homePage != null) homePage.setVisible(true);
-        if (searchPage != null) searchPage.setVisible(false);
+    private void showHomePage()
+    {
+        if (homePage != null)
+            homePage.setVisible(true);
+        if (searchPage != null)
+            searchPage.setVisible(false);
     }
 
-    private void showSearchPage() {
-        if (homePage != null) homePage.setVisible(false);
-        if (searchPage != null) searchPage.setVisible(true);
+    private void showSearchPage()
+    {
+        if (homePage != null)
+            homePage.setVisible(false);
+        if (searchPage != null)
+            searchPage.setVisible(true);
     }
 
     @FXML
-    void detectOverDue(ActionEvent event) {
+    void detectOverDue(ActionEvent event)
+    {
         var detected = overdueItemDetector.detectUsersWithOverdueBooks();
-        var overdueItems = detected.stream()
-                .flatMap(d -> d.items().stream())
-                .map(OverdueBorrowedItem::item)
-                .toList();
+        var overdueItems = detected.stream().flatMap(d -> d.items().stream()).map(OverdueBorrowedItem::item).toList();
         itemTable.setItems(FXCollections.observableArrayList(overdueItems));
     }
 
     @FXML
-    void homeButtonClick(ActionEvent event) {
+    void homeButtonClick(ActionEvent event)
+    {
         showHomePage();
         updateBookCount();
         updateOverdueCount();
@@ -257,37 +266,37 @@ public class LibrarianController {
     }
 
     @FXML
-    void logoutButton(ActionEvent event) {
+    void logoutButton(ActionEvent event)
+    {
         logoutService.logout();
-        fxmlNavigator.logout(
-                (javafx.stage.Stage) logoutButton.getScene().getWindow(),
-                "/fxml/Login.fxml"
-        );
+        fxmlNavigator.logout((javafx.stage.Stage) logoutButton.getScene().getWindow(),"/fxml/Login.fxml");
     }
 
     @FXML
-    void searchButton(ActionEvent event) {
+    void searchButton(ActionEvent event)
+    {
         showSearchPage();
     }
 
     @FXML
-    void searchByButton(ActionEvent event) {
+    void searchByButton(ActionEvent event)
+    {
         String keyword = searchBar.getText();
         String mode = searchList.getValue();
-        var items = mediaItemSearchService.searchByMode(mode, keyword);
+        var items = mediaItemSearchService.searchByMode(mode,keyword);
         itemTable.setItems(FXCollections.observableArrayList(items));
     }
 
     @FXML
-    void viewAllButton(ActionEvent event) {
-        var allItems = new ArrayList<MediaItem>();
-        allItems.addAll(allBookService.getAllBooks());
-        allItems.addAll(allCdService.getAllCds());
+    void viewAllButton(ActionEvent event)
+    {
+        var allItems = mediaItemService.getAllItems();
         itemTable.setItems(FXCollections.observableArrayList(allItems));
     }
 
     @FXML
-    void applyFineOnItem(ActionEvent event) {
+    void applyFineOnItem(ActionEvent event)
+    {
 
     }
 }

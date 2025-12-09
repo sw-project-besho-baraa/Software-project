@@ -15,21 +15,24 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class OverdueItemDetector_Test {
+public class OverdueItemDetector_Test
+{
 
     private AllBookService allBookService;
     private AllCdService allCdService;
     private OverdueItemDetector detector;
 
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         allBookService = mock(AllBookService.class);
         allCdService = mock(AllCdService.class);
         detector = new OverdueItemDetector(allBookService, allCdService);
     }
 
     @Test
-    void detectUsersWithOverdueBooks_noItems_returnsEmptyList() {
+    void detectUsersWithOverdueBooks_noItems_returnsEmptyList()
+    {
         when(allBookService.getAllBooks()).thenReturn(Collections.emptyList());
         when(allCdService.getAllCds()).thenReturn(Collections.emptyList());
         var result = detector.detectUsersWithOverdueBooks();
@@ -38,7 +41,8 @@ public class OverdueItemDetector_Test {
     }
 
     @Test
-    void detectUsersWithOverdueBooks_ignoresNotBorrowedAndFutureOrNullDueDates() {
+    void detectUsersWithOverdueBooks_ignoresNotBorrowedAndFutureOrNullDueDates()
+    {
         MediaItem notBorrowed = mock(MediaItem.class);
         when(notBorrowed.isBorrowed()).thenReturn(false);
         MediaItem borrowedNoDueDate = mock(MediaItem.class);
@@ -48,14 +52,15 @@ public class OverdueItemDetector_Test {
         when(borrowedFutureDue.isBorrowed()).thenReturn(true);
         when(borrowedFutureDue.getDueDate()).thenReturn(new Date(System.currentTimeMillis() + 60_000));
         when(allBookService.getAllBooks()).thenReturn((List) List.of(notBorrowed));
-        when(allCdService.getAllCds()).thenReturn((List) List.of(borrowedNoDueDate, borrowedFutureDue));
+        when(allCdService.getAllCds()).thenReturn((List) List.of(borrowedNoDueDate,borrowedFutureDue));
         var result = detector.detectUsersWithOverdueBooks();
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
 
     @Test
-    void detectUsersWithOverdueBooks_ignoresOverdueItemsWithNullBorrower() {
+    void detectUsersWithOverdueBooks_ignoresOverdueItemsWithNullBorrower()
+    {
         MediaItem overdue = mock(MediaItem.class);
         when(overdue.isBorrowed()).thenReturn(true);
         when(overdue.getDueDate()).thenReturn(new Date(System.currentTimeMillis() - 60_000));
@@ -68,7 +73,8 @@ public class OverdueItemDetector_Test {
     }
 
     @Test
-    void detectUsersWithOverdueBooks_singleOverdueItem_createsOneEntry() {
+    void detectUsersWithOverdueBooks_singleOverdueItem_createsOneEntry()
+    {
         User user = new User();
         user.setId(1);
         user.setEmail("u@test.com");
@@ -80,11 +86,12 @@ public class OverdueItemDetector_Test {
         when(allBookService.getAllBooks()).thenReturn((List) List.of(overdue));
         when(allCdService.getAllCds()).thenReturn(Collections.emptyList());
         var result = detector.detectUsersWithOverdueBooks();
-        assertEquals(1, result.size());
+        assertEquals(1,result.size());
     }
 
     @Test
-    void detectUsersWithOverdueBooks_overdueToday_stillCreatesEntry() {
+    void detectUsersWithOverdueBooks_overdueToday_stillCreatesEntry()
+    {
         User user = new User();
         user.setId(2);
         user.setEmail("today@test.com");
@@ -96,11 +103,12 @@ public class OverdueItemDetector_Test {
         when(allBookService.getAllBooks()).thenReturn((List) List.of(overdueToday));
         when(allCdService.getAllCds()).thenReturn(Collections.emptyList());
         var result = detector.detectUsersWithOverdueBooks();
-        assertEquals(1, result.size());
+        assertEquals(1,result.size());
     }
 
     @Test
-    void detectUsersWithOverdueBooks_multipleOverdueItemsSameUser_groupedInSingleEntry() {
+    void detectUsersWithOverdueBooks_multipleOverdueItemsSameUser_groupedInSingleEntry()
+    {
         User user = new User();
         user.setId(3);
         user.setEmail("multi@test.com");
@@ -116,6 +124,6 @@ public class OverdueItemDetector_Test {
         when(allBookService.getAllBooks()).thenReturn((List) List.of(overdue1));
         when(allCdService.getAllCds()).thenReturn((List) List.of(overdue2));
         var result = detector.detectUsersWithOverdueBooks();
-        assertEquals(1, result.size());
+        assertEquals(1,result.size());
     }
 }

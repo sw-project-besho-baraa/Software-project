@@ -7,15 +7,17 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class BookCountService_Test {
+public class BookCountService_Test
+{
 
     @Test
-    void countBooks_returnsRepositoryCount() {
+    void countBooks_returnsRepositoryCount()
+    {
         BookRepository repo = mock(BookRepository.class);
         when(repo.count()).thenReturn(10L);
 
         BookCountService service = new BookCountService(repo);
-        assertEquals(10L, service.countBooks());
+        assertEquals(10L,service.countBooks());
         verify(repo).count();
     }
 }

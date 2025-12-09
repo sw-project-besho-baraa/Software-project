@@ -1,14 +1,17 @@
 package Entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
 @Getter
 @Setter
 @Entity
 @Table(name = "fine_history")
 @NoArgsConstructor
-public class FineHistory {
+public class FineHistory
+{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +28,8 @@ public class FineHistory {
     @Column(name = "applied_date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date appliedDate;
 
-    public FineHistory(User user, BigDecimal fineAmount) {
+    public FineHistory(User user, BigDecimal fineAmount)
+    {
         this.user = user;
         this.fineAmount = fineAmount;
         this.appliedDate = new Date();

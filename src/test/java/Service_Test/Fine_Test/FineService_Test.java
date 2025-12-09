@@ -17,7 +17,8 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class FineService_Test {
+public class FineService_Test
+{
 
     private UserRepository userRepository;
     private FineHistoryRepository fineHistoryRepository;
@@ -25,7 +26,8 @@ public class FineService_Test {
     private FineService fineService;
 
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         userRepository = mock(UserRepository.class);
         fineHistoryRepository = mock(FineHistoryRepository.class);
         amountValidator = mock(AmountValidator.class);
@@ -33,28 +35,31 @@ public class FineService_Test {
     }
 
     @Test
-    void calculateFine_returnsZero_whenItemIsNull() {
-        BigDecimal result = fineService.calculateFine(null, 5);
-        assertEquals(BigDecimal.ZERO, result);
+    void calculateFine_returnsZero_whenItemIsNull()
+    {
+        BigDecimal result = fineService.calculateFine(null,5);
+        assertEquals(BigDecimal.ZERO,result);
     }
 
     @Test
-    void calculateFine_returnsZero_whenOverdueDaysNotPositive() {
+    void calculateFine_returnsZero_whenOverdueDaysNotPositive()
+    {
         MediaItem item = mock(MediaItem.class);
         when(item.getMediaType()).thenReturn(MediaItemType.Book);
-        BigDecimal result = fineService.calculateFine(item, 0);
-        assertEquals(BigDecimal.ZERO, result);
+        BigDecimal result = fineService.calculateFine(item,0);
+        assertEquals(BigDecimal.ZERO,result);
     }
 
     @Test
-    void calculateFine_bookAndCd_positiveDays_returnsExpectedValues() {
+    void calculateFine_bookAndCd_positiveDays_returnsExpectedValues()
+    {
         MediaItem book = mock(MediaItem.class);
         when(book.getMediaType()).thenReturn(MediaItemType.Book);
-        BigDecimal bookFine = fineService.calculateFine(book, 3);
+        BigDecimal bookFine = fineService.calculateFine(book,3);
 
         MediaItem cd = mock(MediaItem.class);
         when(cd.getMediaType()).thenReturn(MediaItemType.Cd);
-        BigDecimal cdFine = fineService.calculateFine(cd, 2);
+        BigDecimal cdFine = fineService.calculateFine(cd,2);
 
         assertNotNull(bookFine);
         assertNotNull(cdFine);
@@ -63,105 +68,115 @@ public class FineService_Test {
     }
 
     @Test
-    void applyFine_zeroFine_doesNotTouchRepositories() {
+    void applyFine_zeroFine_doesNotTouchRepositories()
+    {
         User user = mock(User.class);
         MediaItem item = mock(MediaItem.class);
         when(item.getMediaType()).thenReturn(MediaItemType.Book);
 
-        fineService.applyFine(user, item, 0);
+        fineService.applyFine(user,item,0);
 
-        verifyNoInteractions(fineHistoryRepository, userRepository);
+        verifyNoInteractions(fineHistoryRepository,userRepository);
     }
 
     @Test
-    void applyFine_positiveFine_updatesUserAndSavesHistory() {
+    void applyFine_positiveFine_updatesUserAndSavesHistory()
+    {
         User user = mock(User.class);
         MediaItem item = mock(MediaItem.class);
         when(item.getMediaType()).thenReturn(MediaItemType.Book);
 
-        fineService.applyFine(user, item, 1);
+        fineService.applyFine(user,item,1);
 
-        verify(user, times(1)).increaseFine(any(BigDecimal.class));
-        verify(fineHistoryRepository, times(1)).save(any(FineHistory.class));
-        verify(userRepository, times(1)).save(user);
+        verify(user,times(1)).increaseFine(any(BigDecimal.class));
+        verify(fineHistoryRepository,times(1)).save(any(FineHistory.class));
+        verify(userRepository,times(1)).save(user);
     }
 
     @Test
-    void payFine_throwsIllegalArgument_whenUserIsNull() {
-        assertThrows(IllegalArgumentException.class, () -> fineService.payFine(null, "10"));
+    void payFine_throwsIllegalArgument_whenUserIsNull()
+    {
+        assertThrows(IllegalArgumentException.class,() -> fineService.payFine(null,"10"));
     }
 
     @Test
-    void payFine_throwsIllegalArgument_whenParsedAmountIsNull() {
+    void payFine_throwsIllegalArgument_whenParsedAmountIsNull()
+    {
         User user = mock(User.class);
         when(amountValidator.validateAndParse("x")).thenReturn(null);
-        assertThrows(IllegalArgumentException.class, () -> fineService.payFine(user, "x"));
+        assertThrows(IllegalArgumentException.class,() -> fineService.payFine(user,"x"));
     }
 
     @Test
-    void payFine_throwsIllegalArgument_whenParsedAmountIsNotPositive() {
+    void payFine_throwsIllegalArgument_whenParsedAmountIsNotPositive()
+    {
         User user = mock(User.class);
         when(amountValidator.validateAndParse("0")).thenReturn(BigDecimal.ZERO);
-        assertThrows(IllegalArgumentException.class, () -> fineService.payFine(user, "0"));
+        assertThrows(IllegalArgumentException.class,() -> fineService.payFine(user,"0"));
     }
 
     @Test
-    void payFine_throwsIllegalState_whenUserHasNoBalance() {
+    void payFine_throwsIllegalState_whenUserHasNoBalance()
+    {
         User user = mock(User.class);
         when(user.getFineBalance()).thenReturn(BigDecimal.ZERO);
         when(amountValidator.validateAndParse("5")).thenReturn(BigDecimal.valueOf(5));
-        assertThrows(IllegalStateException.class, () -> fineService.payFine(user, "5"));
+        assertThrows(IllegalStateException.class,() -> fineService.payFine(user,"5"));
     }
 
     @Test
-    void payFine_throwsIllegalArgument_whenAmountGreaterThanBalance() {
+    void payFine_throwsIllegalArgument_whenAmountGreaterThanBalance()
+    {
         User user = mock(User.class);
         when(user.getFineBalance()).thenReturn(BigDecimal.valueOf(10));
         when(amountValidator.validateAndParse("20")).thenReturn(BigDecimal.valueOf(20));
-        assertThrows(IllegalArgumentException.class, () -> fineService.payFine(user, "20"));
+        assertThrows(IllegalArgumentException.class,() -> fineService.payFine(user,"20"));
     }
 
     @Test
-    void payFine_validAmount_decreasesFineAndSaves() {
+    void payFine_validAmount_decreasesFineAndSaves()
+    {
         User user = mock(User.class);
         when(user.getFineBalance()).thenReturn(BigDecimal.valueOf(50));
         when(amountValidator.validateAndParse("20")).thenReturn(BigDecimal.valueOf(20));
 
-        fineService.payFine(user, "20");
+        fineService.payFine(user,"20");
 
-        verify(user, times(1)).decreaseFine(BigDecimal.valueOf(20));
-        verify(userRepository, times(1)).save(user);
-        verify(fineHistoryRepository, times(1)).save(any(FineHistory.class));
+        verify(user,times(1)).decreaseFine(BigDecimal.valueOf(20));
+        verify(userRepository,times(1)).save(user);
+        verify(fineHistoryRepository,times(1)).save(any(FineHistory.class));
     }
 
     @Test
-    void payFineInternal_doesNothing_whenInvalidArgs() throws Exception {
-        Method m = FineService.class.getDeclaredMethod("payFineInternal", User.class, BigDecimal.class);
+    void payFineInternal_doesNothing_whenInvalidArgs() throws Exception
+    {
+        Method m = FineService.class.getDeclaredMethod("payFineInternal",User.class,BigDecimal.class);
         m.setAccessible(true);
 
         User user = mock(User.class);
 
-        m.invoke(fineService, user, BigDecimal.ZERO);
-        m.invoke(fineService, user, null);
-        m.invoke(fineService, null, BigDecimal.ONE);
+        m.invoke(fineService,user,BigDecimal.ZERO);
+        m.invoke(fineService,user,null);
+        m.invoke(fineService,null,BigDecimal.ONE);
 
-        verify(user, never()).decreaseFine(any());
-        verify(userRepository, never()).save(any());
-        verify(fineHistoryRepository, never()).save(any());
+        verify(user,never()).decreaseFine(any());
+        verify(userRepository,never()).save(any());
+        verify(fineHistoryRepository,never()).save(any());
     }
 
     @Test
-    void payFineInternal_validArgs_decreasesFineAndSaves() throws Exception {
-        Method m = FineService.class.getDeclaredMethod("payFineInternal", User.class, BigDecimal.class);
+    void payFineInternal_validArgs_decreasesFineAndSaves() throws Exception
+    {
+        Method m = FineService.class.getDeclaredMethod("payFineInternal",User.class,BigDecimal.class);
         m.setAccessible(true);
 
         User user = mock(User.class);
         BigDecimal amount = BigDecimal.valueOf(15);
 
-        m.invoke(fineService, user, amount);
+        m.invoke(fineService,user,amount);
 
-        verify(user, times(1)).decreaseFine(amount);
-        verify(userRepository, times(1)).save(user);
-        verify(fineHistoryRepository, times(1)).save(any(FineHistory.class));
+        verify(user,times(1)).decreaseFine(amount);
+        verify(userRepository,times(1)).save(user);
+        verify(fineHistoryRepository,times(1)).save(any(FineHistory.class));
     }
 }

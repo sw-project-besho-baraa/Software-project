@@ -15,46 +15,54 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class BorrowService_Test {
+public class BorrowService_Test
+{
 
     private UserRepository userRepository;
     private BorrowValidator borrowValidator;
     private BorrowService borrowService;
 
-    private static class TestMediaItem extends MediaItem {
-        public TestMediaItem() {
+    private static class TestMediaItem extends MediaItem
+    {
+        public TestMediaItem()
+        {
             super("Test");
         }
 
         @Override
-        public MediaItemType getMediaType() {
+        public MediaItemType getMediaType()
+        {
             return MediaItemType.Book;
         }
     }
 
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         userRepository = mock(UserRepository.class);
         borrowValidator = mock(BorrowValidator.class);
         borrowService = new BorrowService(userRepository, borrowValidator);
     }
 
     @Test
-    void borrow_throwsNullPointer_whenSessionUserIsNull() {
+    void borrow_throwsNullPointer_whenSessionUserIsNull()
+    {
         TestMediaItem item = new TestMediaItem();
         item.setId(1);
-        assertThrows(NullPointerException.class, () -> borrowService.borrow(null, item));
+        assertThrows(NullPointerException.class,() -> borrowService.borrow(null,item));
     }
 
     @Test
-    void borrow_throwsNullPointer_whenItemIsNull() {
+    void borrow_throwsNullPointer_whenItemIsNull()
+    {
         User sessionUser = new User();
         sessionUser.setId(1);
-        assertThrows(NullPointerException.class, () -> borrowService.borrow(sessionUser, null));
+        assertThrows(NullPointerException.class,() -> borrowService.borrow(sessionUser,null));
     }
 
     @Test
-    void borrow_throwsIllegalState_whenUserNotFound() {
+    void borrow_throwsIllegalState_whenUserNotFound()
+    {
         User sessionUser = new User();
         sessionUser.setId(2);
 
@@ -63,11 +71,12 @@ public class BorrowService_Test {
 
         when(userRepository.findById(2)).thenReturn(Optional.empty());
 
-        assertThrows(IllegalStateException.class, () -> borrowService.borrow(sessionUser, item));
+        assertThrows(IllegalStateException.class,() -> borrowService.borrow(sessionUser,item));
     }
 
     @Test
-    void borrow_updatesItemAndUserBorrowedItems_whenValid() throws Exception {
+    void borrow_updatesItemAndUserBorrowedItems_whenValid() throws Exception
+    {
         User sessionUser = new User();
         sessionUser.setId(3);
 
@@ -80,18 +89,19 @@ public class BorrowService_Test {
 
         when(userRepository.findById(3)).thenReturn(Optional.of(dbUser));
 
-        borrowService.borrow(sessionUser, item);
+        borrowService.borrow(sessionUser,item);
 
         assertTrue(item.isBorrowed());
         assertNotNull(item.getBorrowedDate());
         assertNotNull(item.getDueDate());
-        assertEquals(dbUser, item.getBorrower());
-        assertEquals(1, dbUser.getBorrowedItems().size());
-        assertSame(item, dbUser.getBorrowedItems().get(0));
+        assertEquals(dbUser,item.getBorrower());
+        assertEquals(1,dbUser.getBorrowedItems().size());
+        assertSame(item,dbUser.getBorrowedItems().get(0));
     }
 
     @Test
-    void borrow_throwsExceptionAndDoesNotChangeState_whenValidatorFails() throws Exception {
+    void borrow_throwsExceptionAndDoesNotChangeState_whenValidatorFails() throws Exception
+    {
         User sessionUser = new User();
         sessionUser.setId(4);
 
@@ -103,9 +113,9 @@ public class BorrowService_Test {
         item.setId(30);
 
         when(userRepository.findById(4)).thenReturn(Optional.of(dbUser));
-        doThrow(new Exception("Not allowed")).when(borrowValidator).validate(dbUser, item);
+        doThrow(new Exception("Not allowed")).when(borrowValidator).validate(dbUser,item);
 
-        assertThrows(Exception.class, () -> borrowService.borrow(sessionUser, item));
+        assertThrows(Exception.class,() -> borrowService.borrow(sessionUser,item));
 
         assertFalse(item.isBorrowed());
         assertNull(item.getBorrowedDate());

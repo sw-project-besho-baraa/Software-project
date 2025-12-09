@@ -30,9 +30,10 @@ public class BorrowValidator_Test
         User user = mock(User.class);
         MediaItem item = mock(MediaItem.class);
         when(item.isBorrowed()).thenReturn(true);
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> borrowValidator.validate(user, item));
-        assertEquals("Item is already borrowed", ex.getMessage());
-        verify(overdueBorrowValidation, never()).validate(any());
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> borrowValidator.validate(user,item));
+        assertEquals("Item is already borrowed",ex.getMessage());
+        verify(overdueBorrowValidation,never()).validate(any());
     }
 
     @Test
@@ -42,8 +43,8 @@ public class BorrowValidator_Test
         MediaItem item = mock(MediaItem.class);
         when(item.isBorrowed()).thenReturn(false);
         when(user.getFineBalance()).thenReturn(null);
-        assertDoesNotThrow(() -> borrowValidator.validate(user, item));
-        verify(overdueBorrowValidation, times(1)).validate(user);
+        assertDoesNotThrow(() -> borrowValidator.validate(user,item));
+        verify(overdueBorrowValidation,times(1)).validate(user);
     }
 
     @Test
@@ -53,9 +54,9 @@ public class BorrowValidator_Test
         MediaItem item = mock(MediaItem.class);
         when(item.isBorrowed()).thenReturn(false);
         when(user.getFineBalance()).thenReturn(new BigDecimal("5.00"));
-        IllegalStateException ex = assertThrows(IllegalStateException.class, () -> borrowValidator.validate(user, item));
-        assertEquals("fine: please pay full balance before borrowing.", ex.getMessage());
-        verify(overdueBorrowValidation, times(1)).validate(user);
+        IllegalStateException ex = assertThrows(IllegalStateException.class,() -> borrowValidator.validate(user,item));
+        assertEquals("fine: please pay full balance before borrowing.",ex.getMessage());
+        verify(overdueBorrowValidation,times(1)).validate(user);
     }
 
     @Test
@@ -65,7 +66,7 @@ public class BorrowValidator_Test
         MediaItem item = mock(MediaItem.class);
         when(item.isBorrowed()).thenReturn(false);
         when(user.getFineBalance()).thenReturn(BigDecimal.ZERO);
-        assertDoesNotThrow(() -> borrowValidator.validate(user, item));
-        verify(overdueBorrowValidation, times(1)).validate(user);
+        assertDoesNotThrow(() -> borrowValidator.validate(user,item));
+        verify(overdueBorrowValidation,times(1)).validate(user);
     }
 }

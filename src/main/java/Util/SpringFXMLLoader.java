@@ -6,15 +6,18 @@ import org.springframework.context.ApplicationContext;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class SpringFXMLLoader {
+public class SpringFXMLLoader
+{
 
     private static final ApplicationContext applicationContext;
 
-    static {
+    static
+    {
         applicationContext = ApplicationContextProvider.getApplicationContext();
     }
 
-    public static FXMLLoader load(String fxmlPath) {
+    public static FXMLLoader load(String fxmlPath)
+    {
         FXMLLoader loader = new FXMLLoader();
         loader.setControllerFactory(applicationContext::getBean);
 

@@ -6,19 +6,21 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class PaymentConfirmationMessageFormater_Test {
+public class PaymentConfirmationMessageFormater_Test
+{
 
-    private final PaymentConfirmationMessageFormater formatter =
-            new PaymentConfirmationMessageFormater();
+    private final PaymentConfirmationMessageFormater formatter = new PaymentConfirmationMessageFormater();
 
     @Test
-    void formatMessage_nullData_returnsEmptyString() {
+    void formatMessage_nullData_returnsEmptyString()
+    {
         String result = formatter.formatMessage(null);
-        assertEquals("", result);
+        assertEquals("",result);
     }
 
     @Test
-    void formatMessage_filledData_replacesPlaceholders() {
+    void formatMessage_filledData_replacesPlaceholders()
+    {
         PaymentConfirmationData data = mock(PaymentConfirmationData.class);
         when(data.patronName()).thenReturn("Mohammad");
         when(data.amountPaid()).thenReturn("$10");
@@ -39,7 +41,8 @@ public class PaymentConfirmationMessageFormater_Test {
     }
 
     @Test
-    void formatMessage_nullFields_usesEmptyStringInsteadOfNull() {
+    void formatMessage_nullFields_usesEmptyStringInsteadOfNull()
+    {
         PaymentConfirmationData data = mock(PaymentConfirmationData.class);
         when(data.patronName()).thenReturn(null);
         when(data.amountPaid()).thenReturn(null);

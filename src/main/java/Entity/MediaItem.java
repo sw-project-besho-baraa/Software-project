@@ -3,7 +3,7 @@ package Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import Enum.MediaItemType;
 
 @Setter
@@ -26,9 +26,10 @@ public abstract class MediaItem
     @JoinColumn(name = "user_id")
     private User borrower;
 
-    private Date borrowedDate;
+    private LocalDateTime borrowedDate;
 
-    private Date dueDate;
+    private LocalDateTime dueDate;
+    private LocalDateTime lastTimeFineCalculated;
 
     public MediaItem()
     {
@@ -44,6 +45,6 @@ public abstract class MediaItem
     @PrePersist
     protected void onCreate()
     {
-        borrowedDate = new Date();
+        borrowedDate = LocalDateTime.now();
     }
 }

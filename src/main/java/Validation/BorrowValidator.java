@@ -24,9 +24,13 @@ public class BorrowValidator
         {
             throw new IllegalArgumentException("Item is already borrowed");
         }
-
+        if (user.getFineBalance() != null && user.getFineBalance().compareTo(BigDecimal.ZERO) > 0)
+        {
+            throw new IllegalStateException("fine: please pay full balance before borrowing.");
+        }
         overdueBorrowValidation.validate(user);
-        if (user.getFineBalance() != null && user.getFineBalance().compareTo(BigDecimal.ZERO) > 0) {
+        if (user.getFineBalance() != null && user.getFineBalance().compareTo(BigDecimal.ZERO) > 0)
+        {
             throw new IllegalStateException("fine: please pay full balance before borrowing.");
         }
     }

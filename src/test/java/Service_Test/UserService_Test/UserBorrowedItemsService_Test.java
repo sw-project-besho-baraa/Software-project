@@ -12,36 +12,41 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class UserBorrowedItemsService_Test {
+public class UserBorrowedItemsService_Test
+{
 
     private UserRepository userRepository;
     private UserBorrowedItemsService userBorrowedItemsService;
 
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         userRepository = mock(UserRepository.class);
         userBorrowedItemsService = new UserBorrowedItemsService(userRepository);
     }
 
     @Test
-    void countBorrowedItems_returnsZero_whenSessionUserIsNull() {
+    void countBorrowedItems_returnsZero_whenSessionUserIsNull()
+    {
         int result = userBorrowedItemsService.countBorrowedItems(null);
-        assertEquals(0, result);
+        assertEquals(0,result);
     }
 
     @Test
-    void countBorrowedItems_returnsZero_whenUserNotFound() {
+    void countBorrowedItems_returnsZero_whenUserNotFound()
+    {
         User sessionUser = new User();
         sessionUser.setId(1);
         when(userRepository.findByIdWithBorrowedItems(1)).thenReturn(Optional.empty());
 
         int result = userBorrowedItemsService.countBorrowedItems(sessionUser);
 
-        assertEquals(0, result);
+        assertEquals(0,result);
     }
 
     @Test
-    void countBorrowedItems_returnsZero_whenBorrowedItemsIsNull() {
+    void countBorrowedItems_returnsZero_whenBorrowedItemsIsNull()
+    {
         User sessionUser = new User();
         sessionUser.setId(2);
 
@@ -52,37 +57,36 @@ public class UserBorrowedItemsService_Test {
 
         int result = userBorrowedItemsService.countBorrowedItems(sessionUser);
 
-        assertEquals(0, result);
+        assertEquals(0,result);
     }
 
     @Test
-    void countBorrowedItems_returnsSizeOfBorrowedItems() {
+    void countBorrowedItems_returnsSizeOfBorrowedItems()
+    {
         User sessionUser = new User();
         sessionUser.setId(3);
 
         User dbUser = new User();
-        List<MediaItem> items = Arrays.asList(
-                mock(MediaItem.class),
-                mock(MediaItem.class),
-                mock(MediaItem.class)
-        );
+        List<MediaItem> items = Arrays.asList(mock(MediaItem.class),mock(MediaItem.class),mock(MediaItem.class));
         dbUser.setBorrowedItems(items);
 
         when(userRepository.findByIdWithBorrowedItems(3)).thenReturn(Optional.of(dbUser));
 
         int result = userBorrowedItemsService.countBorrowedItems(sessionUser);
 
-        assertEquals(3, result);
+        assertEquals(3,result);
     }
 
     @Test
-    void countOverdueItems_returnsZero_whenSessionUserIsNull() {
+    void countOverdueItems_returnsZero_whenSessionUserIsNull()
+    {
         long result = userBorrowedItemsService.countOverdueItems(null);
-        assertEquals(0, result);
+        assertEquals(0,result);
     }
 
     @Test
-    void countOverdueItems_returnsZero_whenUserNotFound() {
+    void countOverdueItems_returnsZero_whenUserNotFound()
+    {
         User sessionUser = new User();
         sessionUser.setId(8);
 
@@ -90,11 +94,12 @@ public class UserBorrowedItemsService_Test {
 
         long result = userBorrowedItemsService.countOverdueItems(sessionUser);
 
-        assertEquals(0, result);
+        assertEquals(0,result);
     }
 
     @Test
-    void countOverdueItems_returnsZero_whenBorrowedItemsIsNull() {
+    void countOverdueItems_returnsZero_whenBorrowedItemsIsNull()
+    {
         User sessionUser = new User();
         sessionUser.setId(9);
 
@@ -105,11 +110,12 @@ public class UserBorrowedItemsService_Test {
 
         long result = userBorrowedItemsService.countOverdueItems(sessionUser);
 
-        assertEquals(0, result);
+        assertEquals(0,result);
     }
 
     @Test
-    void countOverdueItems_countsOnlyBorrowedAndOverdueItems() {
+    void countOverdueItems_countsOnlyBorrowedAndOverdueItems()
+    {
         User sessionUser = new User();
         sessionUser.setId(4);
 
@@ -130,24 +136,26 @@ public class UserBorrowedItemsService_Test {
         when(notBorrowed.isBorrowed()).thenReturn(false);
         when(notBorrowed.getDueDate()).thenReturn(past);
 
-        dbUser.setBorrowedItems(Arrays.asList(overdueBorrowed, notOverdueBorrowed, notBorrowed));
+        dbUser.setBorrowedItems(Arrays.asList(overdueBorrowed,notOverdueBorrowed,notBorrowed));
 
         when(userRepository.findByIdWithBorrowedItems(4)).thenReturn(Optional.of(dbUser));
 
         long result = userBorrowedItemsService.countOverdueItems(sessionUser);
 
-        assertEquals(1, result);
+        assertEquals(1,result);
     }
 
     @Test
-    void getBorrowedItems_returnsEmptyList_whenSessionUserIsNull() {
+    void getBorrowedItems_returnsEmptyList_whenSessionUserIsNull()
+    {
         List<MediaItem> result = userBorrowedItemsService.getBorrowedItems(null);
         assertNotNull(result);
         assertTrue(result.isEmpty());
     }
 
     @Test
-    void getBorrowedItems_returnsEmptyList_whenUserNotFound() {
+    void getBorrowedItems_returnsEmptyList_whenUserNotFound()
+    {
         User sessionUser = new User();
         sessionUser.setId(5);
 
@@ -160,7 +168,8 @@ public class UserBorrowedItemsService_Test {
     }
 
     @Test
-    void getBorrowedItems_returnsEmptyList_whenBorrowedItemsIsNull() {
+    void getBorrowedItems_returnsEmptyList_whenBorrowedItemsIsNull()
+    {
         User sessionUser = new User();
         sessionUser.setId(6);
 
@@ -176,22 +185,20 @@ public class UserBorrowedItemsService_Test {
     }
 
     @Test
-    void getBorrowedItems_returnsCopyOfBorrowedItems() {
+    void getBorrowedItems_returnsCopyOfBorrowedItems()
+    {
         User sessionUser = new User();
         sessionUser.setId(7);
 
         User dbUser = new User();
-        List<MediaItem> items = Arrays.asList(
-                mock(MediaItem.class),
-                mock(MediaItem.class)
-        );
+        List<MediaItem> items = Arrays.asList(mock(MediaItem.class),mock(MediaItem.class));
         dbUser.setBorrowedItems(items);
 
         when(userRepository.findByIdWithBorrowedItems(7)).thenReturn(Optional.of(dbUser));
 
         List<MediaItem> result = userBorrowedItemsService.getBorrowedItems(sessionUser);
 
-        assertEquals(2, result.size());
-        assertNotSame(items, result);
+        assertEquals(2,result.size());
+        assertNotSame(items,result);
     }
 }

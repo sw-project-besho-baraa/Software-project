@@ -10,17 +10,19 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class BookSearchByAuthorStrategy_Test {
+public class BookSearchByAuthorStrategy_Test
+{
 
     @Test
-    void searchBook_callsRepositoryAndReturnsResult() {
+    void searchBook_callsRepositoryAndReturnsResult()
+    {
         BookRepository repo = mock(BookRepository.class);
         Book book = new Book();
         book.setAuthor("Mohammad");
         when(repo.findByAuthorContainingIgnoreCase("Mohammad")).thenReturn(List.of(book));
         BookSearchByAuthorStrategy strategy = new BookSearchByAuthorStrategy();
-        List<Book> result = strategy.searchBook(repo, "Mohammad");
-        assertEquals(List.of(book), result);
+        List<Book> result = strategy.searchBook(repo,"Mohammad");
+        assertEquals(List.of(book),result);
         verify(repo).findByAuthorContainingIgnoreCase("Mohammad");
     }
 }

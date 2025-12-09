@@ -14,44 +14,52 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class ReturnService_Test {
+public class ReturnService_Test
+{
 
     private UserRepository userRepository;
     private ReturnService returnService;
 
-    private static class TestMediaItem extends MediaItem {
-        public TestMediaItem() {
+    private static class TestMediaItem extends MediaItem
+    {
+        public TestMediaItem()
+        {
             super("Test");
         }
 
         @Override
-        public MediaItemType getMediaType() {
+        public MediaItemType getMediaType()
+        {
             return MediaItemType.Book;
         }
     }
 
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         userRepository = mock(UserRepository.class);
         returnService = new ReturnService(userRepository);
     }
 
     @Test
-    void returnItem_throwsNullPointer_whenSessionUserIsNull() {
+    void returnItem_throwsNullPointer_whenSessionUserIsNull()
+    {
         TestMediaItem item = new TestMediaItem();
         item.setId(1);
-        assertThrows(NullPointerException.class, () -> returnService.returnItem(null, item));
+        assertThrows(NullPointerException.class,() -> returnService.returnItem(null,item));
     }
 
     @Test
-    void returnItem_throwsNullPointer_whenItemIsNull() {
+    void returnItem_throwsNullPointer_whenItemIsNull()
+    {
         User sessionUser = new User();
         sessionUser.setId(1);
-        assertThrows(NullPointerException.class, () -> returnService.returnItem(sessionUser, null));
+        assertThrows(NullPointerException.class,() -> returnService.returnItem(sessionUser,null));
     }
 
     @Test
-    void returnItem_clearsItemAndRemovesFromUserBorrowedItems_whenValid() {
+    void returnItem_clearsItemAndRemovesFromUserBorrowedItems_whenValid()
+    {
         User sessionUser = new User();
         sessionUser.setId(1);
 
@@ -70,7 +78,7 @@ public class ReturnService_Test {
 
         when(userRepository.findById(1)).thenReturn(Optional.of(dbUser));
 
-        returnService.returnItem(sessionUser, item);
+        returnService.returnItem(sessionUser,item);
 
         assertFalse(item.isBorrowed());
         assertNull(item.getBorrowedDate());
@@ -80,7 +88,8 @@ public class ReturnService_Test {
     }
 
     @Test
-    void returnItem_throwsIllegalStateException_whenUserNotFound() {
+    void returnItem_throwsIllegalStateException_whenUserNotFound()
+    {
         User sessionUser = new User();
         sessionUser.setId(2);
 
@@ -89,11 +98,12 @@ public class ReturnService_Test {
 
         when(userRepository.findById(2)).thenReturn(Optional.empty());
 
-        assertThrows(IllegalStateException.class, () -> returnService.returnItem(sessionUser, item));
+        assertThrows(IllegalStateException.class,() -> returnService.returnItem(sessionUser,item));
     }
 
     @Test
-    void returnItem_throwsIllegalStateException_whenItemNotInUserBorrowedItems() {
+    void returnItem_throwsIllegalStateException_whenItemNotInUserBorrowedItems()
+    {
         User sessionUser = new User();
         sessionUser.setId(3);
 
@@ -110,11 +120,12 @@ public class ReturnService_Test {
 
         when(userRepository.findById(3)).thenReturn(Optional.of(dbUser));
 
-        assertThrows(IllegalStateException.class, () -> returnService.returnItem(sessionUser, item));
+        assertThrows(IllegalStateException.class,() -> returnService.returnItem(sessionUser,item));
     }
 
     @Test
-    void returnItem_throwsIllegalStateException_whenItemNotBorrowedOrHasNoBorrower() {
+    void returnItem_throwsIllegalStateException_whenItemNotBorrowedOrHasNoBorrower()
+    {
         User sessionUser = new User();
         sessionUser.setId(4);
 
@@ -131,6 +142,6 @@ public class ReturnService_Test {
 
         when(userRepository.findById(4)).thenReturn(Optional.of(dbUser));
 
-        assertThrows(IllegalStateException.class, () -> returnService.returnItem(sessionUser, item));
+        assertThrows(IllegalStateException.class,() -> returnService.returnItem(sessionUser,item));
     }
 }

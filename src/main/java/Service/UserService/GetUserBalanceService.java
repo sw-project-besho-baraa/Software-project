@@ -8,17 +8,19 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 @Service
-public class GetUserBalanceService {
+public class GetUserBalanceService
+{
 
     private final UserRepository userRepository;
     @Autowired
-    public GetUserBalanceService(UserRepository userRepository) {
+    public GetUserBalanceService(UserRepository userRepository)
+    {
         this.userRepository = userRepository;
     }
-    public BigDecimal getUserBalance(int userId) {
+
+    public BigDecimal getUserBalance(int userId)
+    {
         return userRepository.findById(userId)
-                .map(u -> u.getFineBalance() == null ? BigDecimal.ZERO : u.getFineBalance())
-                .orElse(BigDecimal.ZERO);
+                .map(u -> u.getFineBalance() == null ? BigDecimal.ZERO : u.getFineBalance()).orElse(BigDecimal.ZERO);
     }
 }
-

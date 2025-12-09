@@ -2,6 +2,7 @@ package Service.Fine;
 
 import java.math.BigDecimal;
 
-public interface FineStrategy {
+public interface FineStrategy
+{
     BigDecimal calculateFine(int overdueDays);
 }
