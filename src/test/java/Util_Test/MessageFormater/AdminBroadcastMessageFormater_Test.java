@@ -6,24 +6,29 @@ import Util.MessageFormater.AdminBroadcastMessageFormater;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-public class AdminBroadcastMessageFormater_Test {
+
+public class AdminBroadcastMessageFormater_Test
+{
 
     AdminBroadcastMessageFormater f = new AdminBroadcastMessageFormater();
 
     @Test
-    void nullData_returnsEmpty() {
-        assertEquals("", f.formatMessage(null));
+    void nullData_returnsEmpty()
+    {
+        assertEquals("",f.formatMessage(null));
     }
 
     @Test
-    void nullUser_returnsEmpty() {
+    void nullUser_returnsEmpty()
+    {
         var d = mock(AdminBroadcastMessageData.class);
         when(d.userContactDTO()).thenReturn(null);
-        assertEquals("", f.formatMessage(d));
+        assertEquals("",f.formatMessage(d));
     }
 
     @Test
-    void fullData_replacesAndEscapes() {
+    void fullData_replacesAndEscapes()
+    {
         var u = mock(UserContactDTO.class);
         when(u.getName()).thenReturn("Mohammad");
         var d = mock(AdminBroadcastMessageData.class);
@@ -37,7 +42,8 @@ public class AdminBroadcastMessageFormater_Test {
     }
 
     @Test
-    void blankNameAndNullMessage_defaultAndNoNull() {
+    void blankNameAndNullMessage_defaultAndNoNull()
+    {
         var u = mock(UserContactDTO.class);
         when(u.getName()).thenReturn(" ");
         var d = mock(AdminBroadcastMessageData.class);

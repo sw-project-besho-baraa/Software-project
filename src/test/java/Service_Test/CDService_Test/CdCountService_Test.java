@@ -7,16 +7,18 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class CdCountService_Test {
+public class CdCountService_Test
+{
 
     @Test
-    void countCds_returnsRepositoryCount() {
+    void countCds_returnsRepositoryCount()
+    {
         CdRepository repo = mock(CdRepository.class);
         when(repo.count()).thenReturn(10L);
 
         CdCountService service = new CdCountService(repo);
 
-        assertEquals(10L, service.countCds());
+        assertEquals(10L,service.countCds());
         verify(repo).count();
     }
 }

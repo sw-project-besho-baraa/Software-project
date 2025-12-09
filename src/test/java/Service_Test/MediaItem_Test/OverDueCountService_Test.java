@@ -14,21 +14,24 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class OverDueCountService_Test {
+public class OverDueCountService_Test
+{
 
     private AllBookService bookService;
     private AllCdService cdService;
     private OverDueCountService service;
 
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         bookService = mock(AllBookService.class);
         cdService = mock(AllCdService.class);
         service = new OverDueCountService(bookService, cdService);
     }
 
     @Test
-    void countOverdueItems_mixedItems_returnsCorrectCount() {
+    void countOverdueItems_mixedItems_returnsCorrectCount()
+    {
         MediaItem overdue = mock(MediaItem.class);
         when(overdue.isBorrowed()).thenReturn(true);
         when(overdue.getDueDate()).thenReturn(new Date(System.currentTimeMillis() - 1000));
@@ -42,11 +45,12 @@ public class OverDueCountService_Test {
 
         long result = service.countOverdueItems();
 
-        assertEquals(1, result);
+        assertEquals(1,result);
     }
 
     @Test
-    void countOverdueItems_noBorrowedOrNoDueDate_returnsZero() {
+    void countOverdueItems_noBorrowedOrNoDueDate_returnsZero()
+    {
         MediaItem notBorrowed = mock(MediaItem.class);
         when(notBorrowed.isBorrowed()).thenReturn(false);
 
@@ -55,11 +59,12 @@ public class OverDueCountService_Test {
 
         long result = service.countOverdueItems();
 
-        assertEquals(0, result);
+        assertEquals(0,result);
     }
 
     @Test
-    void countOverdueItems_borrowedButDueDateNull_notCounted() {
+    void countOverdueItems_borrowedButDueDateNull_notCounted()
+    {
         MediaItem borrowedNoDueDate = mock(MediaItem.class);
         when(borrowedNoDueDate.isBorrowed()).thenReturn(true);
         when(borrowedNoDueDate.getDueDate()).thenReturn(null);
@@ -69,6 +74,6 @@ public class OverDueCountService_Test {
 
         long result = service.countOverdueItems();
 
-        assertEquals(0, result);
+        assertEquals(0,result);
     }
 }
