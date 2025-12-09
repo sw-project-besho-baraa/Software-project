@@ -37,4 +37,20 @@ public class FxmlNavigator {
     public void logout(Stage stage, String loginFxmlPath) {
         navigateTo(stage, loginFxmlPath, "Login");
     }
+
+    public <T> T openInNewWindow(String fxmlPath, String title) {
+        try {
+            FXMLLoader loader = SpringFXMLLoader.load(fxmlPath);
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle(title);
+            stage.setScene(new Scene(root));
+            stage.show();
+            return loader.getController();
+        } catch (IOException e) {
+            System.err.println("Error loading FXML file: " + fxmlPath);
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

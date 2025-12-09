@@ -6,6 +6,8 @@ import Validation.OverdueBorrowValidator.IOverdueBorrowValidation;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class BorrowValidator
 {
@@ -24,5 +26,8 @@ public class BorrowValidator
         }
 
         overdueBorrowValidation.validate(user);
+        if (user.getFineBalance() != null && user.getFineBalance().compareTo(BigDecimal.ZERO) > 0) {
+            throw new IllegalStateException("fine: please pay full balance before borrowing.");
+        }
     }
 }

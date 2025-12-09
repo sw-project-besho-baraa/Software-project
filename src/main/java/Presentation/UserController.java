@@ -5,11 +5,13 @@ import Entity.MediaItem;
 import Entity.User;
 import Repository.UserRepository;
 import Service.BorrowService;
+import Service.Fine.FineService;
 import Service.ReturnService;
 import Service.LogoutService;
 import Service.BookService.AllBookService;
 import Service.CDService.AllCdService;
 import Service.MediaItem.MediaItemSearchService;
+import Service.UserService.GetUserBalanceService;
 import Service.UserService.UserBorrowedItemsService;
 import Session.LocalSessionManager;
 import Util.FxmlNavigator.FxmlNavigator;
@@ -51,6 +53,9 @@ public class UserController {
 
     @FXML
     private Label numberOfOverDue;
+
+    @FXML
+    private Label errorPayLable;
 
     @FXML
     private Button payFine;
@@ -116,6 +121,8 @@ public class UserController {
     private final ReturnService returnService;
     private final UserBorrowedItemsService userBorrowedItemsService;
     private final UserRepository userRepository;
+    private final GetUserBalanceService getUserBalanceService;
+    private final FineService fineService;
 
     @Autowired
     public UserController(LogoutService logoutService,
@@ -127,7 +134,10 @@ public class UserController {
                           BorrowService borrowService,
                           ReturnService returnService,
                           UserBorrowedItemsService userBorrowedItemsService,
-                          UserRepository userRepository) {
+                          UserRepository userRepository,
+                          GetUserBalanceService getUserBalanceService,
+                          FineService fineService
+    ) {
         this.logoutService = logoutService;
         this.fxmlNavigator = fxmlNavigator;
         this.mediaItemSearchService = mediaItemSearchService;
@@ -138,6 +148,8 @@ public class UserController {
         this.returnService = returnService;
         this.userBorrowedItemsService = userBorrowedItemsService;
         this.userRepository = userRepository;
+        this.getUserBalanceService=getUserBalanceService;
+        this.fineService=fineService;
     }
 
     @FXML
@@ -147,6 +159,7 @@ public class UserController {
         initUserHeader();
         updateUserStats();
         setAllVisibleFalse();
+        setUserFineData();
         if (homePage != null) {
             homePage.setVisible(true);
         }
@@ -256,6 +269,7 @@ public class UserController {
         if (userEmailField != null) {
             userEmailField.setText(user.getEmail());
         }
+        fine.setText(user.getFineBalance()+" $");
     }
 
     private void updateUserStats() {
@@ -271,6 +285,14 @@ public class UserController {
         if (numberOfOverDue != null) {
             numberOfOverDue.setText(String.valueOf(overdueCount));
         }
+        fine.setText(sessionUser.getFineBalance()+" $");
+    }
+
+
+    private void setUserFineData(){
+        User sessionUser = sessionManager.getUser();
+        feinInDollar.setText(getUserBalanceService.getUserBalance(sessionUser.getId())+"  dollar");
+        userEmailField.setText(sessionUser.getEmail());
     }
 
     private void setAllVisibleFalse() {
@@ -369,18 +391,75 @@ public class UserController {
 
     @FXML
     void payButton(ActionEvent event) {
+        if (errorPayLable != null) {
+            errorPayLable.setText("");
+        }
+
+        User sessionUser = sessionManager.getUser();
+        if (sessionUser == null) {
+            if (errorPayLable != null) {
+                errorPayLable.setText("No logged-in user.");
+            }
+            return;
+        }
+
+        String amountText = payValueTextField != null ? payValueTextField.getText() : null;
+        if (amountText == null || amountText.isBlank()) {
+            if (errorPayLable != null) {
+                errorPayLable.setText("Enter an amount to pay.");
+            }
+            return;
+        }
+
+        try {
+            fineService.payFine(sessionUser, amountText);
+            updateUserStats();
+            setUserFineData();
+            if (payValueTextField != null) {
+                payValueTextField.clear();
+            }
+            if (errorPayLable != null) {
+                errorPayLable.setText("Payment successful.");
+            }
+        } catch (IllegalArgumentException | IllegalStateException ex) {
+            if (errorPayLable != null) {
+                errorPayLable.setText(ex.getMessage());
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            if (errorPayLable != null) {
+                errorPayLable.setText(ex.getMessage() != null ? ex.getMessage() : "Payment failed.");
+            }
+        }
     }
+
 
     @FXML
     void payFineButton(ActionEvent event) {
         setAllVisibleFalse();
+        setUserFineData();
         if (payFinePage != null) {
             payFinePage.setVisible(true);
         }
+
     }
 
     @FXML
     void printDetails(ActionEvent event) {
+        User sessionUser = sessionManager.getUser();
+        if (sessionUser == null) {
+            System.out.println("No logged-in user.");
+            return;
+        }
+        try {
+            var controller = fxmlNavigator.openInNewWindow("/fxml/UserFineHistoryReport.fxml", "Fine History for " + sessionUser.getName()
+            );
+            if (controller != null && controller instanceof Presentation.FineHistoryReportController reportController) {
+                reportController.setUser(sessionUser);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

@@ -5,6 +5,8 @@ import Repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+
 @Service
 public class UnregisterUserService {
 
@@ -21,6 +23,10 @@ public class UnregisterUserService {
 
         if (managedUser.getBorrowedItems() != null && !managedUser.getBorrowedItems().isEmpty()) {
             throw new IllegalStateException("User has borrowed items and cannot be unregistered");
+        }
+        if (managedUser.getFineBalance() != null &&
+                managedUser.getFineBalance().compareTo(BigDecimal.ZERO) > 0) {
+            throw new IllegalStateException("User has unpaid fines and cannot be unregistered");
         }
 
         userRepository.delete(managedUser);

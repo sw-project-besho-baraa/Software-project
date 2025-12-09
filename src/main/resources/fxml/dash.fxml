@@ -118,13 +118,13 @@
                     <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                             <children>
-                                <AnchorPane fx:id="homePage" layoutX="-6.0" prefHeight="555.0" prefWidth="889.0" style="-fx-background-color: #11192c;" stylesheets="@css/ooo.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane fx:id="homePage" layoutX="-6.0" prefHeight="555.0" prefWidth="889.0" style="-fx-background-color: #11192c;" stylesheets="@css/ooo.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <AnchorPane id="ee" layoutX="26.0" layoutY="268.0" prefHeight="194.0" prefWidth="837.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 30px;" stylesheets="@css/ooo.css">
                                             <children>
                                                 <AnchorPane id="2e" layoutX="14.0" layoutY="12.0" prefHeight="171.0" prefWidth="220.0" style="-fx-background-color: #141e34; -fx-background-radius: 30px;" stylesheets="@css/ooo.css">
                                                     <children>
-                                                        <Label id="text" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="36.0" prefHeight="43.0" prefWidth="115.0" stylesheets="@css/ooo.css" text="Number of Books " textFill="WHITE">
+                                                        <Label id="text" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="36.0" prefHeight="43.0" prefWidth="115.0" stylesheets="@css/ooo.css" text="Number of Items " textFill="WHITE">
                                                             <font>
                                                                 <Font size="14.0" />
                                                             </font>
@@ -197,7 +197,7 @@
                                         </ImageView>
                                     </children>
                                 </AnchorPane>
-                                <AnchorPane fx:id="searchPage" layoutX="345.0" layoutY="157.0" prefHeight="551.0" prefWidth="889.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane fx:id="searchPage" layoutX="345.0" layoutY="157.0" prefHeight="551.0" prefWidth="889.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <AnchorPane id="2e" layoutX="44.0" layoutY="33.0" prefHeight="376.0" prefWidth="802.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 30;" stylesheets="@css/ooo.css">
                                             <children>
@@ -289,12 +289,13 @@
                                         </AnchorPane>
                                         <AnchorPane id="1e" layoutX="69.0" layoutY="303.0" prefHeight="43.0" prefWidth="752.0" style="-fx-background-color: #1f2a42; -fx-background-radius: 30px;" stylesheets="@css/ooo.css">
                                             <children>
-                                                <Button id="button" layoutX="420.0" layoutY="8.0" mnemonicParsing="false" onAction="#payButton" prefHeight="28.0" prefWidth="199.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Pay " textFill="WHITE">
+                                                <Button id="button" layoutX="512.0" layoutY="8.0" mnemonicParsing="false" onAction="#payButton" prefHeight="28.0" prefWidth="199.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="Pay " textFill="WHITE">
                                                     <font>
                                                         <Font name="Arial Bold" size="10.0" />
                                                     </font>
                                                 </Button>
-                                                <TextField id="e3" fx:id="payValueTextField" layoutX="179.0" layoutY="9.0" prefHeight="19.0" prefWidth="152.0" stylesheets="@css/ooo.css" />
+                                                <TextField fx:id="payValueTextField" layoutX="290.0" layoutY="9.0" prefHeight="19.0" prefWidth="152.0" />
+                                    <Label fx:id="errorPayLable" layoutX="60.0" layoutY="14.0" prefHeight="17.0" prefWidth="192.0" textAlignment="CENTER" textFill="#00a6ff" />
                                             </children>
                                         </AnchorPane>
                                         <Button id="button" alignment="CENTER" layoutX="386.0" layoutY="424.0" mnemonicParsing="false" onAction="#printDetails" prefHeight="30.0" prefWidth="117.0" style="-fx-background-radius: 20px;" stylesheets="@css/ooo.css" text="    Print Details" textAlignment="RIGHT" textFill="WHITE">
