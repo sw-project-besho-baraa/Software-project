@@ -9,4 +9,8 @@ public class OverdueItemsException extends RuntimeException
     {
         super(String.join("\n",overdueMessages));
     }
+    public OverdueItemsException()
+    {
+        super();
+    }
 }

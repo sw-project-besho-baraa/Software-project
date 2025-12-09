@@ -2,8 +2,8 @@ package MessageFormater_Test;
 
 import DTO.UserDTO.UserContactDTO;
 import Entity.MediaItem;
-import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItem;
-import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItemsData;
+import Service.OverdueBorrowDetection.OverdueBorrowedItem;
+import Service.OverdueBorrowDetection.OverdueBorrowedItemsData;
 import Util.MessageFormater.GeneralOverdueBorrowMessageFormater;
 import org.junit.jupiter.api.Test;
 

@@ -1,14 +1,13 @@
 package Service.Email;
 
 import DTO.UserDTO.UserContactDTO;
-import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItem;
-import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItemsData;
+import Service.OverdueBorrowDetection.OverdueBorrowedItem;
+import Service.OverdueBorrowDetection.OverdueBorrowedItemsData;
 import Service.NotificationSender.INotificationSender;
 import Util.MessageFormater.IMessageFormater;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-
 
 @Component
 public class EmailOverdueBorrowNotificationSender

@@ -12,11 +12,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EnableJpaRepositories(basePackages = {"Repository"})
 @EntityScan(basePackages = {"Entity"})
-@SpringBootApplication(scanBasePackages = {"Presentation", "Service", "Repository", "Validation", "Util", "Session", "DTO"})
-public class Main extends javafx.application.Application {
+@SpringBootApplication(scanBasePackages = {"Presentation", "Service", "Repository", "Validation", "Util", "Session",
+        "DTO"})
+public class Main extends javafx.application.Application
+{
     private ConfigurableApplicationContext springContext;
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws Exception
+    {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
         springContext = new SpringApplicationBuilder(Main.class).run();
@@ -28,14 +31,16 @@ public class Main extends javafx.application.Application {
     }
 
     @Override
-    public void stop() throws Exception {
-        if (springContext != null) {
+    public void stop() throws Exception
+    {
+        if (springContext != null)
+        {
             springContext.close();
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         launch(args);
     }
 }
-

@@ -6,11 +6,18 @@ import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+
 @Service
-public class AllCdService {
+public class AllCdService
+{
     CdRepository cdRepository;
-    AllCdService( CdRepository cdRepository){this.cdRepository=cdRepository;}
-    public Collection<@NonNull Cd> getAllCds(){
+    AllCdService(CdRepository cdRepository)
+    {
+        this.cdRepository = cdRepository;
+    }
+
+    public Collection<@NonNull Cd> getAllCds()
+    {
         return cdRepository.findAll();
     }
 }

@@ -16,7 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Component
-public class FineHistoryReportController {
+public class FineHistoryReportController
+{
 
     @FXML
     private TableView<FineHistory> tblHistory;
@@ -37,18 +38,18 @@ public class FineHistoryReportController {
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     @Autowired
-    public FineHistoryReportController(FineHistoryRepository fineHistoryRepository) {
+    public FineHistoryReportController(FineHistoryRepository fineHistoryRepository)
+    {
         this.fineHistoryRepository = fineHistoryRepository;
     }
 
     @FXML
-    private void initialize() {
+    private void initialize()
+    {
 
-        colDate.setCellValueFactory(cellData ->
-                new SimpleStringProperty(
-                        cellData.getValue().getAppliedDate() != null ? dateFormat.format(cellData.getValue().getAppliedDate()) : ""
-                )
-        );
+        colDate.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAppliedDate() != null
+                ? dateFormat.format(cellData.getValue().getAppliedDate())
+                : ""));
         colAmount.setCellValueFactory(cellData -> {
             BigDecimal amount = cellData.getValue().getFineAmount();
             return new SimpleStringProperty(amount != null ? amount.toString() : "0.00");
@@ -56,24 +57,30 @@ public class FineHistoryReportController {
         colType.setCellValueFactory(cellData -> {
             BigDecimal amount = cellData.getValue().getFineAmount();
             String type;
-            if (amount == null || amount.compareTo(BigDecimal.ZERO) == 0) {
+            if (amount == null || amount.compareTo(BigDecimal.ZERO) == 0)
+            {
                 type = "Neutral";
-            } else if (amount.compareTo(BigDecimal.ZERO) > 0) {
+            } else if (amount.compareTo(BigDecimal.ZERO) > 0)
+            {
                 type = "Fine";
-            } else {
+            } else
+            {
                 type = "Payment";
             }
             return new SimpleStringProperty(type);
         });
     }
 
-    public void setUser(User user) {
+    public void setUser(User user)
+    {
         this.user = user;
         loadData();
     }
 
-    private void loadData() {
-        if (user == null || tblHistory == null) return;
+    private void loadData()
+    {
+        if (user == null || tblHistory == null)
+            return;
 
         List<FineHistory> historyList = fineHistoryRepository.findByUserOrderByAppliedDateAsc(user);
         tblHistory.setItems(FXCollections.observableArrayList(historyList));

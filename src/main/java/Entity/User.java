@@ -6,6 +6,7 @@ import org.apache.commons.lang3.builder.*;
 import Enum.UserRole;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Getter
@@ -29,14 +30,13 @@ public class User
     private String hashedPassword;
 
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date creationDate;
+    private LocalDateTime creationDate;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole userRole;
 
-    @Column(name = "fine_balance", precision = 10, scale = 2,
-            columnDefinition = "DECIMAL(10,2) DEFAULT 0.00")
+    @Column(name = "fine_balance", precision = 10, scale = 2, columnDefinition = "DECIMAL(10,2) DEFAULT 0.00")
     private BigDecimal fineBalance = BigDecimal.ZERO;
 
     @OneToMany(mappedBy = "borrower", cascade = CascadeType.ALL)
@@ -45,18 +45,25 @@ public class User
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FineHistory> fineHistoryList = new ArrayList<>();
 
-    public void increaseFine(@NonNull BigDecimal amount) {
-        if ( amount.compareTo(BigDecimal.ZERO) <= 0) return;
-        if (fineBalance == null) fineBalance = BigDecimal.ZERO;
+    public void increaseFine(@NonNull BigDecimal amount)
+    {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0)
+            return;
+        if (fineBalance == null)
+            fineBalance = BigDecimal.ZERO;
         fineBalance = fineBalance.add(amount);
     }
 
-    public void decreaseFine(@NonNull BigDecimal amount) {
-        if (amount.compareTo(BigDecimal.ZERO) <= 0) return;
-        if (fineBalance == null) fineBalance = BigDecimal.ZERO;
+    public void decreaseFine(@NonNull BigDecimal amount)
+    {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0)
+            return;
+        if (fineBalance == null)
+            fineBalance = BigDecimal.ZERO;
 
         fineBalance = fineBalance.subtract(amount);
-        if (fineBalance.compareTo(BigDecimal.ZERO) < 0) {
+        if (fineBalance.compareTo(BigDecimal.ZERO) < 0)
+        {
             fineBalance = BigDecimal.ZERO;
         }
     }
@@ -77,6 +84,6 @@ public class User
     @PrePersist
     protected void onCreate()
     {
-        creationDate = new Date();
+        creationDate =  LocalDateTime.now();
     }
 }

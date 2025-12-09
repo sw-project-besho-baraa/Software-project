@@ -1,14 +1,13 @@
-package Service.MediaItem.OverdueBorrowNotifier;
+package Service.OverdueBorrowNotifier;
 
 import DTO.UserDTO.UserContactDTO;
-import Service.MediaItem.OverdueBorrowDetection.OverdueItemDetector;
-import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItem;
+import Service.OverdueBorrowDetection.OverdueItemDetector;
+import Service.OverdueBorrowDetection.OverdueBorrowedItem;
 import Service.NotificationSender.INotificationSender;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
+
 @Component
 public class OverdueBorrowNotifier
 {
@@ -24,8 +23,9 @@ public class OverdueBorrowNotifier
     public void send()
     {
         var overBorrows = overdueBookDetector.detectUsersWithOverdueBooks();
-        if (overBorrows == null) {
-            overBorrows = Collections.emptyList();
+        if (overBorrows == null)
+        {
+            return;
         }
         for (var overBorrow : overBorrows)
         {

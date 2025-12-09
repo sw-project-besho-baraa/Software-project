@@ -2,14 +2,14 @@ package Util.MessageFormater;
 
 import DTO.UserDTO.UserContactDTO;
 import Entity.MediaItem;
-import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItem;
-import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItemsData;
+import Service.OverdueBorrowDetection.OverdueBorrowedItem;
+import Service.OverdueBorrowDetection.OverdueBorrowedItemsData;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
 @Component
 public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<OverdueBorrowedItemsData>
 {
@@ -27,7 +27,6 @@ public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<Ove
                 ? user.getName()
                 : "Valued Reader";
         String userEmail = user != null ? nullSafe(user.getEmail()) : "-";
-        String userPhone = user != null ? nullSafe(user.getPhoneNumber()) : "-";
         int overdueCount = (items == null) ? 0 : items.size();
         StringBuilder rowsBuilder = new StringBuilder();
         if (items != null && !items.isEmpty())
@@ -43,14 +42,14 @@ public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<Ove
 
                 if (item != null)
                 {
-                    Date borrowedDate = item.getBorrowedDate();
+                    var borrowedDate = item.getBorrowedDate();
                     if (borrowedDate != null)
                     {
                         borrowedDateStr = BORROWED_DATE_FORMAT.format(borrowedDate);
                     }
                 }
                 String detectedAtStr = (overdueItem.detectedAt() != null) ? overdueItem.detectedAt().toString() : "-";
-                int overdueDays = overdueItem.overdueDays();
+                long overdueDays = overdueItem.overdueDays();
                 rowsBuilder.append("""
                         <tr class="item-row">
                         <td class="item-title">
@@ -524,7 +523,6 @@ public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<Ove
 
         return htmlTemplate.replace("__USER_NAME__",escapeHtml(userName))
                 .replace("__OVERDUE_COUNT__",String.valueOf(overdueCount))
-                .replace("__USER_EMAIL__",escapeHtml(userEmail)).replace("__USER_PHONE__",escapeHtml(userPhone))
                 .replace("__ITEM_ROWS__",rowsBuilder.toString());
     }
 

@@ -2,56 +2,56 @@ package Service.UserService;
 
 import Entity.MediaItem;
 import Entity.User;
+import Repository.MediaItemRepository;
 import Repository.UserRepository;
+import Util.CurrentLocalTimeDateResolver.ICurrentLocalTimeDateResolver;
+import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
-public class UserBorrowedItemsService {
+public class UserBorrowedItemsService
+{
+    public int countBorrowedItems(@NonNull User user)
+    {
 
-    private final UserRepository userRepository;
-
-    public UserBorrowedItemsService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    private User loadUserWithBorrowedItems(User sessionUser) {
-        if (sessionUser == null) {
-            return null;
-        }
-        return userRepository.findByIdWithBorrowedItems(sessionUser.getId())
-                .orElse(null);
-    }
-
-    public int countBorrowedItems(User sessionUser) {
-        User user = loadUserWithBorrowedItems(sessionUser);
-        if (user == null || user.getBorrowedItems() == null) {
+        if (user.getBorrowedItems() == null)
+        {
             return 0;
         }
         return user.getBorrowedItems().size();
     }
 
-    public long countOverdueItems(User sessionUser) {
-        User user = loadUserWithBorrowedItems(sessionUser);
-        if (user == null || user.getBorrowedItems() == null) {
+    public long countOverdueItems(@NonNull User user, ICurrentLocalTimeDateResolver timeDateResolver)
+    {
+        if ( user.getBorrowedItems() == null)
+        {
             return 0;
         }
-        Date now = new Date();
+        var currentLocalDateTime = timeDateResolver.getCurrentLocalDateTime();
         return user.getBorrowedItems().stream()
-                .filter(mi -> mi.isBorrowed()
-                        && mi.getDueDate() != null
-                        && mi.getDueDate().before(now))
+                .filter(mi -> mi.isBorrowed()  && mi.getDueDate().isBefore(currentLocalDateTime))
                 .count();
     }
-
-    public List<MediaItem> getBorrowedItems(User sessionUser) {
-        User user = loadUserWithBorrowedItems(sessionUser);
-        if (user == null || user.getBorrowedItems() == null) {
-            return List.of();
+    public Stream<MediaItem> getOverdueItems(@NonNull User user, ICurrentLocalTimeDateResolver timeDateResolver)
+    {
+        if ( user.getBorrowedItems() == null)
+        {
+            return null;
         }
-        return new ArrayList<>(user.getBorrowedItems());
+        var currentLocalDateTime = timeDateResolver.getCurrentLocalDateTime();
+        return user.getBorrowedItems().stream()
+                .filter(mi -> mi.isBorrowed()  && mi.getDueDate().isBefore(currentLocalDateTime));
+    }
+
+    public List<MediaItem> getBorrowedItems(@NonNull User user)
+    {
+
+        return  user.getBorrowedItems();
     }
 }

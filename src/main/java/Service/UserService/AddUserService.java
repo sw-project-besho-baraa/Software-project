@@ -10,19 +10,22 @@ import org.springframework.stereotype.Service;
 import Enum.UserRole;
 
 @Service
-public class AddUserService {
-    UserRepository userRepository;
-    IHashingPassword hashingPassword ;
-    public AddUserService(UserRepository userRepository, BCryptHashingPassword hashingPassword) {
+public class AddUserService
+{
+   private final UserRepository userRepository;
+   private final IHashingPassword hashingPassword;
+    public AddUserService(UserRepository userRepository, BCryptHashingPassword hashingPassword)
+    {
         this.userRepository = userRepository;
         this.hashingPassword = hashingPassword;
     }
-    public void addUser(String name , String email,String password,UserRole role){
+
+    public void addUser(String name,String email,String password,UserRole role)
+    {
         password = hashingPassword.hashPassword(password);
         User user = new User(name, email, password);
-        user.setUserRole(role) ;
+        user.setUserRole(role);
         userRepository.save(user);
     }
-
 
 }

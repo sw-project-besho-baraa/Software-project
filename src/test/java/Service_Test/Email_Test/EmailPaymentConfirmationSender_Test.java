@@ -1,7 +1,7 @@
 package Service_Test.Email_Test;
 
 import DTO.UserDTO.UserContactDTO;
-import Service.MediaItem.Payment.PaymentConfirmationData;
+import Service.Payment.PaymentConfirmationData;
 import Service.Email.EmailPaymentConfirmationSender;
 import Service.Email.EmailService;
 import Util.MessageFormater.IMessageFormater;

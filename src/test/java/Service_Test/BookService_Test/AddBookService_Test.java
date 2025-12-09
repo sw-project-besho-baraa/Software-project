@@ -2,7 +2,8 @@ package Service_Test.BookService_Test;
 
 import Entity.Book;
 import Repository.BookRepository;
-import Service.MediaItem.AddMediaItemService;
+import Repository.MediaItemRepository;
+import Service.MediaItem.MediaItemService;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,14 +12,14 @@ import static org.mockito.Mockito.*;
 public class AddBookService_Test
 {
 
-    private BookRepository bookRepository;
-    private AddMediaItemService addBookService;
+    private MediaItemRepository repository;
+    private MediaItemService addBookService;
 
     @BeforeEach
     void setup()
     {
-        bookRepository = mock(BookRepository.class);
-        addBookService = new AddMediaItemService(bookRepository);
+        repository = mock(MediaItemRepository.class);
+        addBookService = new MediaItemService(repository);
     }
 
     @Test
@@ -26,7 +27,7 @@ public class AddBookService_Test
     {
         Book book = mock(Book.class);
         addBookService.addItem(book);
-        verify(bookRepository,times(1)).save(book);
+        verify(repository,times(1)).save(book);
 
     }
 

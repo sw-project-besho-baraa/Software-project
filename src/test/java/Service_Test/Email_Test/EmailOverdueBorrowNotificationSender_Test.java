@@ -1,8 +1,8 @@
 package Service_Test.Email_Test;
 
 import DTO.UserDTO.UserContactDTO;
-import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItem;
-import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItemsData;
+import Service.OverdueBorrowDetection.OverdueBorrowedItem;
+import Service.OverdueBorrowDetection.OverdueBorrowedItemsData;
 import Service.Email.EmailOverdueBorrowNotificationSender;
 import Service.Email.EmailService;
 import Util.MessageFormater.IMessageFormater;

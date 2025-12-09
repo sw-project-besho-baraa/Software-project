@@ -1,19 +1,24 @@
 package Exception;
 
-public class NotImplementedException extends RuntimeException {
-    public NotImplementedException() {
+public class NotImplementedException extends RuntimeException
+{
+    public NotImplementedException()
+    {
         super();
     }
 
-    public NotImplementedException(String message) {
+    public NotImplementedException(String message)
+    {
         super(message);
     }
 
-    public NotImplementedException(String message, Throwable cause) {
+    public NotImplementedException(String message, Throwable cause)
+    {
         super(message, cause);
     }
 
-    public NotImplementedException(Throwable cause) {
+    public NotImplementedException(Throwable cause)
+    {
         super(cause);
     }
 }
