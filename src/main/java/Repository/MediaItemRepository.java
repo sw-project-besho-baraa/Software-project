@@ -12,5 +12,6 @@ import java.util.List;
 public interface MediaItemRepository extends JpaRepository<@NonNull MediaItem, @NonNull Integer>
 {
     List<MediaItem> findAllByBorrowedTrueAndDueDateBefore(@NonNull LocalDateTime date);
+
     long countByBorrowedTrueAndDueDateBefore(@NonNull LocalDateTime date);
 }

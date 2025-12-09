@@ -1,6 +1,5 @@
 package Service.OverdueBorrowDetection;
 
-
 import java.util.*;
 import Entity.User;
 import Entity.MediaItem;
@@ -21,7 +20,7 @@ public class OverdueItemDetector
     public OverdueItemDetector(MediaItemRepository mediaItemRepository)
     {
 
-        this.mediaItemRepository=mediaItemRepository;
+        this.mediaItemRepository = mediaItemRepository;
     }
 
     public List<OverdueBorrowedItemsData> detectUsersWithOverdueBooks()
@@ -30,19 +29,19 @@ public class OverdueItemDetector
         List<MediaItem> allItems = mediaItemRepository.findAllByBorrowedTrueAndDueDateBefore(currentDate);
 
         Map<User, List<OverdueBorrowedItem>> overdueByUser = allItems.stream()
-                .collect(Collectors.groupingBy(
-                        MediaItem::getBorrower,
-                        Collectors.mapping(
-                                item -> new OverdueBorrowedItem(item,
-                                        DateCalculator.daysDifference(currentDate, item.getDueDate()),
-                                        currentDate),
-                                Collectors.toList()
-                        )
-                ));
+                .collect(
+                        Collectors
+                                .groupingBy(MediaItem::getBorrower,
+                                        Collectors
+                                                .mapping(
+                                                        item -> new OverdueBorrowedItem(item,
+                                                                DateCalculator.daysDifference(currentDate,
+                                                                        item.getDueDate()),
+                                                                currentDate),
+                                                        Collectors.toList())));
 
         return overdueByUser.entrySet().stream()
-                .map(entry -> new OverdueBorrowedItemsData(
-                        new UserContactDTO(entry.getKey()), entry.getValue()))
+                .map(entry -> new OverdueBorrowedItemsData(entry.getKey(), entry.getValue()))
                 .toList();
     }
 }

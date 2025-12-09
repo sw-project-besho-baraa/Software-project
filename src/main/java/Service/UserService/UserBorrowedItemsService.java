@@ -27,31 +27,31 @@ public class UserBorrowedItemsService
         return user.getBorrowedItems().size();
     }
 
-    public long countOverdueItems(@NonNull User user, ICurrentLocalTimeDateResolver timeDateResolver)
+    public long countOverdueItems(@NonNull User user,ICurrentLocalTimeDateResolver timeDateResolver)
     {
-        if ( user.getBorrowedItems() == null)
+        if (user.getBorrowedItems() == null)
         {
             return 0;
         }
         var currentLocalDateTime = timeDateResolver.getCurrentLocalDateTime();
         return user.getBorrowedItems().stream()
-                .filter(mi -> mi.isBorrowed()  && mi.getDueDate().isBefore(currentLocalDateTime))
-                .count();
+                .filter(mi -> mi.isBorrowed() && mi.getDueDate().isBefore(currentLocalDateTime)).count();
     }
-    public Stream<MediaItem> getOverdueItems(@NonNull User user, ICurrentLocalTimeDateResolver timeDateResolver)
+
+    public Stream<MediaItem> getOverdueItems(@NonNull User user,ICurrentLocalTimeDateResolver timeDateResolver)
     {
-        if ( user.getBorrowedItems() == null)
+        if (user.getBorrowedItems() == null)
         {
             return null;
         }
         var currentLocalDateTime = timeDateResolver.getCurrentLocalDateTime();
         return user.getBorrowedItems().stream()
-                .filter(mi -> mi.isBorrowed()  && mi.getDueDate().isBefore(currentLocalDateTime));
+                .filter(mi -> mi.isBorrowed() && mi.getDueDate().isBefore(currentLocalDateTime));
     }
 
     public List<MediaItem> getBorrowedItems(@NonNull User user)
     {
 
-        return  user.getBorrowedItems();
+        return user.getBorrowedItems();
     }
 }

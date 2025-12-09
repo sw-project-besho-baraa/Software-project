@@ -18,11 +18,13 @@ public class StandardOverdueBorrowValidator implements IOverdueBorrowValidation
 {
 
     @Override
-    public void validate(User user) {
-        var userBorrowedItemsService= new UserBorrowedItemsService();
-        var currentTimeDateResolver=new CurrentLocalDateTimeResolver();
-         var overdueItems=  userBorrowedItemsService.getOverdueItems(user,currentTimeDateResolver);
-        if(overdueItems.findAny().isPresent()){
+    public void validate(User user)
+    {
+        var userBorrowedItemsService = new UserBorrowedItemsService();
+        var currentTimeDateResolver = new CurrentLocalDateTimeResolver();
+        var overdueItems = userBorrowedItemsService.getOverdueItems(user,currentTimeDateResolver);
+        if (overdueItems.findAny().isPresent())
+        {
             throw new OverdueItemsException();
         }
     }

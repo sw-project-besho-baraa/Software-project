@@ -1,6 +1,6 @@
 package Service.Email;
 
-import DTO.UserDTO.UserContactDTO;
+import Entity.User;
 import Service.OverdueBorrowDetection.OverdueBorrowedItem;
 import Service.OverdueBorrowDetection.OverdueBorrowedItemsData;
 import Service.NotificationSender.INotificationSender;
@@ -12,7 +12,7 @@ import java.util.List;
 @Component
 public class EmailOverdueBorrowNotificationSender
         implements
-            INotificationSender<UserContactDTO, List<OverdueBorrowedItem>>
+            INotificationSender<User, List<OverdueBorrowedItem>>
 {
     private final EmailService emailService;
     private final IMessageFormater<OverdueBorrowedItemsData> messageFormater;
@@ -24,7 +24,7 @@ public class EmailOverdueBorrowNotificationSender
     }
 
     @Override
-    public void send(UserContactDTO user,List<OverdueBorrowedItem> items)
+    public void send(User user, List<OverdueBorrowedItem> items)
     {
         if (user == null || user.getEmail() == null || user.getEmail().isBlank())
         {

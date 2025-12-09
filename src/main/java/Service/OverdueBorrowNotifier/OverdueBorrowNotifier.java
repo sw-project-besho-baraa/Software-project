@@ -1,6 +1,6 @@
 package Service.OverdueBorrowNotifier;
 
-import DTO.UserDTO.UserContactDTO;
+import Entity.User;
 import Service.OverdueBorrowDetection.OverdueItemDetector;
 import Service.OverdueBorrowDetection.OverdueBorrowedItem;
 import Service.NotificationSender.INotificationSender;
@@ -11,9 +11,9 @@ import java.util.List;
 @Component
 public class OverdueBorrowNotifier
 {
-    private final INotificationSender<UserContactDTO, List<OverdueBorrowedItem>> notifier;
+    private final INotificationSender<User, List<OverdueBorrowedItem>> notifier;
     private final OverdueItemDetector overdueBookDetector;
-    public OverdueBorrowNotifier(INotificationSender<UserContactDTO, List<OverdueBorrowedItem>> notifier,
+    public OverdueBorrowNotifier(INotificationSender<User, List<OverdueBorrowedItem>> notifier,
             OverdueItemDetector overdueBookDetector)
     {
         this.notifier = notifier;
@@ -29,7 +29,7 @@ public class OverdueBorrowNotifier
         }
         for (var overBorrow : overBorrows)
         {
-            notifier.send(overBorrow.userContactDTO(),overBorrow.items());
+            notifier.send(overBorrow.user(),overBorrow.items());
         }
     }
 }

@@ -21,7 +21,7 @@ public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<Ove
         {
             return "";
         }
-        UserContactDTO user = overdueBorrowedItemsData.userContactDTO();
+        var user = overdueBorrowedItemsData.user();
         List<OverdueBorrowedItem> items = overdueBorrowedItemsData.items();
         String userName = user != null && user.getName() != null && !user.getName().isBlank()
                 ? user.getName()

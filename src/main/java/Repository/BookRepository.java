@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BookRepository extends  JpaRepository<@NonNull Book, @NonNull String>
+public interface BookRepository extends JpaRepository<@NonNull Book, @NonNull String>
 {
     long count();
 
