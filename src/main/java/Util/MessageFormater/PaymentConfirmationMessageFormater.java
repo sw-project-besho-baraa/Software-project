@@ -1,6 +1,6 @@
 package Util.MessageFormater;
 
-import Service.MediaItem.Payment.PaymentConfirmationData;
+import Service.Payment.PaymentConfirmationData;
 import org.springframework.stereotype.Component;
 
 @Component

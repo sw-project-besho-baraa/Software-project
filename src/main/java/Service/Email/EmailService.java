@@ -10,46 +10,51 @@ import org.springframework.stereotype.Component;
 import java.util.Properties;
 
 @Component
-public class EmailService {
+public class EmailService
+{
 
     private final String username;
     private final String password;
 
-    public EmailService(
-            @Value("${app.mail.username}") String username,
-            @Value("${app.mail.password}") String password
-    ) {
+    public EmailService(@Value("${app.mail.username}") String username, @Value("${app.mail.password}") String password)
+    {
         this.username = username;
         this.password = password;
     }
 
-    protected void sendMessage(Message message) throws MessagingException {
+    protected void sendMessage(Message message) throws MessagingException
+    {
         Transport.send(message);
     }
 
-    public void sendEmail(String to, String subject, String bodyHtml) {
+    public void sendEmail(String to,String subject,String bodyHtml)
+    {
         Properties props = new Properties();
         props.put("mail.smtp.auth","true");
         props.put("mail.smtp.starttls.enable","true");
         props.put("mail.smtp.host","smtp.gmail.com");
         props.put("mail.smtp.port","587");
 
-        Session session = Session.getInstance(props, new Authenticator() {
+        Session session = Session.getInstance(props,new Authenticator()
+        {
             @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
+            protected PasswordAuthentication getPasswordAuthentication()
+            {
                 return new PasswordAuthentication(username, password);
             }
         });
 
-        try {
+        try
+        {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));
             message.setSubject(subject);
-            message.setContent(bodyHtml, "text/html; charset=UTF-8");
+            message.setContent(bodyHtml,"text/html; charset=UTF-8");
             sendMessage(message);
             System.out.println("Email sent successfully to " + to);
-        } catch (MessagingException e) {
+        } catch (MessagingException e)
+        {
             e.printStackTrace();
             throw new RuntimeException("Failed to send email", e);
         }

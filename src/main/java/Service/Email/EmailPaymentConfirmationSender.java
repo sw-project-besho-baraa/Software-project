@@ -1,7 +1,7 @@
 package Service.Email;
 
 import DTO.UserDTO.UserContactDTO;
-import Service.MediaItem.Payment.PaymentConfirmationData;
+import Service.Payment.PaymentConfirmationData;
 import Service.NotificationSender.INotificationSender;
 import Util.MessageFormater.IMessageFormater;
 

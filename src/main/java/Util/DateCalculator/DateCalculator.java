@@ -1,6 +1,7 @@
 package Util.DateCalculator;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
@@ -10,19 +11,14 @@ import java.util.Locale;
 public class DateCalculator
 {
 
-    public static Date add(Date date,int days)
+    public static LocalDateTime add(LocalDateTime dateTime,long days)
     {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.add(Calendar.DAY_OF_MONTH,days);
-        return cal.getTime();
+        return dateTime.plusDays(days);
     }
 
-    public static int daysDifference(Date date1,Date date2)
+    public static long daysDifference(LocalDateTime date1,LocalDateTime date2)
     {
 
-        LocalDate d1 = date1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate d2 = date2.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        return (int) ChronoUnit.DAYS.between(d1,d2);
+        return ChronoUnit.DAYS.between(date1.toLocalDate(),date2.toLocalDate());
     }
 }

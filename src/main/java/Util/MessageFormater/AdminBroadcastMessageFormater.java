@@ -5,21 +5,22 @@ import Service.BroadcastMessage.AdminBroadcastMessageData;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AdminBroadcastMessageFormater implements IMessageFormater<AdminBroadcastMessageData> {
+public class AdminBroadcastMessageFormater implements IMessageFormater<AdminBroadcastMessageData>
+{
 
     @Override
-    public String formatMessage(AdminBroadcastMessageData data) {
-        if (data == null || data.userContactDTO() == null) {
+    public String formatMessage(AdminBroadcastMessageData data)
+    {
+        if (data == null || data.userContactDTO() == null)
+        {
             return "";
         }
 
         UserContactDTO user = data.userContactDTO();
         String message = data.message() == null ? "" : data.message();
-        String userName = (user.getName() != null && !user.getName().isBlank())
-                ? user.getName()
-                : "Valued Reader";
+        String userName = (user.getName() != null && !user.getName().isBlank()) ? user.getName() : "Valued Reader";
 
-        String escapedMessage = escapeHtml(message).replace("\n", "<br/>");
+        String escapedMessage = escapeHtml(message).replace("\n","<br/>");
 
         String htmlTemplate = """
                 <!DOCTYPE html>
@@ -170,24 +171,20 @@ public class AdminBroadcastMessageFormater implements IMessageFormater<AdminBroa
                             __MESSAGE_BODY__
                         </div>
 
-                        
+
                     </div>
                 </div>
                 </body>
                 </html>
                 """;
 
-        return htmlTemplate
-                .replace("__USER_NAME__", escapeHtml(userName))
-                .replace("__MESSAGE_BODY__", escapedMessage);
+        return htmlTemplate.replace("__USER_NAME__",escapeHtml(userName)).replace("__MESSAGE_BODY__",escapedMessage);
     }
 
-    private static String escapeHtml(String input) {
-        if (input == null) return "";
-        return input
-                .replace("&","&amp;")
-                .replace("<","&lt;")
-                .replace(">","&gt;")
-                .replace("\"","&quot;");
+    private static String escapeHtml(String input)
+    {
+        if (input == null)
+            return "";
+        return input.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;").replace("\"","&quot;");
     }
 }

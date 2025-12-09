@@ -2,10 +2,8 @@ package Repository;
 
 import Entity.User;
 
-import java.util.List;
 import java.util.Optional;
 
-import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItemsData;
 import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

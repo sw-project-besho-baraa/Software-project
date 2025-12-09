@@ -17,7 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LoginController {
+public class LoginController
+{
 
     @FXML
     private TextField emailTextField;
@@ -37,7 +38,9 @@ public class LoginController {
     private final FxmlNavigator fxmlNavigator;
 
     @Autowired
-    public LoginController(LoginService loginService, RoleToFxmlMapper roleToFxmlMapper, ISessionManager sessionManager, FxmlNavigator fxmlNavigator) {
+    public LoginController(LoginService loginService, RoleToFxmlMapper roleToFxmlMapper, ISessionManager sessionManager,
+            FxmlNavigator fxmlNavigator)
+    {
         this.loginService = loginService;
         this.roleToFxmlMapper = roleToFxmlMapper;
         this.sessionManager = sessionManager;
@@ -45,19 +48,22 @@ public class LoginController {
     }
 
     @FXML
-    void onSignIn(ActionEvent event) {
+    void onSignIn(ActionEvent event)
+    {
         System.out.println("Sign In button clicked");
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
         UserCredentialsDTO userDTO = new UserCredentialsDTO(email, password);
         boolean loginSuccessful = loginService.login(userDTO);
-        if (loginSuccessful) {
+        if (loginSuccessful)
+        {
             wrongUsernameOrPassword.setText("Login successful!");
             User currentUser = sessionManager.getUser();
             System.out.println(currentUser.getUserRole());
             String fxmlPath = roleToFxmlMapper.getFxmlFileForRole(currentUser.getUserRole()).orElse("/fxml/Login.fxml");
-            fxmlNavigator.navigateTo((Stage) signInButton.getScene().getWindow(), fxmlPath, "Main Application");
-        } else {
+            fxmlNavigator.navigateTo((Stage) signInButton.getScene().getWindow(),fxmlPath,"Main Application");
+        } else
+        {
             wrongUsernameOrPassword.setText("Wrong username or password.");
         }
     }
