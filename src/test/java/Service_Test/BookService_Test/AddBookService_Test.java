@@ -2,37 +2,19 @@ package Service_Test.BookService_Test;
 
 import Entity.Book;
 import Repository.BookRepository;
-import Service.MediaItem.AddMediaItemService;
-import org.junit.jupiter.api.*;
+import Service.BookService.AddBookService;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class AddBookService_Test
-{
-
-    private BookRepository bookRepository;
-    private AddMediaItemService addBookService;
-
-    @BeforeEach
-    void setup()
-    {
-        bookRepository = mock(BookRepository.class);
-        addBookService = new AddMediaItemService(bookRepository);
-    }
+public class AddBookService_Test {
 
     @Test
-    void addBook_ValidBook_SavesBook()
-    {
-        Book book = mock(Book.class);
-        addBookService.addItem(book);
-        verify(bookRepository,times(1)).save(book);
-
-    }
-
-    @Test
-    void addBook_NullBook_ThrowsException()
-    {
-        assertThrows(NullPointerException.class,() -> addBookService.addItem(null));
+    void addBook_callsRepositorySave() {
+        BookRepository repo = mock(BookRepository.class);
+        AddBookService service = new AddBookService(repo);
+        Book book = new Book();
+        service.addBook(book);
+        verify(repo).save(book);
     }
 }

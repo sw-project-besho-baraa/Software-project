@@ -11,7 +11,7 @@ import java.util.Collection;
 @Service
 public class AllBookService {
     BookRepository bookRepository;
-    AllBookService( BookRepository bookRepository){this.bookRepository=bookRepository;}
+    public AllBookService(BookRepository bookRepository){this.bookRepository=bookRepository;}
     public Collection<@NonNull Book> getAllBooks(){
         return bookRepository.findAll();
     }

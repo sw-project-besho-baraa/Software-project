@@ -20,11 +20,6 @@ public interface UserRepository extends JpaRepository<@NonNull User, @NonNull In
 
     long countByUserRole(@NonNull UserRole userRole);
 
-    // @Query("select distinct u from User u join u.bookings b where
-    // b.durationMinutes > :minMinutes")
-    // List<OverdueBorrowedItemsData>
-    // findUsersWithBookingsExceedingDuration(@Param("minMinutes") Integer
-    // minMinutes);
     @Query("select u from User u left join fetch u.borrowedItems where u.id = :id")
     Optional<User> findByIdWithBorrowedItems(@Param("id") Integer id);
 }

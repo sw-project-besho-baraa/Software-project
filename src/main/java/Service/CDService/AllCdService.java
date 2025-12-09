@@ -9,7 +9,7 @@ import java.util.Collection;
 @Service
 public class AllCdService {
     CdRepository cdRepository;
-    AllCdService( CdRepository cdRepository){this.cdRepository=cdRepository;}
+    public AllCdService(CdRepository cdRepository){this.cdRepository=cdRepository;}
     public Collection<@NonNull Cd> getAllCds(){
         return cdRepository.findAll();
     }

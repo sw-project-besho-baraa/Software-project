@@ -34,7 +34,6 @@ public class BorrowService {
 
         Date currentDate = new Date();
         Date dueDate = DateCalculator.add(currentDate, 28);
-
         item.setBorrowed(true);
         item.setBorrowedDate(currentDate);
         item.setDueDate(dueDate);
