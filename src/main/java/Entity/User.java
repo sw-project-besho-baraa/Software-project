@@ -45,14 +45,14 @@ public class User
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FineHistory> fineHistoryList = new ArrayList<>();
 
-    public void increaseFine(BigDecimal amount) {
-        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) return;
+    public void increaseFine(@NonNull BigDecimal amount) {
+        if ( amount.compareTo(BigDecimal.ZERO) <= 0) return;
         if (fineBalance == null) fineBalance = BigDecimal.ZERO;
         fineBalance = fineBalance.add(amount);
     }
 
-    public void decreaseFine(BigDecimal amount) {
-        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) return;
+    public void decreaseFine(@NonNull BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) return;
         if (fineBalance == null) fineBalance = BigDecimal.ZERO;
 
         fineBalance = fineBalance.subtract(amount);

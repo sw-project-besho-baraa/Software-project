@@ -33,7 +33,8 @@ public class BorrowService {
         borrowValidator.validate(user, item);
 
         Date currentDate = new Date();
-        Date dueDate = DateCalculator.add(currentDate, 28);
+        int allowedOverdueDays = BorrowDueDurationCalculator.getDuration(item);
+        Date dueDate = DateCalculator.add(currentDate,allowedOverdueDays );
 
         item.setBorrowed(true);
         item.setBorrowedDate(currentDate);

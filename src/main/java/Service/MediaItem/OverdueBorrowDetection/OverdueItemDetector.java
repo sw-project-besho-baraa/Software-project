@@ -3,6 +3,7 @@ package Service.MediaItem.OverdueBorrowDetection;
 import DTO.UserDTO.UserContactDTO;
 import Entity.MediaItem;
 import Entity.User;
+import Repository.MediaItemRepository;
 import Service.BookService.AllBookService;
 import Service.CDService.AllCdService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class OverdueItemDetector {
     public OverdueItemDetector(AllBookService allBookService, AllCdService allCdService) {
         this.allBookService = allBookService;
         this.allCdService = allCdService;
+
+
     }
 
     public List<OverdueBorrowedItemsData> detectUsersWithOverdueBooks() {
