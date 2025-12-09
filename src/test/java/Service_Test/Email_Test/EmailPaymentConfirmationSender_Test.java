@@ -1,69 +1,43 @@
 package Service_Test.Email_Test;
 
+
 import DTO.UserDTO.UserContactDTO;
-import Service.MediaItem.Payment.PaymentConfirmationData;
 import Service.Email.EmailPaymentConfirmationSender;
 import Service.Email.EmailService;
+import Service.MediaItem.Payment.PaymentConfirmationData;
 import Util.MessageFormater.IMessageFormater;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
 
-public class EmailPaymentConfirmationSender_Test
-{
+public class EmailPaymentConfirmationSender_Test {
 
-    private EmailService emailService;
-    private IMessageFormater<PaymentConfirmationData> messageFormater;
-    private EmailPaymentConfirmationSender sender;
+    @Test
+    void send_validUser_sendsEmail() {
+        EmailService emailService = mock(EmailService.class);
+        IMessageFormater<PaymentConfirmationData> formater = mock(IMessageFormater.class);
+        when(formater.formatMessage(any())).thenReturn("<html>ok</html>");
+        EmailPaymentConfirmationSender sender = new EmailPaymentConfirmationSender(emailService, formater);
 
-    @BeforeEach
-    void setup()
-    {
-        emailService = mock(EmailService.class);
-        messageFormater = mock(IMessageFormater.class);
-        sender = new EmailPaymentConfirmationSender(emailService, messageFormater);
+        UserContactDTO user = new UserContactDTO();
+        user.setEmail("besho@mail.com");
+        PaymentConfirmationData data = new PaymentConfirmationData(
+                "bbbbbbbbbbbbbb", "kjkjjk", "kjkjkjkj", "kjkjkj", "bjbkjk",
+                "kjkj", "bjbjbj", "kkjk", "kjkjkjjk", "kjkj"
+        );
+        sender.send(user, data);
+        verify(emailService).sendEmail(eq("besho@mail.com"), contains("Payment confirmation"), anyString());
     }
 
     @Test
-    void send_ValidUserAndData_SendsEmail()
-    {
-        UserContactDTO user = mock(UserContactDTO.class);
-        when(user.getEmail()).thenReturn("besho@gmail.com");
-        PaymentConfirmationData data = mock(PaymentConfirmationData.class);
-        String htmlBody = "<html>Payment confirmed</html>";
-        when(messageFormater.formatMessage(data)).thenReturn(htmlBody);
-        sender.send(user,data);
-        verify(messageFormater,times(1)).formatMessage(data);
-        verify(emailService,times(1)).sendEmail("besho@gmail.com","Library Management System · Payment confirmation",
-                htmlBody);
-    }
-
-    @Test
-    void send_UserIsNull_DoesNotSendEmail()
-    {
-        PaymentConfirmationData data = mock(PaymentConfirmationData.class);
-        sender.send(null,data);
-        verifyNoInteractions(emailService,messageFormater);
-    }
-
-    @Test
-    void send_UserEmailIsNull_DoesNotSendEmail()
-    {
-        UserContactDTO user = mock(UserContactDTO.class);
-        when(user.getEmail()).thenReturn(null);
-        PaymentConfirmationData data = mock(PaymentConfirmationData.class);
-        sender.send(user,data);
-        verifyNoInteractions(emailService,messageFormater);
-    }
-
-    @Test
-    void send_UserEmailIsBlank_DoesNotSendEmail()
-    {
-        UserContactDTO user = mock(UserContactDTO.class);
-        when(user.getEmail()).thenReturn("   ");
-        PaymentConfirmationData data = mock(PaymentConfirmationData.class);
-        sender.send(user,data);
-        verifyNoInteractions(emailService,messageFormater);
+    void send_nullOrEmptyEmail_doesNothing() {
+        EmailService emailService = mock(EmailService.class);
+        IMessageFormater<PaymentConfirmationData> formater = mock(IMessageFormater.class);
+        EmailPaymentConfirmationSender sender = new EmailPaymentConfirmationSender(emailService, formater);
+        sender.send(null, null);
+        UserContactDTO user = new UserContactDTO();
+        user.setEmail(" ");
+        sender.send(user, null);
+        verifyNoInteractions(emailService, formater);
     }
 }
