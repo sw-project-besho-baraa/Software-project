@@ -1,5 +1,5 @@
 package Enum;
 
 public enum MediaItemType {
-    Book, Cd, Magazine,
+    Book, Cd, Magazine,Dve
 }

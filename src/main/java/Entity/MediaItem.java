@@ -43,7 +43,7 @@ public abstract class MediaItem
     public abstract MediaItemType getMediaType();
 
     @PrePersist
-    protected void onCreate()
+    public void onCreate()
     {
         borrowedDate = LocalDateTime.now();
     }

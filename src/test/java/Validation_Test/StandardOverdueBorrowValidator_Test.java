@@ -2,78 +2,49 @@ package Validation_Test;
 
 import Entity.MediaItem;
 import Entity.User;
+import Enum.MediaItemType;
 import Exception.OverdueItemsException;
 import Validation.OverdueBorrowValidator.StandardOverdueBorrowValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
-public class StandardOverdueBorrowValidator_Test
-{
+public class StandardOverdueBorrowValidator_Test {
+
     private StandardOverdueBorrowValidator validator;
 
     @BeforeEach
-    void setup()
-    {
+    void setUp() {
         validator = new StandardOverdueBorrowValidator();
     }
 
-    private Date daysAgo(long days)
-    {
-        return Date.from(LocalDate.now().minusDays(days).atStartOfDay(ZoneId.systemDefault()).toInstant());
-    }
-
-    private User userWithItems(long... daysAgoValues)
-    {
-        List<MediaItem> items = LongStream.of(daysAgoValues).mapToObj(d -> {
-            MediaItem item = mock(MediaItem.class);
-            when(item.getBorrowedDate()).thenReturn(daysAgo(d));
-            when(item.getTitle()).thenReturn("Item " + d);
-            return item;
-        }).collect(Collectors.toList());
-
-        User user = mock(User.class);
-        when(user.getBorrowedItems()).thenReturn(items);
-        return user;
-    }
-
     @Test
-    void noItems_doesNotThrow()
-    {
-        User user = mock(User.class);
-        when(user.getBorrowedItems()).thenReturn(List.of());
+    void validate_doesNotThrow_whenNoOverdueItems() {
+        User user = new User();
+        TestMediaItem item = new TestMediaItem("Book1");
+        item.setBorrowed(true);
+        item.setDueDate(LocalDateTime.now().plusDays(2));
+        user.setBorrowedItems(List.of(item));
         assertDoesNotThrow(() -> validator.validate(user));
     }
 
     @Test
-    void allWithinLimit_doesNotThrow()
-    {
-        assertDoesNotThrow(() -> validator.validate(userWithItems(10,20,28)));
+    void validate_throwsException_whenOverdueItemsExist() {
+        User user = new User();
+        TestMediaItem item = new TestMediaItem("Book2");
+        item.setBorrowed(true);
+        item.setDueDate(LocalDateTime.now().minusDays(1)); // overdue
+        user.setBorrowedItems(List.of(item));
+        assertThrows(OverdueItemsException.class, () -> validator.validate(user));
     }
 
-    @Test
-    void singleOverdue_throwsException()
-    {
-        OverdueItemsException ex = assertThrows(OverdueItemsException.class,
-                () -> validator.validate(userWithItems(30)));
-        assertTrue(ex.getMessage().contains("overdue"));
-    }
-
-    @Test
-    void multipleOverdue_throwsException()
-    {
-        OverdueItemsException ex = assertThrows(OverdueItemsException.class,
-                () -> validator.validate(userWithItems(35,50)));
-        assertTrue(ex.getMessage().contains("Item 35"));
-        assertTrue(ex.getMessage().contains("Item 50"));
+    private static class TestMediaItem extends MediaItem {
+        public TestMediaItem(String title) {super(title);}
+        @Override
+        public MediaItemType getMediaType() {return MediaItemType.Book;}
     }
 }

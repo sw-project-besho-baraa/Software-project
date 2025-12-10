@@ -1,6 +1,7 @@
 package Service_Test.MediaItem_Test.Payment;
 
-import Service.MediaItem.Payment.PaymentConfirmationData;
+
+import Service.Payment.PaymentConfirmationData;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

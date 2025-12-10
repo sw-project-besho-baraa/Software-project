@@ -11,7 +11,7 @@ import java.util.Collection;
 public class AllCdService
 {
     CdRepository cdRepository;
-    AllCdService(CdRepository cdRepository)
+    public AllCdService(CdRepository cdRepository)
     {
         this.cdRepository = cdRepository;
     }

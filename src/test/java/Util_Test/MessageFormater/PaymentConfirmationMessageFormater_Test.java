@@ -1,6 +1,6 @@
 package Util_Test.MessageFormater;
 
-import Service.MediaItem.Payment.PaymentConfirmationData;
+import Service.Payment.PaymentConfirmationData;
 import Util.MessageFormater.PaymentConfirmationMessageFormater;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

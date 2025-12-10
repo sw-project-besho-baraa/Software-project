@@ -3,74 +3,50 @@ package Util_Test.DataCalculator;
 import Util.DateCalculator.DateCalculator;
 import org.junit.jupiter.api.Test;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DateCalculator_Test
-{
+public class DateCalculator_Test {
 
-    private Date buildDate(int year,int month,int dayOfMonth)
-    {
-
-        Calendar cal = Calendar.getInstance();
-        cal.clear();
-        cal.set(year,month - 1,dayOfMonth,0,0,0);
-        cal.set(Calendar.MILLISECOND,0);
-        return cal.getTime();
+    @Test
+    void add_addsPositiveDays() {
+        LocalDateTime base = LocalDateTime.of(2025, 1, 1, 10, 0);
+        LocalDateTime result = DateCalculator.add(base, 5);
+        assertEquals(LocalDateTime.of(2025, 1, 6, 10, 0), result);
     }
 
     @Test
-    void add_positiveDays_returnsDateInFuture()
-    {
-        Date base = buildDate(2024,1,10);
-        Date result = DateCalculator.add(base,5);
-        Date expected = buildDate(2024,1,15);
-        assertEquals(expected,result);
+    void add_addsNegativeDays() {
+        LocalDateTime base = LocalDateTime.of(2025, 1, 10, 10, 0);
+        LocalDateTime result = DateCalculator.add(base, -3);
+        assertEquals(LocalDateTime.of(2025, 1, 7, 10, 0), result);
     }
 
     @Test
-    void add_negativeDays_returnsDateInPast()
-    {
-        Date base = buildDate(2024,1,10);
-        Date result = DateCalculator.add(base,-7);
-        Date expected = buildDate(2024,1,3);
-        assertEquals(expected,result);
+    void add_addsZeroDays_returnsSameDate() {
+        LocalDateTime base = LocalDateTime.of(2025, 1, 15, 12, 30);
+        LocalDateTime result = DateCalculator.add(base, 0);
+        assertEquals(base, result);
     }
 
     @Test
-    void add_zeroDays_returnsSameDate()
-    {
-        Date base = buildDate(2024,3,5);
-        Date result = DateCalculator.add(base,0);
-        assertEquals(base,result);
+    void daysDifference_returnsZero_whenSameDate() {
+        LocalDateTime date1 = LocalDateTime.of(2025, 1, 1, 10, 0);
+        LocalDateTime date2 = LocalDateTime.of(2025, 1, 1, 22, 0);
+        assertEquals(0, DateCalculator.daysDifference(date1, date2));
     }
 
     @Test
-    void daysDifference_sameDate_returnsZero()
-    {
-        Date d1 = buildDate(2024,2,20);
-        Date d2 = buildDate(2024,2,20);
-        int diff = DateCalculator.daysDifference(d1,d2);
-        assertEquals(0,diff);
+    void daysDifference_returnsPositive_whenDate2AfterDate1() {
+        LocalDateTime date1 = LocalDateTime.of(2025, 1, 1, 10, 0);
+        LocalDateTime date2 = LocalDateTime.of(2025, 1, 5, 10, 0);
+        assertEquals(4, DateCalculator.daysDifference(date1, date2));
     }
 
     @Test
-    void daysDifference_futureAfterPast_returnsPositive()
-    {
-        Date earlier = buildDate(2024,2,1);
-        Date later = buildDate(2024,2,11);
-        int diff = DateCalculator.daysDifference(earlier,later);
-        assertEquals(10,diff);
-    }
-
-    @Test
-    void daysDifference_pastAfterFuture_returnsNegative()
-    {
-        Date earlier = buildDate(2024,2,1);
-        Date later = buildDate(2024,2,11);
-        int diff = DateCalculator.daysDifference(later,earlier);
-        assertEquals(-10,diff);
-    }
-}
+    void daysDifference_returnsNegative_whenDate2BeforeDate1() {
+        LocalDateTime date1 = LocalDateTime.of(2025, 1, 10, 10, 0);
+        LocalDateTime date2 = LocalDateTime.of(2025, 1, 5, 10, 0);
+        assertEquals(-5, DateCalculator.daysDifference(date1, date2));
+    }}
