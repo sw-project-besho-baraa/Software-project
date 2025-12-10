@@ -12,10 +12,12 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 
-public class OverdueBorrowNotifier_Test {
+public class OverdueBorrowNotifier_Test
+{
 
     @Test
-    void send_withValidData_sendsNotificationForEachUser() {
+    void send_withValidData_sendsNotificationForEachUser()
+    {
         var notifier = mock(INotificationSender.class);
         var detector = mock(OverdueItemDetector.class);
         var user = mock(User.class);
@@ -29,11 +31,12 @@ public class OverdueBorrowNotifier_Test {
         new OverdueBorrowNotifier(notifier, detector).send();
 
         verify(detector).detectUsersWithOverdueBooks();
-        verify(notifier).send(user, List.of(item));
+        verify(notifier).send(user,List.of(item));
     }
 
     @Test
-    void send_whenDetectorReturnsNull_doesNothing() {
+    void send_whenDetectorReturnsNull_doesNothing()
+    {
         var notifier = mock(INotificationSender.class);
         var detector = mock(OverdueItemDetector.class);
 
@@ -46,7 +49,8 @@ public class OverdueBorrowNotifier_Test {
     }
 
     @Test
-    void send_whenEmptyList_doesNothing() {
+    void send_whenEmptyList_doesNothing()
+    {
         var notifier = mock(INotificationSender.class);
         var detector = mock(OverdueItemDetector.class);
 
