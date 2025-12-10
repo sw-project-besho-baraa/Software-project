@@ -16,57 +16,65 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class UserBorrowedItemsService_Test {
+public class UserBorrowedItemsService_Test
+{
 
     private UserBorrowedItemsService service;
     private ICurrentLocalTimeDateResolver timeResolver;
-    private final LocalDateTime now = LocalDateTime.of(2025, 1, 1, 12, 0);
+    private final LocalDateTime now = LocalDateTime.of(2025,1,1,12,0);
 
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         service = new UserBorrowedItemsService();
         timeResolver = mock(ICurrentLocalTimeDateResolver.class);
         when(timeResolver.getCurrentLocalDateTime()).thenReturn(now);
     }
 
     @Test
-    void countBorrowedItems_returnsZero_whenBorrowedItemsNull() {
+    void countBorrowedItems_returnsZero_whenBorrowedItemsNull()
+    {
         User user = new User();
         user.setBorrowedItems(null);
-        assertEquals(0, service.countBorrowedItems(user));
+        assertEquals(0,service.countBorrowedItems(user));
     }
 
     @Test
-    void countBorrowedItems_returnsSize_whenBorrowedItemsNotNull() {
+    void countBorrowedItems_returnsSize_whenBorrowedItemsNotNull()
+    {
         User user = new User();
-        user.setBorrowedItems(List.of(new TestMediaItem("B1"), new TestMediaItem("B2")));
-        assertEquals(2, service.countBorrowedItems(user));
+        user.setBorrowedItems(List.of(new TestMediaItem("B1"),new TestMediaItem("B2")));
+        assertEquals(2,service.countBorrowedItems(user));
     }
 
     @Test
-    void countBorrowedItems_nullUser_throwsNpe() {
-        assertThrows(NullPointerException.class, () -> service.countBorrowedItems(null));
+    void countBorrowedItems_nullUser_throwsNpe()
+    {
+        assertThrows(NullPointerException.class,() -> service.countBorrowedItems(null));
     }
 
     @Test
-    void countOverdueItems_returnsZero_whenBorrowedItemsNull() {
+    void countOverdueItems_returnsZero_whenBorrowedItemsNull()
+    {
         User user = new User();
         user.setBorrowedItems(null);
-        assertEquals(0, service.countOverdueItems(user, timeResolver));
+        assertEquals(0,service.countOverdueItems(user,timeResolver));
     }
 
     @Test
-    void countOverdueItems_noOverdue() {
+    void countOverdueItems_noOverdue()
+    {
         User user = new User();
         TestMediaItem item = new TestMediaItem("B1");
         item.setBorrowed(true);
         item.setDueDate(now.plusDays(1));
         user.setBorrowedItems(List.of(item));
-        assertEquals(0, service.countOverdueItems(user, timeResolver));
+        assertEquals(0,service.countOverdueItems(user,timeResolver));
     }
 
     @Test
-    void countOverdueItems_mixedBorrowedAndNotBorrowed_overdueOnlyBorrowedCounted() {
+    void countOverdueItems_mixedBorrowedAndNotBorrowed_overdueOnlyBorrowedCounted()
+    {
         User user = new User();
         TestMediaItem overdueBorrowed = new TestMediaItem("OB");
         overdueBorrowed.setBorrowed(true);
@@ -74,24 +82,27 @@ public class UserBorrowedItemsService_Test {
         TestMediaItem overdueNotBorrowed = new TestMediaItem("ONB");
         overdueNotBorrowed.setBorrowed(false);
         overdueNotBorrowed.setDueDate(now.minusDays(2));
-        user.setBorrowedItems(List.of(overdueBorrowed, overdueNotBorrowed));
-        assertEquals(1, service.countOverdueItems(user, timeResolver));
+        user.setBorrowedItems(List.of(overdueBorrowed,overdueNotBorrowed));
+        assertEquals(1,service.countOverdueItems(user,timeResolver));
     }
 
     @Test
-    void countOverdueItems_nullUser_throwsNpe() {
-        assertThrows(NullPointerException.class, () -> service.countOverdueItems(null, timeResolver));
+    void countOverdueItems_nullUser_throwsNpe()
+    {
+        assertThrows(NullPointerException.class,() -> service.countOverdueItems(null,timeResolver));
     }
 
     @Test
-    void getOverdueItems_returnsNull_whenBorrowedItemsNull() {
+    void getOverdueItems_returnsNull_whenBorrowedItemsNull()
+    {
         User user = new User();
         user.setBorrowedItems(null);
-        assertNull(service.getOverdueItems(user, timeResolver));
+        assertNull(service.getOverdueItems(user,timeResolver));
     }
 
     @Test
-    void getOverdueItems_filtersCorrectly() {
+    void getOverdueItems_filtersCorrectly()
+    {
         User user = new User();
 
         TestMediaItem overdueBorrowed = new TestMediaItem("OB");
@@ -106,40 +117,47 @@ public class UserBorrowedItemsService_Test {
         overdueNotBorrowed.setBorrowed(false);
         overdueNotBorrowed.setDueDate(now.minusDays(2));
 
-        user.setBorrowedItems(List.of(overdueBorrowed, futureBorrowed, overdueNotBorrowed));
+        user.setBorrowedItems(List.of(overdueBorrowed,futureBorrowed,overdueNotBorrowed));
 
-        Stream<MediaItem> stream = service.getOverdueItems(user, timeResolver);
+        Stream<MediaItem> stream = service.getOverdueItems(user,timeResolver);
         List<MediaItem> list = stream.toList();
 
-        assertEquals(1, list.size());
-        assertEquals("OB", list.get(0).getTitle());
+        assertEquals(1,list.size());
+        assertEquals("OB",list.get(0).getTitle());
     }
 
     @Test
-    void getOverdueItems_nullUser_throwsNpe() {
-        assertThrows(NullPointerException.class, () -> service.getOverdueItems(null, timeResolver));
+    void getOverdueItems_nullUser_throwsNpe()
+    {
+        assertThrows(NullPointerException.class,() -> service.getOverdueItems(null,timeResolver));
     }
 
     @Test
-    void getBorrowedItems_returnsList() {
+    void getBorrowedItems_returnsList()
+    {
         User user = new User();
         List<MediaItem> items = new ArrayList<>();
         items.add(new TestMediaItem("B1"));
         user.setBorrowedItems(items);
-        assertEquals(items, service.getBorrowedItems(user));
+        assertEquals(items,service.getBorrowedItems(user));
     }
 
     @Test
-    void getBorrowedItems_nullUser_throwsNpe() {
-        assertThrows(NullPointerException.class, () -> service.getBorrowedItems(null));
+    void getBorrowedItems_nullUser_throwsNpe()
+    {
+        assertThrows(NullPointerException.class,() -> service.getBorrowedItems(null));
     }
 
-    private static class TestMediaItem extends MediaItem {
-        public TestMediaItem(String title) {
+    private static class TestMediaItem extends MediaItem
+    {
+        public TestMediaItem(String title)
+        {
             super(title);
         }
+
         @Override
-        public MediaItemType getMediaType() {
+        public MediaItemType getMediaType()
+        {
             return MediaItemType.Book;
         }
     }

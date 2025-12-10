@@ -13,17 +13,20 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class StandardOverdueBorrowValidator_Test {
+public class StandardOverdueBorrowValidator_Test
+{
 
     private StandardOverdueBorrowValidator validator;
 
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         validator = new StandardOverdueBorrowValidator();
     }
 
     @Test
-    void validate_doesNotThrow_whenNoOverdueItems() {
+    void validate_doesNotThrow_whenNoOverdueItems()
+    {
         User user = new User();
         TestMediaItem item = new TestMediaItem("Book1");
         item.setBorrowed(true);
@@ -33,18 +36,27 @@ public class StandardOverdueBorrowValidator_Test {
     }
 
     @Test
-    void validate_throwsException_whenOverdueItemsExist() {
+    void validate_throwsException_whenOverdueItemsExist()
+    {
         User user = new User();
         TestMediaItem item = new TestMediaItem("Book2");
         item.setBorrowed(true);
         item.setDueDate(LocalDateTime.now().minusDays(1)); // overdue
         user.setBorrowedItems(List.of(item));
-        assertThrows(OverdueItemsException.class, () -> validator.validate(user));
+        assertThrows(OverdueItemsException.class,() -> validator.validate(user));
     }
 
-    private static class TestMediaItem extends MediaItem {
-        public TestMediaItem(String title) {super(title);}
+    private static class TestMediaItem extends MediaItem
+    {
+        public TestMediaItem(String title)
+        {
+            super(title);
+        }
+
         @Override
-        public MediaItemType getMediaType() {return MediaItemType.Book;}
+        public MediaItemType getMediaType()
+        {
+            return MediaItemType.Book;
+        }
     }
 }

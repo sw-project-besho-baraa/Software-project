@@ -25,7 +25,8 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class CalculateFineService_Test {
+class CalculateFineService_Test
+{
 
     @Mock
     MediaItemRepository mediaItemRepository;
@@ -34,8 +35,9 @@ class CalculateFineService_Test {
     UserRepository userRepository;
 
     @Test
-    void calculateFines_allBranches() {
-        LocalDateTime now = LocalDateTime.of(2025, 1, 10, 0, 0);
+    void calculateFines_allBranches()
+    {
+        LocalDateTime now = LocalDateTime.of(2025,1,10,0,0);
         User borrower = mock(User.class);
         MediaItem item1 = mock(MediaItem.class);
         MediaItem item2 = mock(MediaItem.class);
@@ -46,21 +48,21 @@ class CalculateFineService_Test {
         when(oi1.item()).thenReturn(item1);
         when(oi2.item()).thenReturn(item2);
         when(data.user()).thenReturn(borrower);
-        when(data.items()).thenReturn(List.of(oi1, oi2));
+        when(data.items()).thenReturn(List.of(oi1,oi2));
 
         LocalDateTime due = now.minusDays(3);
         when(item1.getLastTimeFineCalculated()).thenReturn(null);
         when(item1.getDueDate()).thenReturn(due);
         when(item2.getLastTimeFineCalculated()).thenReturn(now);
 
-        try (MockedConstruction<OverdueItemDetector> ctor =
-                     Mockito.mockConstruction(OverdueItemDetector.class,
-                             (m, c) -> when(m.detectUsersWithOverdueBooks()).thenReturn(List.of(data)));
-             MockedStatic<DateCalculator> dc = Mockito.mockStatic(DateCalculator.class);
-             MockedStatic<FineResolver> fr = Mockito.mockStatic(FineResolver.class)) {
+        try (MockedConstruction<OverdueItemDetector> ctor = Mockito.mockConstruction(OverdueItemDetector.class,
+                (m,c) -> when(m.detectUsersWithOverdueBooks()).thenReturn(List.of(data)));
+                MockedStatic<DateCalculator> dc = Mockito.mockStatic(DateCalculator.class);
+                MockedStatic<FineResolver> fr = Mockito.mockStatic(FineResolver.class))
+        {
 
-            dc.when(() -> DateCalculator.daysDifference(now, due)).thenReturn(3L);
-            dc.when(() -> DateCalculator.daysDifference(now, now)).thenReturn(0L);
+            dc.when(() -> DateCalculator.daysDifference(now,due)).thenReturn(3L);
+            dc.when(() -> DateCalculator.daysDifference(now,now)).thenReturn(0L);
             fr.when(() -> FineResolver.getFine(item1)).thenReturn(new BigDecimal("2"));
             fr.when(() -> FineResolver.getFine(item2)).thenReturn(new BigDecimal("5"));
 
@@ -73,21 +75,22 @@ class CalculateFineService_Test {
         verify(mediaItemRepository).save(item1);
         verify(userRepository).save(borrower);
 
-        verify(item2, never()).setLastTimeFineCalculated(any());
-        verify(mediaItemRepository, never()).save(item2);
+        verify(item2,never()).setLastTimeFineCalculated(any());
+        verify(mediaItemRepository,never()).save(item2);
     }
 
     @Test
-    void calculateFines_emptyList() {
-        LocalDateTime now = LocalDateTime.of(2025, 1, 10, 0, 0);
+    void calculateFines_emptyList()
+    {
+        LocalDateTime now = LocalDateTime.of(2025,1,10,0,0);
 
-        try (MockedConstruction<OverdueItemDetector> ctor =
-                     Mockito.mockConstruction(OverdueItemDetector.class,
-                             (m, c) -> when(m.detectUsersWithOverdueBooks()).thenReturn(List.of()))) {
+        try (MockedConstruction<OverdueItemDetector> ctor = Mockito.mockConstruction(OverdueItemDetector.class,
+                (m,c) -> when(m.detectUsersWithOverdueBooks()).thenReturn(List.of())))
+        {
             CalculateFineService s = new CalculateFineService(mediaItemRepository, userRepository);
             s.calculateFines(now);
         }
 
-        verifyNoInteractions(mediaItemRepository, userRepository);
+        verifyNoInteractions(mediaItemRepository,userRepository);
     }
 }

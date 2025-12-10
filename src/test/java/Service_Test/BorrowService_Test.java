@@ -14,47 +14,51 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class BorrowService_Test {
+public class BorrowService_Test
+{
 
     private UserRepository userRepository;
     private BorrowValidator borrowValidator;
     private BorrowService borrowService;
 
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         userRepository = mock(UserRepository.class);
         borrowValidator = mock(BorrowValidator.class);
         borrowService = new BorrowService(userRepository, borrowValidator);
     }
 
     @Test
-    void borrow_success_updatesItemAndUserAndCallsSave() throws Exception {
+    void borrow_success_updatesItemAndUserAndCallsSave() throws Exception
+    {
         User user = new User();
         user.setBorrowedItems(new ArrayList<>());
         TestMediaItem item = new TestMediaItem("Book1");
-        doNothing().when(borrowValidator).validate(user, item);
+        doNothing().when(borrowValidator).validate(user,item);
 
-        borrowService.borrow(user, item);
+        borrowService.borrow(user,item);
 
-        verify(borrowValidator).validate(user, item);
+        verify(borrowValidator).validate(user,item);
         verify(userRepository).save(user);
         assertTrue(item.isBorrowed());
         assertNotNull(item.getBorrowedDate());
         assertNotNull(item.getDueDate());
-        assertEquals(user, item.getBorrower());
+        assertEquals(user,item.getBorrower());
         assertTrue(user.getBorrowedItems().contains(item));
     }
 
     @Test
-    void borrow_validationFails_throwsExceptionAndDoesNotSave() throws Exception {
+    void borrow_validationFails_throwsExceptionAndDoesNotSave() throws Exception
+    {
         User user = new User();
         user.setBorrowedItems(new ArrayList<>());
         TestMediaItem item = new TestMediaItem("Book2");
-        doThrow(new RuntimeException("Validation failed")).when(borrowValidator).validate(user, item);
+        doThrow(new RuntimeException("Validation failed")).when(borrowValidator).validate(user,item);
 
-        assertThrows(RuntimeException.class, () -> borrowService.borrow(user, item));
+        assertThrows(RuntimeException.class,() -> borrowService.borrow(user,item));
 
-        verify(borrowValidator).validate(user, item);
+        verify(borrowValidator).validate(user,item);
         verifyNoInteractions(userRepository);
         assertFalse(item.isBorrowed());
         assertNull(item.getBorrowedDate());
@@ -64,25 +68,31 @@ public class BorrowService_Test {
     }
 
     @Test
-    void borrow_nullUser_throwsNullPointerException_beforeValidation() {
+    void borrow_nullUser_throwsNullPointerException_beforeValidation()
+    {
         TestMediaItem item = new TestMediaItem("Book3");
-        assertThrows(NullPointerException.class, () -> borrowService.borrow(null, item));
-        verifyNoInteractions(borrowValidator, userRepository);
+        assertThrows(NullPointerException.class,() -> borrowService.borrow(null,item));
+        verifyNoInteractions(borrowValidator,userRepository);
     }
 
     @Test
-    void borrow_nullItem_throwsNullPointerException_beforeValidation() {
+    void borrow_nullItem_throwsNullPointerException_beforeValidation()
+    {
         User user = new User();
-        assertThrows(NullPointerException.class, () -> borrowService.borrow(user, null));
-        verifyNoInteractions(borrowValidator, userRepository);
+        assertThrows(NullPointerException.class,() -> borrowService.borrow(user,null));
+        verifyNoInteractions(borrowValidator,userRepository);
     }
 
-    private static class TestMediaItem extends MediaItem {
-        public TestMediaItem(String title) {
+    private static class TestMediaItem extends MediaItem
+    {
+        public TestMediaItem(String title)
+        {
             super(title);
         }
+
         @Override
-        public MediaItemType getMediaType() {
+        public MediaItemType getMediaType()
+        {
             return MediaItemType.Book;
         }
     }
