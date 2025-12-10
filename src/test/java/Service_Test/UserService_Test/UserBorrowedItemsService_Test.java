@@ -2,203 +2,145 @@ package Service_Test.UserService_Test;
 
 import Entity.MediaItem;
 import Entity.User;
-import Repository.UserRepository;
+import Enum.MediaItemType;
 import Service.UserService.UserBorrowedItemsService;
+import Util.CurrentLocalTimeDateResolver.ICurrentLocalTimeDateResolver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class UserBorrowedItemsService_Test
-{
+public class UserBorrowedItemsService_Test {
 
-    private UserRepository userRepository;
-    private UserBorrowedItemsService userBorrowedItemsService;
+    private UserBorrowedItemsService service;
+    private ICurrentLocalTimeDateResolver timeResolver;
+    private final LocalDateTime now = LocalDateTime.of(2025, 1, 1, 12, 0);
 
     @BeforeEach
-    void setUp()
-    {
-        userRepository = mock(UserRepository.class);
-        userBorrowedItemsService = new UserBorrowedItemsService(userRepository);
+    void setUp() {
+        service = new UserBorrowedItemsService();
+        timeResolver = mock(ICurrentLocalTimeDateResolver.class);
+        when(timeResolver.getCurrentLocalDateTime()).thenReturn(now);
     }
 
     @Test
-    void countBorrowedItems_returnsZero_whenSessionUserIsNull()
-    {
-        int result = userBorrowedItemsService.countBorrowedItems(null);
-        assertEquals(0,result);
+    void countBorrowedItems_returnsZero_whenBorrowedItemsNull() {
+        User user = new User();
+        user.setBorrowedItems(null);
+        assertEquals(0, service.countBorrowedItems(user));
     }
 
     @Test
-    void countBorrowedItems_returnsZero_whenUserNotFound()
-    {
-        User sessionUser = new User();
-        sessionUser.setId(1);
-        when(userRepository.findByIdWithBorrowedItems(1)).thenReturn(Optional.empty());
-
-        int result = userBorrowedItemsService.countBorrowedItems(sessionUser);
-
-        assertEquals(0,result);
+    void countBorrowedItems_returnsSize_whenBorrowedItemsNotNull() {
+        User user = new User();
+        user.setBorrowedItems(List.of(new TestMediaItem("B1"), new TestMediaItem("B2")));
+        assertEquals(2, service.countBorrowedItems(user));
     }
 
     @Test
-    void countBorrowedItems_returnsZero_whenBorrowedItemsIsNull()
-    {
-        User sessionUser = new User();
-        sessionUser.setId(2);
-
-        User dbUser = new User();
-        dbUser.setBorrowedItems(null);
-
-        when(userRepository.findByIdWithBorrowedItems(2)).thenReturn(Optional.of(dbUser));
-
-        int result = userBorrowedItemsService.countBorrowedItems(sessionUser);
-
-        assertEquals(0,result);
+    void countBorrowedItems_nullUser_throwsNpe() {
+        assertThrows(NullPointerException.class, () -> service.countBorrowedItems(null));
     }
 
     @Test
-    void countBorrowedItems_returnsSizeOfBorrowedItems()
-    {
-        User sessionUser = new User();
-        sessionUser.setId(3);
-
-        User dbUser = new User();
-        List<MediaItem> items = Arrays.asList(mock(MediaItem.class),mock(MediaItem.class),mock(MediaItem.class));
-        dbUser.setBorrowedItems(items);
-
-        when(userRepository.findByIdWithBorrowedItems(3)).thenReturn(Optional.of(dbUser));
-
-        int result = userBorrowedItemsService.countBorrowedItems(sessionUser);
-
-        assertEquals(3,result);
+    void countOverdueItems_returnsZero_whenBorrowedItemsNull() {
+        User user = new User();
+        user.setBorrowedItems(null);
+        assertEquals(0, service.countOverdueItems(user, timeResolver));
     }
 
     @Test
-    void countOverdueItems_returnsZero_whenSessionUserIsNull()
-    {
-        long result = userBorrowedItemsService.countOverdueItems(null);
-        assertEquals(0,result);
+    void countOverdueItems_noOverdue() {
+        User user = new User();
+        TestMediaItem item = new TestMediaItem("B1");
+        item.setBorrowed(true);
+        item.setDueDate(now.plusDays(1));
+        user.setBorrowedItems(List.of(item));
+        assertEquals(0, service.countOverdueItems(user, timeResolver));
     }
 
     @Test
-    void countOverdueItems_returnsZero_whenUserNotFound()
-    {
-        User sessionUser = new User();
-        sessionUser.setId(8);
-
-        when(userRepository.findByIdWithBorrowedItems(8)).thenReturn(Optional.empty());
-
-        long result = userBorrowedItemsService.countOverdueItems(sessionUser);
-
-        assertEquals(0,result);
+    void countOverdueItems_mixedBorrowedAndNotBorrowed_overdueOnlyBorrowedCounted() {
+        User user = new User();
+        TestMediaItem overdueBorrowed = new TestMediaItem("OB");
+        overdueBorrowed.setBorrowed(true);
+        overdueBorrowed.setDueDate(now.minusDays(1));
+        TestMediaItem overdueNotBorrowed = new TestMediaItem("ONB");
+        overdueNotBorrowed.setBorrowed(false);
+        overdueNotBorrowed.setDueDate(now.minusDays(2));
+        user.setBorrowedItems(List.of(overdueBorrowed, overdueNotBorrowed));
+        assertEquals(1, service.countOverdueItems(user, timeResolver));
     }
 
     @Test
-    void countOverdueItems_returnsZero_whenBorrowedItemsIsNull()
-    {
-        User sessionUser = new User();
-        sessionUser.setId(9);
-
-        User dbUser = new User();
-        dbUser.setBorrowedItems(null);
-
-        when(userRepository.findByIdWithBorrowedItems(9)).thenReturn(Optional.of(dbUser));
-
-        long result = userBorrowedItemsService.countOverdueItems(sessionUser);
-
-        assertEquals(0,result);
+    void countOverdueItems_nullUser_throwsNpe() {
+        assertThrows(NullPointerException.class, () -> service.countOverdueItems(null, timeResolver));
     }
 
     @Test
-    void countOverdueItems_countsOnlyBorrowedAndOverdueItems()
-    {
-        User sessionUser = new User();
-        sessionUser.setId(4);
-
-        User dbUser = new User();
-
-        Date past = new Date(System.currentTimeMillis() - 60_000);
-        Date future = new Date(System.currentTimeMillis() + 60_000);
-
-        MediaItem overdueBorrowed = mock(MediaItem.class);
-        when(overdueBorrowed.isBorrowed()).thenReturn(true);
-        when(overdueBorrowed.getDueDate()).thenReturn(past);
-
-        MediaItem notOverdueBorrowed = mock(MediaItem.class);
-        when(notOverdueBorrowed.isBorrowed()).thenReturn(true);
-        when(notOverdueBorrowed.getDueDate()).thenReturn(future);
-
-        MediaItem notBorrowed = mock(MediaItem.class);
-        when(notBorrowed.isBorrowed()).thenReturn(false);
-        when(notBorrowed.getDueDate()).thenReturn(past);
-
-        dbUser.setBorrowedItems(Arrays.asList(overdueBorrowed,notOverdueBorrowed,notBorrowed));
-
-        when(userRepository.findByIdWithBorrowedItems(4)).thenReturn(Optional.of(dbUser));
-
-        long result = userBorrowedItemsService.countOverdueItems(sessionUser);
-
-        assertEquals(1,result);
+    void getOverdueItems_returnsNull_whenBorrowedItemsNull() {
+        User user = new User();
+        user.setBorrowedItems(null);
+        assertNull(service.getOverdueItems(user, timeResolver));
     }
 
     @Test
-    void getBorrowedItems_returnsEmptyList_whenSessionUserIsNull()
-    {
-        List<MediaItem> result = userBorrowedItemsService.getBorrowedItems(null);
-        assertNotNull(result);
-        assertTrue(result.isEmpty());
+    void getOverdueItems_filtersCorrectly() {
+        User user = new User();
+
+        TestMediaItem overdueBorrowed = new TestMediaItem("OB");
+        overdueBorrowed.setBorrowed(true);
+        overdueBorrowed.setDueDate(now.minusDays(1));
+
+        TestMediaItem futureBorrowed = new TestMediaItem("FB");
+        futureBorrowed.setBorrowed(true);
+        futureBorrowed.setDueDate(now.plusDays(1));
+
+        TestMediaItem overdueNotBorrowed = new TestMediaItem("ONB");
+        overdueNotBorrowed.setBorrowed(false);
+        overdueNotBorrowed.setDueDate(now.minusDays(2));
+
+        user.setBorrowedItems(List.of(overdueBorrowed, futureBorrowed, overdueNotBorrowed));
+
+        Stream<MediaItem> stream = service.getOverdueItems(user, timeResolver);
+        List<MediaItem> list = stream.toList();
+
+        assertEquals(1, list.size());
+        assertEquals("OB", list.get(0).getTitle());
     }
 
     @Test
-    void getBorrowedItems_returnsEmptyList_whenUserNotFound()
-    {
-        User sessionUser = new User();
-        sessionUser.setId(5);
-
-        when(userRepository.findByIdWithBorrowedItems(5)).thenReturn(Optional.empty());
-
-        List<MediaItem> result = userBorrowedItemsService.getBorrowedItems(sessionUser);
-
-        assertNotNull(result);
-        assertTrue(result.isEmpty());
+    void getOverdueItems_nullUser_throwsNpe() {
+        assertThrows(NullPointerException.class, () -> service.getOverdueItems(null, timeResolver));
     }
 
     @Test
-    void getBorrowedItems_returnsEmptyList_whenBorrowedItemsIsNull()
-    {
-        User sessionUser = new User();
-        sessionUser.setId(6);
-
-        User dbUser = new User();
-        dbUser.setBorrowedItems(null);
-
-        when(userRepository.findByIdWithBorrowedItems(6)).thenReturn(Optional.of(dbUser));
-
-        List<MediaItem> result = userBorrowedItemsService.getBorrowedItems(sessionUser);
-
-        assertNotNull(result);
-        assertTrue(result.isEmpty());
+    void getBorrowedItems_returnsList() {
+        User user = new User();
+        List<MediaItem> items = new ArrayList<>();
+        items.add(new TestMediaItem("B1"));
+        user.setBorrowedItems(items);
+        assertEquals(items, service.getBorrowedItems(user));
     }
 
     @Test
-    void getBorrowedItems_returnsCopyOfBorrowedItems()
-    {
-        User sessionUser = new User();
-        sessionUser.setId(7);
+    void getBorrowedItems_nullUser_throwsNpe() {
+        assertThrows(NullPointerException.class, () -> service.getBorrowedItems(null));
+    }
 
-        User dbUser = new User();
-        List<MediaItem> items = Arrays.asList(mock(MediaItem.class),mock(MediaItem.class));
-        dbUser.setBorrowedItems(items);
-
-        when(userRepository.findByIdWithBorrowedItems(7)).thenReturn(Optional.of(dbUser));
-
-        List<MediaItem> result = userBorrowedItemsService.getBorrowedItems(sessionUser);
-
-        assertEquals(2,result.size());
-        assertNotSame(items,result);
+    private static class TestMediaItem extends MediaItem {
+        public TestMediaItem(String title) {
+            super(title);
+        }
+        @Override
+        public MediaItemType getMediaType() {
+            return MediaItemType.Book;
+        }
     }
 }

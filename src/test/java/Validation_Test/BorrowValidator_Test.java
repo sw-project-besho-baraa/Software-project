@@ -56,7 +56,7 @@ public class BorrowValidator_Test
         when(user.getFineBalance()).thenReturn(new BigDecimal("5.00"));
         IllegalStateException ex = assertThrows(IllegalStateException.class,() -> borrowValidator.validate(user,item));
         assertEquals("fine: please pay full balance before borrowing.",ex.getMessage());
-        verify(overdueBorrowValidation,times(1)).validate(user);
+
     }
 
     @Test

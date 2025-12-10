@@ -1,79 +1,52 @@
 package Service_Test.MediaItem_Test;
 
-import Entity.MediaItem;
-import Service.BookService.AllBookService;
-import Service.CDService.AllCdService;
+import Repository.MediaItemRepository;
 import Service.MediaItem.OverDueCountService;
-import org.junit.jupiter.api.BeforeEach;
+import Util.CurrentLocalTimeDateResolver.CurrentLocalDateTimeResolver;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.MockedConstruction;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class OverDueCountService_Test
-{
+@ExtendWith(MockitoExtension.class)
+class OverDueCountService_Test {
 
-    private AllBookService bookService;
-    private AllCdService cdService;
-    private OverDueCountService service;
+    @Test
+    void countOverdueItems_usesCurrentTimeAndDelegatesToRepository() {
+        MediaItemRepository repo = mock(MediaItemRepository.class);
+        OverDueCountService service = new OverDueCountService(repo);
 
-    @BeforeEach
-    void setUp()
-    {
-        bookService = mock(AllBookService.class);
-        cdService = mock(AllCdService.class);
-        service = new OverDueCountService(bookService, cdService);
+        LocalDateTime fakeNow = LocalDateTime.of(2025, 12, 10, 18, 0);
+
+        try (MockedConstruction<CurrentLocalDateTimeResolver> mocked =
+                     mockConstruction(CurrentLocalDateTimeResolver.class,
+                             (mock, context) -> when(mock.getCurrentLocalDateTime()).thenReturn(fakeNow))) {
+
+            when(repo.countByBorrowedTrueAndDueDateBefore(fakeNow)).thenReturn(3L);
+
+            long result = service.countOverdueItems();
+
+            assertEquals(3L, result);
+            verify(repo).countByBorrowedTrueAndDueDateBefore(fakeNow);
+        }
     }
 
     @Test
-    void countOverdueItems_mixedItems_returnsCorrectCount()
-    {
-        MediaItem overdue = mock(MediaItem.class);
-        when(overdue.isBorrowed()).thenReturn(true);
-        when(overdue.getDueDate()).thenReturn(new Date(System.currentTimeMillis() - 1000));
+    void countOverdueItems_withGivenDate_delegatesToRepository() {
+        MediaItemRepository repo = mock(MediaItemRepository.class);
+        OverDueCountService service = new OverDueCountService(repo);
 
-        MediaItem notOverdue = mock(MediaItem.class);
-        when(notOverdue.isBorrowed()).thenReturn(true);
-        when(notOverdue.getDueDate()).thenReturn(new Date(System.currentTimeMillis() + 100000));
+        LocalDateTime testTime = LocalDateTime.of(2025, 12, 11, 10, 30);
+        when(repo.countByBorrowedTrueAndDueDateBefore(testTime)).thenReturn(5L);
 
-        when(bookService.getAllBooks()).thenReturn((List) List.of(overdue));
-        when(cdService.getAllCds()).thenReturn((List) List.of(notOverdue));
+        long result = service.countOverdueItems(testTime);
 
-        long result = service.countOverdueItems();
-
-        assertEquals(1,result);
-    }
-
-    @Test
-    void countOverdueItems_noBorrowedOrNoDueDate_returnsZero()
-    {
-        MediaItem notBorrowed = mock(MediaItem.class);
-        when(notBorrowed.isBorrowed()).thenReturn(false);
-
-        when(bookService.getAllBooks()).thenReturn((List) List.of(notBorrowed));
-        when(cdService.getAllCds()).thenReturn((List) Collections.emptyList());
-
-        long result = service.countOverdueItems();
-
-        assertEquals(0,result);
-    }
-
-    @Test
-    void countOverdueItems_borrowedButDueDateNull_notCounted()
-    {
-        MediaItem borrowedNoDueDate = mock(MediaItem.class);
-        when(borrowedNoDueDate.isBorrowed()).thenReturn(true);
-        when(borrowedNoDueDate.getDueDate()).thenReturn(null);
-
-        when(bookService.getAllBooks()).thenReturn((List) List.of(borrowedNoDueDate));
-        when(cdService.getAllCds()).thenReturn((List) Collections.emptyList());
-
-        long result = service.countOverdueItems();
-
-        assertEquals(0,result);
+        assertEquals(5L, result);
+        verify(repo).countByBorrowedTrueAndDueDateBefore(testTime);
     }
 }

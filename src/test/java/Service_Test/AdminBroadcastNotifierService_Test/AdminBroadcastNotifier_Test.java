@@ -1,5 +1,4 @@
 package Service_Test.AdminBroadcastNotifierService_Test;
-
 import DTO.UserDTO.UserContactDTO;
 import Entity.User;
 import Enum.UserRole;
@@ -11,61 +10,92 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.mockito.ArgumentMatchers.*;
 
-public class AdminBroadcastNotifier_Test
-{
+public class AdminBroadcastNotifier_Test {
 
     private UserRepository userRepository;
     private INotificationSender<UserContactDTO, String> notifier;
-    private AdminBroadcastNotifier service;
+    private AdminBroadcastNotifier broadcastNotifier;
 
     @BeforeEach
-    void setup()
-    {
+    void setUp() {
         userRepository = mock(UserRepository.class);
         notifier = mock(INotificationSender.class);
-        service = new AdminBroadcastNotifier(userRepository, notifier);
+        broadcastNotifier = new AdminBroadcastNotifier(userRepository, notifier);
     }
 
     @Test
-    void sendToAll_nullOrBlankMessage_doesNothing()
-    {
-        service.sendToAll(null);
-        service.sendToAll("   ");
-        verifyNoInteractions(userRepository,notifier);
-    }
-
-    @Test
-    void sendToAll_usersNullOrEmpty_doesNotSend()
-    {
-        when(userRepository.findAll()).thenReturn(null);
-        service.sendToAll("msg");
-        when(userRepository.findAll()).thenReturn(List.of());
-        service.sendToAll("msg");
-        verify(userRepository,times(2)).findAll();
+    void sendToAll_doesNothing_whenMessageIsNull() {
+        broadcastNotifier.sendToAll(null);
+        verifyNoInteractions(userRepository);
         verifyNoInteractions(notifier);
     }
 
     @Test
-    void sendToAll_onlyUserRoleWithEmail_getsNotified()
-    {
-        User admin = mock(User.class);
-        when(admin.getUserRole()).thenReturn(UserRole.Admin);
-        User userNoEmail = mock(User.class);
-        when(userNoEmail.getUserRole()).thenReturn(UserRole.User);
-        when(userNoEmail.getEmail()).thenReturn(" ");
-        User goodUser = mock(User.class);
-        when(goodUser.getUserRole()).thenReturn(UserRole.User);
-        when(goodUser.getEmail()).thenReturn("user@example.com");
-        when(goodUser.getName()).thenReturn("Mohammad");
-        when(userRepository.findAll()).thenReturn(List.of(admin,userNoEmail,goodUser));
-        String msg = "Hello";
-        service.sendToAll(msg);
-        verify(notifier).send(argThat(c -> "Mohammad".equals(c.getName()) && "user@example.com".equals(c.getEmail())),
-                eq(msg));
-        verifyNoMoreInteractions(notifier);
+    void sendToAll_doesNothing_whenMessageIsBlank() {
+        broadcastNotifier.sendToAll("   ");
+        verifyNoInteractions(userRepository);
+        verifyNoInteractions(notifier);
+    }
+
+    @Test
+    void sendToAll_doesNothing_whenUsersNull() {
+        when(userRepository.findAll()).thenReturn(null);
+        broadcastNotifier.sendToAll("Hello");
+        verify(userRepository, times(1)).findAll();
+        verifyNoInteractions(notifier);
+    }
+
+    @Test
+    void sendToAll_doesNothing_whenUsersEmpty() {
+        when(userRepository.findAll()).thenReturn(List.of());
+        broadcastNotifier.sendToAll("Hello");
+        verify(userRepository, times(1)).findAll();
+        verifyNoInteractions(notifier);
+    }
+
+    @Test
+    void sendToAll_skipsUsersWithNonUserRole() {
+        User admin = new User();
+        admin.setUserRole(UserRole.Admin);
+        admin.setEmail("admin@example.com");
+        when(userRepository.findAll()).thenReturn(List.of(admin));
+
+        broadcastNotifier.sendToAll("Hello");
+        verifyNoInteractions(notifier);
+    }
+
+    @Test
+    void sendToAll_skipsUsersWithNullEmail() {
+        User user = new User();
+        user.setUserRole(UserRole.User);
+        user.setEmail(null);
+        when(userRepository.findAll()).thenReturn(List.of(user));
+
+        broadcastNotifier.sendToAll("Hello");
+        verifyNoInteractions(notifier);
+    }
+
+    @Test
+    void sendToAll_skipsUsersWithBlankEmail() {
+        User user = new User();
+        user.setUserRole(UserRole.User);
+        user.setEmail("   ");
+        when(userRepository.findAll()).thenReturn(List.of(user));
+
+        broadcastNotifier.sendToAll("Hello");
+        verifyNoInteractions(notifier);
+    }
+
+    @Test
+    void sendToAll_sendsNotification_whenValidUser() {
+        User user = new User();
+        user.setUserRole(UserRole.User);
+        user.setName("admin");
+        user.setEmail("admin@example.com");
+        when(userRepository.findAll()).thenReturn(List.of(user));
+        broadcastNotifier.sendToAll("Hello");
+        verify(notifier, times(1)).send(any(UserContactDTO.class), eq("Hello"));
     }
 }

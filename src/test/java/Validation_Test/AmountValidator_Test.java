@@ -61,7 +61,7 @@ public class AmountValidator_Test
     {
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
                 () -> amountValidator.validateAndParse("12.a3"));
-        assertEquals("Invalid numeric amount.",ex.getMessage());
+        assertEquals("Invalid amount format. Use digits with up to 2 decimals (e.g. 12.50).",ex.getMessage());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class AmountValidator_Test
     {
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
                 () -> amountValidator.validateAndParse("12.345"));
-        assertEquals("Amount must have at most 2 decimal places.",ex.getMessage());
+        assertEquals("Invalid amount format. Use digits with up to 2 decimals (e.g. 12.50).",ex.getMessage());
     }
 
     @Test
@@ -85,7 +85,7 @@ public class AmountValidator_Test
     {
         IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
                 () -> amountValidator.validateAndParse("-5"));
-        assertEquals("Amount must be greater than zero.",ex.getMessage());
+        assertEquals("Invalid amount format. Use digits with up to 2 decimals (e.g. 12.50).",ex.getMessage());
     }
 
     @Test

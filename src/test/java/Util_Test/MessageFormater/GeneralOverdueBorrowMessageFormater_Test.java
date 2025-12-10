@@ -1,75 +1,110 @@
 package Util_Test.MessageFormater;
 
-import DTO.UserDTO.UserContactDTO;
 import Entity.MediaItem;
-import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItem;
-import Service.MediaItem.OverdueBorrowDetection.OverdueBorrowedItemsData;
+import Entity.User;
+import Enum.MediaItemType;
+import Service.OverdueBorrowDetection.OverdueBorrowedItem;
+import Service.OverdueBorrowDetection.OverdueBorrowedItemsData;
 import Util.MessageFormater.GeneralOverdueBorrowMessageFormater;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
-public class GeneralOverdueBorrowMessageFormater_Test
-{
+public class GeneralOverdueBorrowMessageFormater_Test {
 
-    GeneralOverdueBorrowMessageFormater f = new GeneralOverdueBorrowMessageFormater();
+    private GeneralOverdueBorrowMessageFormater formater;
 
-    @Test
-    void nullInput_returnsEmpty()
-    {
-        assertEquals("",f.formatMessage(null));
+    @BeforeEach
+    void setUp() {
+        formater = new GeneralOverdueBorrowMessageFormater();
     }
 
     @Test
-    void userNull_itemsNull_defaultsAndEmptyRow()
-    {
-        String r = f.formatMessage(new OverdueBorrowedItemsData(null, null));
-        assertTrue(r.contains("Valued Reader"));
-        assertTrue(r.contains("You currently have no overdue items."));
-        assertTrue(r.contains("0 item(s)"));
+    void formatMessage_returnsEmptyString_whenDataIsNull() {
+        assertEquals("", formater.formatMessage(null));
     }
 
     @Test
-    void userWithInfo_noItems_userInfoFilled()
-    {
-        UserContactDTO u = mock(UserContactDTO.class);
-        when(u.getName()).thenReturn("Mohammad");
-        when(u.getEmail()).thenReturn("user@example.com");
-        when(u.getPhoneNumber()).thenReturn("0590000000");
-        String r = f.formatMessage(new OverdueBorrowedItemsData(u, List.of()));
-        assertTrue(r.contains("Mohammad"));
-        assertTrue(r.contains("user@example.com"));
-        assertTrue(r.contains("0590000000"));
-        assertTrue(r.contains("0 item(s)"));
+    void formatMessage_handlesEmptyItems() {
+        User user = new User();
+        user.setId(1);
+        user.setName("besho");
+        user.setEmail("besho@example.com");
+        OverdueBorrowedItemsData data = new OverdueBorrowedItemsData(user, List.of());
+        String result = formater.formatMessage(data);
+        assertTrue(result.contains("You currently have no overdue items."));
+        assertTrue(result.contains("besho"));
+        assertTrue(result.contains("__USER_EMAIL__"));
     }
 
     @Test
-    void items_present_rowsBuilt_andEscaped()
-    {
-        UserContactDTO u = mock(UserContactDTO.class);
-        when(u.getName()).thenReturn("<Mohammad & Co>");
-        when(u.getEmail()).thenReturn(null);
-        when(u.getPhoneNumber()).thenReturn("   ");
+    void formatMessage_handlesNullItem() {
+        User user = new User();
+        user.setId(2);
+        user.setName(null);
+        user.setEmail(null);
+        OverdueBorrowedItem overdueItem = new OverdueBorrowedItem(null, 0, null);
+        OverdueBorrowedItemsData data = new OverdueBorrowedItemsData(user, List.of(overdueItem));
+        String result = formater.formatMessage(data);
+        assertTrue(result.contains("Unknown item"));
+        assertTrue(result.contains("Valued Reader"));
+    }
 
-        MediaItem m1 = mock(MediaItem.class);
-        when(m1.getTitle()).thenReturn("C++ <Advanced> & Tips");
-        when(m1.getBorrowedDate()).thenReturn(new Date(0));
+    @Test
+    void formatMessage_handlesValidItem() {
+        User user = new User();
+        user.setId(3);
+        user.setName("besho");
+        user.setEmail("besho@example.com");
+        MediaItem mediaItem = new TestMediaItem("Book Title");
+        mediaItem.setBorrowedDate(null);
+        OverdueBorrowedItem overdueItem = new OverdueBorrowedItem(mediaItem, 5, LocalDateTime.now());
+        OverdueBorrowedItemsData data = new OverdueBorrowedItemsData(user, List.of(overdueItem));
+        String result = formater.formatMessage(data);
+        assertTrue(result.contains("Book Title"));
+        assertTrue(result.contains("besho"));
+        assertTrue(result.contains("5"));
+        assertTrue(result.contains("item(s)"));
+    }
 
-        OverdueBorrowedItem o1 = new OverdueBorrowedItem(m1, 3, LocalDate.of(2025,12,1));
-        OverdueBorrowedItem o3 = new OverdueBorrowedItem(null, 2, null);
+    @Test
+    void nullSafe_returnsDash_whenNullOrBlank() throws Exception {
+        var method = GeneralOverdueBorrowMessageFormater.class.getDeclaredMethod("nullSafe", String.class);
+        method.setAccessible(true);
+        assertEquals("-", method.invoke(null, (Object) null));
+        assertEquals("-", method.invoke(null, ""));
+        assertEquals("-", method.invoke(null, "   "));
+        assertEquals("Hello", method.invoke(null, "Hello"));
+    }
 
-        String r = f.formatMessage(new OverdueBorrowedItemsData(u, Arrays.asList(o1,null,o3)));
+    @Test
+    void escapeHtml_replacesSpecialCharacters() throws Exception {
+        var method = GeneralOverdueBorrowMessageFormater.class.getDeclaredMethod("escapeHtml", String.class);
+        method.setAccessible(true);
+        String input = "<div>& \"test\"</div>";
+        String escaped = (String) method.invoke(null, input);
+        assertEquals("&lt;div&gt;&amp; &quot;test&quot;&lt;/div&gt;", escaped);
+    }
 
-        assertTrue(r.contains("&lt;Mohammad &amp; Co&gt;"));
-        assertTrue(r.contains("C++ &lt;Advanced&gt; &amp; Tips"));
-        assertTrue(r.contains("Unknown item"));
-        assertTrue(r.contains("3"));
-        assertTrue(r.contains("3 item(s)"));
+    @Test
+    void mediaItem_onCreate_setsBorrowedDate() {
+        TestMediaItem item = new TestMediaItem("Test Book");
+        assertNull(item.getBorrowedDate());
+        item.onCreate();
+        assertNotNull(item.getBorrowedDate());
+    }
+
+    private static class TestMediaItem extends MediaItem {
+        public TestMediaItem(String title) {
+            super(title);
+        }
+        @Override
+        public MediaItemType getMediaType() {
+            return MediaItemType.Book;
+        }
     }
 }
