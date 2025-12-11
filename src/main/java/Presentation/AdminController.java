@@ -219,11 +219,11 @@ public class AdminController
      */
     @Autowired
     public AdminController(LogoutService logoutService, FxmlNavigator fxmlNavigator, BooksService bookCountService,
-                           CdCountService cdCountService, UserCountService userCountService, AddUserService addUserService,
-                           LocalSessionManager sessionManager, MediaItemService mediaItemService, AllCdService allCdService,
-                           OverdueBorrowNotifier overdueBorrowNotifier, AdminBroadcastNotifier adminBroadcastNotifier,
-                           MediaItemSearchService mediaItemSearchService, UnregisterUserService unregisterUserService,
-                           GetAllUsersService getAllUsersService)
+            CdCountService cdCountService, UserCountService userCountService, AddUserService addUserService,
+            LocalSessionManager sessionManager, MediaItemService mediaItemService, AllCdService allCdService,
+            OverdueBorrowNotifier overdueBorrowNotifier, AdminBroadcastNotifier adminBroadcastNotifier,
+            MediaItemSearchService mediaItemSearchService, UnregisterUserService unregisterUserService,
+            GetAllUsersService getAllUsersService)
     {
         this.logoutService = logoutService;
         this.fxmlNavigator = fxmlNavigator;
@@ -405,7 +405,7 @@ public class AdminController
         String isbn = addBookIsbn.getText();
         Book book = new Book(title, isbn, author);
         mediaItemService.addItem(book);
-        logger.info("Book added: {}, {}, {}", title, author, isbn);
+        logger.info("Book added: {}, {}, {}",title,author,isbn);
         errorLabelAddBook.setText("Book added successfully!");
         addBookTitle.clear();
         addBookAuthor.clear();
@@ -500,12 +500,12 @@ public class AdminController
             role = UserRole.valueOf(roleString);
         } catch (IllegalArgumentException e)
         {
-            logger.warn("Invalid role: {}", roleString);
+            logger.warn("Invalid role: {}",roleString);
             errorLabelAddBook.setText("Invalid role: " + roleString);
             return;
         }
         addUserService.addUser(name,email,password,role);
-        logger.info("User added: {}, {}, {}", name, email, role);
+        logger.info("User added: {}, {}, {}",name,email,role);
         errorLabelAddBook.setText("User added successfully!");
         addUserName.clear();
         addUserEmail.clear();
@@ -523,7 +523,7 @@ public class AdminController
     void sendEmail(ActionEvent event)
     {
         String message = emailMessage.getText();
-        logger.info("Email message to be sent: {}", message);
+        logger.info("Email message to be sent: {}",message);
         errorMessagesForSendEmail.setText("Broadcast email sent successfully!");
         adminBroadcastNotifier.sendToAll(message);
         emailMessage.clear();
@@ -611,7 +611,7 @@ public class AdminController
         String title = addCdTitle.getText();
         Cd cd = new Cd(title);
         mediaItemService.addItem(cd);
-        logger.info("CD added: {}", title);
+        logger.info("CD added: {}",title);
         errorLabelAddCd.setText("CD added successfully!");
         addCdTitle.clear();
     }
