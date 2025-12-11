@@ -13,14 +13,7 @@
         <maven.compiler.target>19</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sonar.organization>sw-project-besho-baraa</sonar.organization>
-        <sonar.projectKey>sw-project</sonar.projectKey>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.coverage.jacoco.xmlReportPaths>
-            ${project.basedir}/target/site/jacoco/jacoco.xml
-        </sonar.coverage.jacoco.xmlReportPaths>
-        <sonar.coverage.exclusions>
-            **/Presentation/**
-        </sonar.coverage.exclusions>
+        <sonar.coverage.exclusions>**/Presentation/**</sonar.coverage.exclusions>
     </properties>
 
     <dependencies>
