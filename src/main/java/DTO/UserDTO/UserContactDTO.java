@@ -2,14 +2,12 @@ package DTO.UserDTO;
 
 import Entity.User;
 import lombok.*;
-import org.springframework.stereotype.Component;
 
 /**
  * Simple DTO for transferring basic user contact info (id, name, email).
  */
 @Getter
 @Setter
-@Component
 public class UserContactDTO
 {
 
