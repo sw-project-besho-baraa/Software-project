@@ -51,6 +51,18 @@ public class LibrarianController {
 
     /**
      * Creates the librarian controller with injected services.
+     *
+     * @param logoutService          service used to handle logout operations
+     * @param fxmlNavigator          navigator used to change FXML views
+     * @param sessionManager         session manager providing the current user
+     * @param bookCountService       service to count the number of books
+     * @param cdCountService         service to count the number of CDs
+     * @param mediaItemService       service to manage media items
+     * @param allCdService           service to retrieve all CDs
+     * @param mediaItemSearchService service used for media item search
+     * @param userCountService       service to count users by role
+     * @param overDueCountService    service to count overdue items
+     * @param overdueItemDetector    detector for users with overdue items
      */
     @Autowired
     public LibrarianController(LogoutService logoutService,

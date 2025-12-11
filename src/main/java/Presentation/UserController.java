@@ -80,6 +80,19 @@ public class UserController {
 
     /**
      * Creates the user controller with required services.
+     *
+     * @param logoutService           service used to log out the current user
+     * @param fxmlNavigator           navigator utility for switching between FXML scenes
+     * @param mediaItemSearchService  service for searching media items
+     * @param mediaItemService        service for general media item operations
+     * @param allCdService            service to retrieve all CDs
+     * @param sessionManager          manager for the current user session
+     * @param borrowService           service handling borrow operations
+     * @param returnService           service handling return operations
+     * @param userBorrowedItemsService service for querying user borrowed items
+     * @param userRepository          repository for user entities
+     * @param getUserBalanceService   service to read user fine balance
+     * @param fineService             service to calculate and pay fines
      */
     @Autowired
     public UserController(LogoutService logoutService,
@@ -244,6 +257,8 @@ public class UserController {
 
     /**
      * Allows the user to borrow a selected item.
+     *
+     * @param event the action event triggered by the borrow button
      */
     @FXML
     void borrowItemButton(ActionEvent event) {
@@ -266,6 +281,8 @@ public class UserController {
 
     /**
      * Allows the user to return a selected item.
+     *
+     * @param event the action event triggered by the return button
      */
     @FXML
     void returnItemButton(ActionEvent event) {
@@ -290,6 +307,8 @@ public class UserController {
 
     /**
      * Shows the home page.
+     *
+     * @param event the action event triggered by the home button
      */
     @FXML
     void homeButtonClick(ActionEvent event) {
@@ -299,6 +318,8 @@ public class UserController {
 
     /**
      * Logs the user out and returns to the login screen.
+     *
+     * @param event the action event triggered by the logout button
      */
     @FXML
     void logoutButton(ActionEvent event) {
@@ -309,6 +330,8 @@ public class UserController {
 
     /**
      * Displays the user’s borrowed items.
+     *
+     * @param event the action event triggered by the "My Items" button
      */
     @FXML
     void myItemsButton(ActionEvent event) {
@@ -324,6 +347,8 @@ public class UserController {
 
     /**
      * Handles fine payment submission.
+     *
+     * @param event the action event triggered by the pay button
      */
     @FXML
     void payButton(ActionEvent event) {
@@ -357,6 +382,8 @@ public class UserController {
 
     /**
      * Opens the fine payment page.
+     *
+     * @param event the action event triggered by the pay fine button
      */
     @FXML
     void payFineButton(ActionEvent event) {
@@ -367,6 +394,8 @@ public class UserController {
 
     /**
      * Opens the fine history report window.
+     *
+     * @param event the action event triggered by the print details button
      */
     @FXML
     void printDetails(ActionEvent event) {
@@ -385,6 +414,8 @@ public class UserController {
 
     /**
      * Searches media items based on the selected mode.
+     *
+     * @param event the action event triggered by the search-by button
      */
     @FXML
     void searchByButton(ActionEvent event) {
@@ -397,6 +428,8 @@ public class UserController {
 
     /**
      * Opens the search page.
+     *
+     * @param event the action event triggered by the search button
      */
     @FXML
     void searchButton(ActionEvent event) {
@@ -406,6 +439,8 @@ public class UserController {
 
     /**
      * Displays all available media items.
+     *
+     * @param event the action event triggered by the view-all button
      */
     @FXML
     void viewAllButton(ActionEvent event) {

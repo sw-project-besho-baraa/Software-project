@@ -42,7 +42,12 @@ public class LoginController {
     private final FxmlNavigator fxmlNavigator;
 
     /**
-     * Creates the login controller with required services.
+     * Constructs a new {@code LoginController} with the required dependencies.
+     *
+     * @param loginService     service responsible for authenticating user credentials
+     * @param roleToFxmlMapper mapper for resolving FXML files based on user roles
+     * @param sessionManager   session manager for storing and retrieving the current user
+     * @param fxmlNavigator    navigator utility for switching between FXML scenes
      */
     @Autowired
     public LoginController(LoginService loginService,

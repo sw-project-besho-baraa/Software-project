@@ -35,6 +35,7 @@ public class ApplicationContextProvider {
     /**
      * Retrieves a Spring-managed bean by its type.
      *
+     * @param <T>   the type of the bean to retrieve
      * @param clazz the bean class
      * @return the bean instance, or {@code null} if not found
      */

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * <p>
  * Scans all project packages for components.
  */
+
 @SpringBootApplication
 @Configuration
 @ComponentScan(basePackages = {"Repository", "Service", "Presentation", "Validation", "Session"})

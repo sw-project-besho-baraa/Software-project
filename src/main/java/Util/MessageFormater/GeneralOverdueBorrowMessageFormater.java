@@ -170,6 +170,9 @@ public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<Ove
 
     /**
      * Returns a non-null safe string for template replacement.
+     *
+     * @param value the original string value, which may be {@code null} or blank
+     * @return "-" if the value is {@code null} or blank; otherwise the original value
      */
     private static String nullSafe(String value) {
         return value == null || value.isBlank() ? "-" : value;
@@ -177,6 +180,9 @@ public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<Ove
 
     /**
      * Escapes basic HTML entities to prevent injection.
+     *
+     * @param input the raw input string, which may be {@code null}
+     * @return the escaped string safe for HTML contexts, or an empty string if input is {@code null}
      */
     private static String escapeHtml(String input) {
         if (input == null)

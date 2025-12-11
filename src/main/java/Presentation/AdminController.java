@@ -182,6 +182,21 @@ public class AdminController {
 
     /**
      * Creates the admin controller with required services.
+     *
+     * @param logoutService         handles logout operations
+     * @param fxmlNavigator         used to switch between FXML views
+     * @param bookCountService      service to count books
+     * @param cdCountService        service to count CDs
+     * @param userCountService      service to count users by role
+     * @param addUserService        service to add new users
+     * @param sessionManager        manages the current logged-in user
+     * @param mediaItemService      service for managing media items
+     * @param allCdService          service to load all CDs
+     * @param overdueBorrowNotifier sends overdue notifications
+     * @param adminBroadcastNotifier sends admin broadcast messages
+     * @param mediaItemSearchService service to search media items
+     * @param unregisterUserService  service to unregister users
+     * @param getAllUsersService     service to fetch all users
      */
     @Autowired
     public AdminController(LogoutService logoutService,
