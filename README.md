@@ -30,3 +30,8 @@ You can open the generated JavaDoc here:
 [Open JavaDoc](https://besho-122.github.io/Doc/)
 
 The documentation is located in the `docs/` folder
+
+
+## Code Coverage Report
+You can view the JaCoCo coverage report here:  
+[Open JaCoCo Report](https://besho-122.github.io/Jacoco/)
