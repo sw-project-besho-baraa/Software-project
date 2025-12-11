@@ -4,6 +4,7 @@ import Entity.MediaItem;
 import Service.OverdueBorrowDetection.OverdueBorrowedItem;
 import Service.OverdueBorrowDetection.OverdueBorrowedItemsData;
 import org.springframework.stereotype.Component;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,47 +13,61 @@ import java.util.List;
 import java.util.Locale;
 
 @Component
-public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<OverdueBorrowedItemsData> {
+public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<OverdueBorrowedItemsData>
+{
 
     private final SimpleDateFormat borrowedDateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
 
     @Override
-    public String formatMessage(OverdueBorrowedItemsData overdueBorrowedItemsData) {
-        if (overdueBorrowedItemsData == null) {
+    public String formatMessage(OverdueBorrowedItemsData overdueBorrowedItemsData)
+    {
+        if (overdueBorrowedItemsData == null)
+        {
             return "";
         }
+
         var user = overdueBorrowedItemsData.user();
         List<OverdueBorrowedItem> items = overdueBorrowedItemsData.items();
+
         String userName = (user != null && user.getName() != null && !user.getName().isBlank())
                 ? user.getName()
                 : "Valued Reader";
+
         int overdueCount = (items == null) ? 0 : items.size();
         StringBuilder rowsBuilder = new StringBuilder();
-        if (items != null && !items.isEmpty()) {
-            for (OverdueBorrowedItem overdueItem : items) {
-                if (overdueItem == null) continue;
+
+        if (items != null && !items.isEmpty())
+        {
+            for (OverdueBorrowedItem overdueItem : items)
+            {
+                if (overdueItem == null)
+                {
+                    continue;
+                }
+
                 MediaItem item = overdueItem.item();
                 String title = (item != null) ? nullSafe(item.getTitle()) : "Unknown item";
                 String borrowedDateStr = "-";
-                if (item != null && item.getBorrowedDate() != null) {
+
+                if (item != null && item.getBorrowedDate() != null)
+                {
                     borrowedDateStr = formatBorrowedDate(item.getBorrowedDate());
                 }
-                String detectedAtStr = (overdueItem.detectedAt() != null)
-                        ? overdueItem.detectedAt().toString()
-                        : "-";
+
+                String detectedAtStr = (overdueItem.detectedAt() != null) ? overdueItem.detectedAt().toString() : "-";
+
                 long overdueDays = overdueItem.overdueDays();
+
                 rowsBuilder.append("""
                         <tr class="item-row">
-                            <td class="item-title"><div class="item-main-title">""")
-                        .append(escapeHtml(title))
-                        .append("</div></td>")
-                        .append("<td class=\"item-date\">").append(escapeHtml(borrowedDateStr))
-                        .append("</td>")
-                        .append("<td class=\"item-overdue\">").append(overdueDays).append(" days</td>")
+                            <td class="item-title"><div class="item-main-title">""").append(escapeHtml(title))
+                        .append("</div></td>").append("<td class=\"item-date\">").append(escapeHtml(borrowedDateStr))
+                        .append("</td>").append("<td class=\"item-overdue\">").append(overdueDays).append(" days</td>")
                         .append("<td class=\"item-detected\">").append(escapeHtml(detectedAtStr)).append("</td>")
                         .append("</tr>");
             }
-        } else {
+        } else
+        {
             rowsBuilder.append("""
                     <tr class="item-row empty-row">
                         <td colspan="4" class="empty-text">
@@ -61,6 +76,7 @@ public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<Ove
                     </tr>
                     """);
         }
+
         String htmlTemplate = """
                 <!DOCTYPE html>
                 <html lang="en">
@@ -91,17 +107,30 @@ public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<Ove
                             padding: 28px 24px;
                             background: var(--card-bg);
                         }
-                        .badge { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+                        .badge {
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 8px;
+                            margin-bottom: 16px;
+                        }
                         .badge-logo {
-                            height: 26px; width: 26px;
+                            height: 26px;
+                            width: 26px;
                             border-radius: 50%;
-                            background: radial-gradient(circle at 20% 20%, #e0f2fe, transparent 55%), radial-gradient(circle at 80% 80%, #38bdf8, transparent 55%);
-                            font-weight: 800; font-size: 14px;
-                            display: flex; align-items: center; justify-content: center;
+                            background: radial-gradient(circle at 20% 20%, #e0f2fe, transparent 55%),
+                                        radial-gradient(circle at 80% 80%, #38bdf8, transparent 55%);
+                            font-weight: 800;
+                            font-size: 14px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
                             color: #020617;
                         }
                         .items-table { width: 100%; border-collapse: collapse; }
-                        .items-table th, .items-table td { padding: 8px 16px; border-bottom: 1px solid rgba(31,41,55,0.9); }
+                        .items-table th, .items-table td {
+                            padding: 8px 16px;
+                            border-bottom: 1px solid rgba(31,41,55,0.9);
+                        }
                         .item-overdue { color: var(--danger); font-weight: 600; }
                     </style>
                 </head>
@@ -128,32 +157,48 @@ public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<Ove
                 </body>
                 </html>
                 """;
-        return htmlTemplate
-                .replace("__USER_NAME__", escapeHtml(userName))
-                .replace("__OVERDUE_COUNT__", String.valueOf(overdueCount))
-                .replace("__ITEM_ROWS__", rowsBuilder.toString());
+
+        return htmlTemplate.replace("__USER_NAME__",escapeHtml(userName))
+                .replace("__OVERDUE_COUNT__",String.valueOf(overdueCount))
+                .replace("__ITEM_ROWS__",rowsBuilder.toString());
     }
 
-    private String formatBorrowedDate(Object rawDate) {
-        if (rawDate == null) return "-";
-        if (rawDate instanceof java.util.Date date) {
+    private String formatBorrowedDate(Object rawDate)
+    {
+        if (rawDate == null)
+        {
+            return "-";
+        }
+
+        if (rawDate instanceof java.util.Date date)
+        {
             return borrowedDateFormat.format(date);
         }
-        if (rawDate instanceof LocalDate localDate) {
-            return localDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH));
+
+        if (rawDate instanceof LocalDate localDate)
+        {
+            return localDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy",Locale.ENGLISH));
         }
-        if (rawDate instanceof LocalDateTime localDateTime) {
-            return localDateTime.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.ENGLISH));
+
+        if (rawDate instanceof LocalDateTime localDateTime)
+        {
+            return localDateTime.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMM yyyy",Locale.ENGLISH));
         }
+
         return rawDate.toString();
     }
 
-    private static String nullSafe(String value) {
+    private static String nullSafe(String value)
+    {
         return value == null || value.isBlank() ? "-" : value;
     }
 
-    private static String escapeHtml(String input) {
-        if (input == null) return "";
-        return input.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;");
+    private static String escapeHtml(String input)
+    {
+        if (input == null)
+        {
+            return "";
+        }
+        return input.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;").replace("\"","&quot;");
     }
 }
