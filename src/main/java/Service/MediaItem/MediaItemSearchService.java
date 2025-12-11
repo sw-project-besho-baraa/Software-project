@@ -66,6 +66,9 @@ public class MediaItemSearchService
             case "Book ISBN" -> {
                 result.addAll(bookSearchService.search(new BookSearchByIsbnStrategy(),keyword));
             }
+            default -> {
+                return result;
+            }
         }
 
         return result;
