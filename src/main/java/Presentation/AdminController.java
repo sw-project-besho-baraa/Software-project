@@ -34,6 +34,8 @@ import javafx.scene.layout.AnchorPane;
 import Enum.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 
@@ -47,6 +49,8 @@ import static Enum.UserRole.User;
 @Component
 public class AdminController
 {
+
+    private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     @FXML
     private AnchorPane addProduct;
@@ -401,7 +405,7 @@ public class AdminController
         String isbn = addBookIsbn.getText();
         Book book = new Book(title, isbn, author);
         mediaItemService.addItem(book);
-        System.out.println("Book added: " + title + ", " + author + ", " + isbn);
+        logger.info("Book added: {}, {}, {}",title,author,isbn);
         errorLabelAddBook.setText("Book added successfully!");
         addBookTitle.clear();
         addBookAuthor.clear();
@@ -472,7 +476,7 @@ public class AdminController
     void logoutButton(ActionEvent event)
     {
         logoutService.logout();
-        System.out.println("Logout button clicked");
+        logger.info("Logout button clicked");
         fxmlNavigator.logout((javafx.stage.Stage) pageHome.getScene().getWindow(),"/fxml/Login.fxml");
     }
 
@@ -496,12 +500,12 @@ public class AdminController
             role = UserRole.valueOf(roleString);
         } catch (IllegalArgumentException e)
         {
-            System.out.println("Invalid role: " + roleString);
+            logger.warn("Invalid role: {}",roleString);
             errorLabelAddBook.setText("Invalid role: " + roleString);
             return;
         }
         addUserService.addUser(name,email,password,role);
-        System.out.println("User added: " + name + ", " + email + ", " + role);
+        logger.info("User added: {}, {}, {}",name,email,role);
         errorLabelAddBook.setText("User added successfully!");
         addUserName.clear();
         addUserEmail.clear();
@@ -519,11 +523,11 @@ public class AdminController
     void sendEmail(ActionEvent event)
     {
         String message = emailMessage.getText();
-        System.out.println("Email message to be sent: " + message);
+        logger.info("Email message to be sent: {}",message);
         errorMessagesForSendEmail.setText("Broadcast email sent successfully!");
         adminBroadcastNotifier.sendToAll(message);
         emailMessage.clear();
-        System.out.println("Broadcast email sent.");
+        logger.info("Broadcast email sent.");
     }
 
     /**
@@ -549,7 +553,7 @@ public class AdminController
     void sendOverDueButton(ActionEvent event)
     {
         overdueBorrowNotifier.send();
-        System.out.println("Overdue notifications sent.");
+        logger.info("Overdue notifications sent.");
     }
 
     /**
@@ -607,7 +611,7 @@ public class AdminController
         String title = addCdTitle.getText();
         Cd cd = new Cd(title);
         mediaItemService.addItem(cd);
-        System.out.println("CD added: " + title);
+        logger.info("CD added: {}",title);
         errorLabelAddCd.setText("CD added successfully!");
         addCdTitle.clear();
     }
