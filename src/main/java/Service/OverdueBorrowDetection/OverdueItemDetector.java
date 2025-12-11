@@ -13,16 +13,19 @@ import org.springframework.stereotype.Component;
  * Detects users who have overdue borrowed media items.
  */
 @Component
-public class OverdueItemDetector {
+public class OverdueItemDetector
+{
 
     private final MediaItemRepository mediaItemRepository;
 
     /**
      * Creates a new detector using the given media item repository.
      *
-     * @param mediaItemRepository repository used to fetch media items
+     * @param mediaItemRepository
+     *            repository used to fetch media items
      */
-    public OverdueItemDetector(MediaItemRepository mediaItemRepository) {
+    public OverdueItemDetector(MediaItemRepository mediaItemRepository)
+    {
         this.mediaItemRepository = mediaItemRepository;
     }
 
@@ -31,22 +34,24 @@ public class OverdueItemDetector {
      *
      * @return a list of users and their overdue borrowed items
      */
-    public List<OverdueBorrowedItemsData> detectUsersWithOverdueBooks() {
+    public List<OverdueBorrowedItemsData> detectUsersWithOverdueBooks()
+    {
         LocalDateTime currentDate = LocalDateTime.now();
         List<MediaItem> allItems = mediaItemRepository.findAllByBorrowedTrueAndDueDateBefore(currentDate);
 
         Map<User, List<OverdueBorrowedItem>> overdueByUser = allItems.stream()
-                .collect(Collectors.groupingBy(
-                        MediaItem::getBorrower,
-                        Collectors.mapping(
-                                item -> new OverdueBorrowedItem(
-                                        item,
-                                        DateCalculator.daysDifference(currentDate, item.getDueDate()),
-                                        currentDate),
-                                Collectors.toList())));
+                .collect(
+                        Collectors
+                                .groupingBy(MediaItem::getBorrower,
+                                        Collectors
+                                                .mapping(
+                                                        item -> new OverdueBorrowedItem(item,
+                                                                DateCalculator.daysDifference(currentDate,
+                                                                        item.getDueDate()),
+                                                                currentDate),
+                                                        Collectors.toList())));
 
         return overdueByUser.entrySet().stream()
-                .map(entry -> new OverdueBorrowedItemsData(entry.getKey(), entry.getValue()))
-                .toList();
+                .map(entry -> new OverdueBorrowedItemsData(entry.getKey(), entry.getValue())).toList();
     }
 }

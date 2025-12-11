@@ -7,16 +7,19 @@ import org.springframework.stereotype.Service;
  * Service for general book-related operations.
  */
 @Service
-public class BooksService {
+public class BooksService
+{
 
     private final BookRepository bookRepository;
 
     /**
      * Creates a new instance of the book service.
      *
-     * @param bookRepository repository for book data
+     * @param bookRepository
+     *            repository for book data
      */
-    public BooksService(BookRepository bookRepository) {
+    public BooksService(BookRepository bookRepository)
+    {
         this.bookRepository = bookRepository;
     }
 
@@ -25,7 +28,8 @@ public class BooksService {
      *
      * @return total book count
      */
-    public long countBooks() {
+    public long countBooks()
+    {
         return bookRepository.count();
     }
 }

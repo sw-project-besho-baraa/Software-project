@@ -12,7 +12,8 @@ import Enum.MediaItemType;
 @Getter
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class MediaItem {
+public abstract class MediaItem
+{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,15 +36,18 @@ public abstract class MediaItem {
     /**
      * Default constructor.
      */
-    public MediaItem() {
+    public MediaItem()
+    {
     }
 
     /**
      * Creates a new media item with the given title.
      *
-     * @param title item title
+     * @param title
+     *            item title
      */
-    public MediaItem(String title) {
+    public MediaItem(String title)
+    {
         this.title = title;
     }
 
@@ -59,7 +63,8 @@ public abstract class MediaItem {
      * Sets the borrowed date automatically when the item is first persisted.
      */
     @PrePersist
-    public void onCreate() {
+    public void onCreate()
+    {
         borrowedDate = LocalDateTime.now();
     }
 }

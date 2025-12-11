@@ -9,23 +9,27 @@ import java.util.List;
  * Service for retrieving all users from the database.
  */
 @Service
-public class GetAllUsersService {
+public class GetAllUsersService
+{
 
     private final UserRepository userRepository;
 
     /**
      * Creates a new instance using the given repository.
      *
-     * @param userRepository repository for accessing user data
+     * @param userRepository
+     *            repository for accessing user data
      */
-    public GetAllUsersService(UserRepository userRepository) {
+    public GetAllUsersService(UserRepository userRepository)
+    {
         this.userRepository = userRepository;
     }
 
     /**
      * @return a list of all users
      */
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers()
+    {
         return userRepository.findAll();
     }
 }

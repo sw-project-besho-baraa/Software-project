@@ -22,7 +22,8 @@ import org.springframework.stereotype.Component;
  * Authenticates users and navigates them to their respective dashboards.
  */
 @Component
-public class LoginController {
+public class LoginController
+{
 
     @FXML
     private TextField emailTextField;
@@ -44,16 +45,19 @@ public class LoginController {
     /**
      * Constructs a new {@code LoginController} with the required dependencies.
      *
-     * @param loginService     service responsible for authenticating user credentials
-     * @param roleToFxmlMapper mapper for resolving FXML files based on user roles
-     * @param sessionManager   session manager for storing and retrieving the current user
-     * @param fxmlNavigator    navigator utility for switching between FXML scenes
+     * @param loginService
+     *            service responsible for authenticating user credentials
+     * @param roleToFxmlMapper
+     *            mapper for resolving FXML files based on user roles
+     * @param sessionManager
+     *            session manager for storing and retrieving the current user
+     * @param fxmlNavigator
+     *            navigator utility for switching between FXML scenes
      */
     @Autowired
-    public LoginController(LoginService loginService,
-                           RoleToFxmlMapper roleToFxmlMapper,
-                           ISessionManager sessionManager,
-                           FxmlNavigator fxmlNavigator) {
+    public LoginController(LoginService loginService, RoleToFxmlMapper roleToFxmlMapper, ISessionManager sessionManager,
+            FxmlNavigator fxmlNavigator)
+    {
         this.loginService = loginService;
         this.roleToFxmlMapper = roleToFxmlMapper;
         this.sessionManager = sessionManager;
@@ -63,14 +67,17 @@ public class LoginController {
     /**
      * Handles the sign-in button click event.
      * <p>
-     * Validates user credentials and navigates to the corresponding dashboard on success.
+     * Validates user credentials and navigates to the corresponding dashboard on
+     * success.
      *
-     * @param event action event triggered by the sign-in button
+     * @param event
+     *            action event triggered by the sign-in button
      * @see LoginService
      * @see RoleToFxmlMapper
      */
     @FXML
-    void onSignIn(ActionEvent event) {
+    void onSignIn(ActionEvent event)
+    {
         System.out.println("Sign In button clicked");
 
         String email = emailTextField.getText();
@@ -78,21 +85,17 @@ public class LoginController {
         UserCredentialsDTO userDTO = new UserCredentialsDTO(email, password);
 
         boolean loginSuccessful = loginService.login(userDTO);
-        if (loginSuccessful) {
+        if (loginSuccessful)
+        {
             wrongUsernameOrPassword.setText("Login successful!");
             User currentUser = sessionManager.getUser();
             System.out.println(currentUser.getUserRole());
 
-            String fxmlPath = roleToFxmlMapper
-                    .getFxmlFileForRole(currentUser.getUserRole())
-                    .orElse("/fxml/Login.fxml");
+            String fxmlPath = roleToFxmlMapper.getFxmlFileForRole(currentUser.getUserRole()).orElse("/fxml/Login.fxml");
 
-            fxmlNavigator.navigateTo(
-                    (Stage) signInButton.getScene().getWindow(),
-                    fxmlPath,
-                    "Main Application"
-            );
-        } else {
+            fxmlNavigator.navigateTo((Stage) signInButton.getScene().getWindow(),fxmlPath,"Main Application");
+        } else
+        {
             wrongUsernameOrPassword.setText("Wrong username or password.");
         }
     }

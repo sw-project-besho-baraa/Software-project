@@ -13,7 +13,8 @@ import org.springframework.stereotype.Service;
  * session using an {@link ISessionManager} if authentication succeeds.
  */
 @Service
-public class LoginService {
+public class LoginService
+{
 
     private final LoginCredentialsValidator loginCredentialsValidator;
     private final ISessionManager sessionManager;
@@ -22,13 +23,16 @@ public class LoginService {
     /**
      * Creates a new login service with its required dependencies.
      *
-     * @param loginCredentialsValidator validator for verifying provided credentials
-     * @param sessionManager            manages the authenticated user session
-     * @param userRepository            repository for accessing stored user data
+     * @param loginCredentialsValidator
+     *            validator for verifying provided credentials
+     * @param sessionManager
+     *            manages the authenticated user session
+     * @param userRepository
+     *            repository for accessing stored user data
      */
-    public LoginService(LoginCredentialsValidator loginCredentialsValidator,
-                        ISessionManager sessionManager,
-                        UserRepository userRepository) {
+    public LoginService(LoginCredentialsValidator loginCredentialsValidator, ISessionManager sessionManager,
+            UserRepository userRepository)
+    {
         this.loginCredentialsValidator = loginCredentialsValidator;
         this.sessionManager = sessionManager;
         this.userRepository = userRepository;
@@ -37,20 +41,24 @@ public class LoginService {
     /**
      * Attempts to log in a user using the provided credentials.
      * <p>
-     * The service validates the credentials and, on success, stores
-     * the authenticated user in the active session.
+     * The service validates the credentials and, on success, stores the
+     * authenticated user in the active session.
      *
-     * @param userDTO the DTO containing the user's email and password
+     * @param userDTO
+     *            the DTO containing the user's email and password
      * @return {@code true} if authentication succeeds; {@code false} otherwise
      */
-    public boolean login(UserCredentialsDTO userDTO) {
+    public boolean login(UserCredentialsDTO userDTO)
+    {
         var userOpt = userRepository.findByEmail(userDTO.getEmail());
-        if (userOpt.isEmpty()) {
+        if (userOpt.isEmpty())
+        {
             return false;
         }
 
         var user = userOpt.get();
-        if (!loginCredentialsValidator.validateLogin(userDTO, user)) {
+        if (!loginCredentialsValidator.validateLogin(userDTO,user))
+        {
             return false;
         }
 

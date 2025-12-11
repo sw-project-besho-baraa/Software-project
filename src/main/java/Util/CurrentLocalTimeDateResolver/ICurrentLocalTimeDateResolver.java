@@ -5,7 +5,8 @@ import java.time.LocalDateTime;
 /**
  * Provides an abstraction for obtaining the current local date and time.
  */
-public interface ICurrentLocalTimeDateResolver {
+public interface ICurrentLocalTimeDateResolver
+{
 
     /**
      * Gets the current local date and time.

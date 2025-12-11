@@ -12,15 +12,18 @@ import java.util.Optional;
 /**
  * Repository for managing {@link User} entities.
  * <p>
- * Provides methods for authentication, role counting, and lazy loading of borrowed items.
+ * Provides methods for authentication, role counting, and lazy loading of
+ * borrowed items.
  */
 @Repository
-public interface UserRepository extends JpaRepository<@NonNull User, @NonNull Integer> {
+public interface UserRepository extends JpaRepository<@NonNull User, @NonNull Integer>
+{
 
     /**
      * Finds a user by their email address.
      *
-     * @param email user email
+     * @param email
+     *            user email
      * @return optional user if found
      */
     Optional<User> findByEmail(@NonNull String email);
@@ -28,7 +31,8 @@ public interface UserRepository extends JpaRepository<@NonNull User, @NonNull In
     /**
      * Counts users by their assigned role.
      *
-     * @param userRole user role
+     * @param userRole
+     *            user role
      * @return number of users with the given role
      */
     long countByUserRole(@NonNull UserRole userRole);
@@ -36,7 +40,8 @@ public interface UserRepository extends JpaRepository<@NonNull User, @NonNull In
     /**
      * Finds a user and fetches their borrowed items in a single query.
      *
-     * @param id user ID
+     * @param id
+     *            user ID
      * @return optional user with borrowed items loaded
      */
     @Query("select u from User u left join fetch u.borrowedItems where u.id = :id")

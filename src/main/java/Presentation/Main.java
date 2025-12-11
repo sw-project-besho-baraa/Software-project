@@ -19,21 +19,24 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableJpaRepositories(basePackages = {"Repository"})
 @EntityScan(basePackages = {"Entity"})
-@SpringBootApplication(scanBasePackages = {
-        "Presentation", "Service", "Repository", "Validation", "Util", "Session", "DTO"
-})
-public class Main extends javafx.application.Application {
+@SpringBootApplication(scanBasePackages = {"Presentation", "Service", "Repository", "Validation", "Util", "Session",
+        "DTO"})
+public class Main extends javafx.application.Application
+{
 
     private ConfigurableApplicationContext springContext;
 
     /**
      * Starts the application and shows the login window.
      *
-     * @param primaryStage main JavaFX stage
-     * @throws Exception if FXML loading fails
+     * @param primaryStage
+     *            main JavaFX stage
+     * @throws Exception
+     *             if FXML loading fails
      */
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws Exception
+    {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
         springContext = new SpringApplicationBuilder(Main.class).run();
         loader.setControllerFactory(springContext::getBean);
@@ -47,11 +50,14 @@ public class Main extends javafx.application.Application {
     /**
      * Closes the Spring context on exit.
      *
-     * @throws Exception if closing fails
+     * @throws Exception
+     *             if closing fails
      */
     @Override
-    public void stop() throws Exception {
-        if (springContext != null) {
+    public void stop() throws Exception
+    {
+        if (springContext != null)
+        {
             springContext.close();
         }
     }
@@ -59,9 +65,11 @@ public class Main extends javafx.application.Application {
     /**
      * Launches the application.
      *
-     * @param args program arguments
+     * @param args
+     *            program arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         launch(args);
     }
 }

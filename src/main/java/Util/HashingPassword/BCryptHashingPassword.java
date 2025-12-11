@@ -10,31 +10,36 @@ import org.springframework.stereotype.Component;
  * storing and validating user passwords.
  */
 @Component
-public class BCryptHashingPassword implements IHashingPassword {
+public class BCryptHashingPassword implements IHashingPassword
+{
 
     /**
      * Hashes a plain text password using BCrypt with a strength of 12.
      *
-     * @param password the plain text password
+     * @param password
+     *            the plain text password
      * @return the hashed password
      * @see BCrypt#hashpw(String, String)
      */
     @Override
-    public String hashPassword(String password) {
-        return BCrypt.hashpw(password, BCrypt.gensalt(12));
+    public String hashPassword(String password)
+    {
+        return BCrypt.hashpw(password,BCrypt.gensalt(12));
     }
 
     /**
      * Verifies a password against a previously hashed value.
      *
-     * @param password       the plain text password
-     * @param hashedPassword the hashed password to compare with
+     * @param password
+     *            the plain text password
+     * @param hashedPassword
+     *            the hashed password to compare with
      * @return true if the password matches, false otherwise
      * @see BCrypt#checkpw(String, String)
      */
     @Override
-    public boolean verifyPassword(String password, String hashedPassword) {
-        return BCrypt.checkpw(password, hashedPassword);
+    public boolean verifyPassword(String password,String hashedPassword)
+    {
+        return BCrypt.checkpw(password,hashedPassword);
     }
 }
-

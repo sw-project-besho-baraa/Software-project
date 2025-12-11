@@ -7,7 +7,8 @@ import lombok.*;
  */
 @Getter
 @Setter
-public class UserCredentialsDTO {
+public class UserCredentialsDTO
+{
 
     private String email;
     private String password;
@@ -15,10 +16,13 @@ public class UserCredentialsDTO {
     /**
      * Constructor to set user credentials.
      *
-     * @param email user email
-     * @param password user password
+     * @param email
+     *            user email
+     * @param password
+     *            user password
      */
-    public UserCredentialsDTO(String email, String password) {
+    public UserCredentialsDTO(String email, String password)
+    {
         this.email = email;
         this.password = password;
     }

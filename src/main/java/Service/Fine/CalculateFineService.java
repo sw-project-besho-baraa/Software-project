@@ -16,7 +16,8 @@ import java.time.LocalDateTime;
  * Calculates and applies fines for users with overdue borrowed items.
  */
 @Component
-public class CalculateFineService {
+public class CalculateFineService
+{
 
     private final MediaItemRepository mediaItemRepository;
     private final UserRepository userRepository;
@@ -24,40 +25,49 @@ public class CalculateFineService {
     /**
      * Creates a new fine calculation service.
      *
-     * @param mediaItemRepository repository for media items
-     * @param userRepository repository for users
+     * @param mediaItemRepository
+     *            repository for media items
+     * @param userRepository
+     *            repository for users
      */
-    public CalculateFineService(MediaItemRepository mediaItemRepository, UserRepository userRepository) {
+    public CalculateFineService(MediaItemRepository mediaItemRepository, UserRepository userRepository)
+    {
         this.mediaItemRepository = mediaItemRepository;
         this.userRepository = userRepository;
     }
 
     /**
-     * Detects overdue items and calculates fines based on the number of overdue days.
+     * Detects overdue items and calculates fines based on the number of overdue
+     * days.
      *
-     * @param currentDateTime the current time used for fine calculation
+     * @param currentDateTime
+     *            the current time used for fine calculation
      */
     @Transactional
-    public void calculateFines(LocalDateTime currentDateTime) {
+    public void calculateFines(LocalDateTime currentDateTime)
+    {
         var overdueItemDetector = new OverdueItemDetector(mediaItemRepository);
         var overdueList = overdueItemDetector.detectUsersWithOverdueBooks();
 
-        for (var userData : overdueList) {
+        for (var userData : overdueList)
+        {
             User borrower = userData.user();
             var items = userData.items();
 
-            for (var overdueItem : items) {
+            for (var overdueItem : items)
+            {
                 var item = overdueItem.item();
 
                 LocalDateTime lastCalculated = item.getLastTimeFineCalculated();
-                if (lastCalculated == null) {
+                if (lastCalculated == null)
+                {
                     lastCalculated = item.getDueDate();
                 }
 
-                long daysOverdue = DateCalculator.daysDifference(currentDateTime, lastCalculated);
-                if (daysOverdue > 0) {
-                    BigDecimal fineAmount = FineResolver.getFine(item)
-                            .multiply(BigDecimal.valueOf(daysOverdue));
+                long daysOverdue = DateCalculator.daysDifference(currentDateTime,lastCalculated);
+                if (daysOverdue > 0)
+                {
+                    BigDecimal fineAmount = FineResolver.getFine(item).multiply(BigDecimal.valueOf(daysOverdue));
 
                     borrower.increaseFine(fineAmount);
                     item.setLastTimeFineCalculated(currentDateTime);

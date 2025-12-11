@@ -12,16 +12,19 @@ import org.springframework.stereotype.Service;
  */
 @Getter
 @Service
-public class LogoutService {
+public class LogoutService
+{
 
     private final ISessionManager sessionManager;
 
     /**
      * Creates a new logout service with the given session manager.
      *
-     * @param sessionManager the session manager used to perform logout operations
+     * @param sessionManager
+     *            the session manager used to perform logout operations
      */
-    public LogoutService(ISessionManager sessionManager) {
+    public LogoutService(ISessionManager sessionManager)
+    {
         this.sessionManager = sessionManager;
     }
 
@@ -30,7 +33,8 @@ public class LogoutService {
      * <p>
      * If no session is active, this method performs no action.
      */
-    public void logout() {
+    public void logout()
+    {
         sessionManager.logout();
     }
 

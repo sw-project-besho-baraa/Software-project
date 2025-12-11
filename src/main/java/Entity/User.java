@@ -17,7 +17,8 @@ import java.util.*;
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
-public class User {
+public class User
+{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,9 +52,11 @@ public class User {
     /**
      * Increases the user's fine balance.
      *
-     * @param amount amount to add
+     * @param amount
+     *            amount to add
      */
-    public void increaseFine(@NonNull BigDecimal amount) {
+    public void increaseFine(@NonNull BigDecimal amount)
+    {
         if (amount.compareTo(BigDecimal.ZERO) <= 0)
             return;
         if (fineBalance == null)
@@ -64,9 +67,11 @@ public class User {
     /**
      * Decreases the user's fine balance.
      *
-     * @param amount amount to subtract
+     * @param amount
+     *            amount to subtract
      */
-    public void decreaseFine(@NonNull BigDecimal amount) {
+    public void decreaseFine(@NonNull BigDecimal amount)
+    {
         if (amount.compareTo(BigDecimal.ZERO) <= 0)
             return;
         if (fineBalance == null)
@@ -80,11 +85,15 @@ public class User {
     /**
      * Creates a new user with basic info.
      *
-     * @param name user's name
-     * @param email user's email
-     * @param hashedPassword hashed password
+     * @param name
+     *            user's name
+     * @param email
+     *            user's email
+     * @param hashedPassword
+     *            hashed password
      */
-    public User(String name, String email, String hashedPassword) {
+    public User(String name, String email, String hashedPassword)
+    {
         this.name = name;
         this.email = email;
         this.hashedPassword = hashedPassword;
@@ -96,15 +105,17 @@ public class User {
      * @return user details as a string
      */
     @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    public String toString()
+    {
+        return ToStringBuilder.reflectionToString(this,ToStringStyle.MULTI_LINE_STYLE);
     }
 
     /**
      * Sets the creation date when the user is first persisted.
      */
     @PrePersist
-    protected void onCreate() {
+    protected void onCreate()
+    {
         creationDate = LocalDateTime.now();
     }
 }

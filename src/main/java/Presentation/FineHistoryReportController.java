@@ -19,7 +19,8 @@ import java.util.List;
  * Controller for displaying a user's fine history in a table view.
  */
 @Component
-public class FineHistoryReportController {
+public class FineHistoryReportController
+{
 
     @FXML
     private TableView<FineHistory> tblHistory;
@@ -40,10 +41,12 @@ public class FineHistoryReportController {
     /**
      * Creates the controller with a fine history repository.
      *
-     * @param fineHistoryRepository repository for fine history records
+     * @param fineHistoryRepository
+     *            repository for fine history records
      */
     @Autowired
-    public FineHistoryReportController(FineHistoryRepository fineHistoryRepository) {
+    public FineHistoryReportController(FineHistoryRepository fineHistoryRepository)
+    {
         this.fineHistoryRepository = fineHistoryRepository;
     }
 
@@ -51,12 +54,11 @@ public class FineHistoryReportController {
      * Initializes table columns and their value factories.
      */
     @FXML
-    private void initialize() {
-        colDate.setCellValueFactory(cellData -> new SimpleStringProperty(
-                cellData.getValue().getAppliedDate() != null
-                        ? dateFormat.format(cellData.getValue().getAppliedDate())
-                        : ""
-        ));
+    private void initialize()
+    {
+        colDate.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAppliedDate() != null
+                ? dateFormat.format(cellData.getValue().getAppliedDate())
+                : ""));
 
         colAmount.setCellValueFactory(cellData -> {
             BigDecimal amount = cellData.getValue().getFineAmount();
@@ -66,11 +68,14 @@ public class FineHistoryReportController {
         colType.setCellValueFactory(cellData -> {
             BigDecimal amount = cellData.getValue().getFineAmount();
             String type;
-            if (amount == null || amount.compareTo(BigDecimal.ZERO) == 0) {
+            if (amount == null || amount.compareTo(BigDecimal.ZERO) == 0)
+            {
                 type = "Neutral";
-            } else if (amount.compareTo(BigDecimal.ZERO) > 0) {
+            } else if (amount.compareTo(BigDecimal.ZERO) > 0)
+            {
                 type = "Fine";
-            } else {
+            } else
+            {
                 type = "Payment";
             }
             return new SimpleStringProperty(type);
@@ -80,9 +85,11 @@ public class FineHistoryReportController {
     /**
      * Sets the user whose fine history should be displayed.
      *
-     * @param user target user
+     * @param user
+     *            target user
      */
-    public void setUser(User user) {
+    public void setUser(User user)
+    {
         this.user = user;
         loadData();
     }
@@ -90,7 +97,8 @@ public class FineHistoryReportController {
     /**
      * Loads fine history data for the current user.
      */
-    private void loadData() {
+    private void loadData()
+    {
         if (user == null || tblHistory == null)
             return;
 

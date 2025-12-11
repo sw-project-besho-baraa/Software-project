@@ -11,30 +11,36 @@ import java.util.List;
  * Service that delegates book search requests to the selected strategy.
  */
 @Service
-public class BookSearchService {
+public class BookSearchService
+{
 
     private final BookRepository bookRepository;
 
     /**
      * Creates a new book search service.
      *
-     * @param bookRepository repository used for book queries
+     * @param bookRepository
+     *            repository used for book queries
      */
-    public BookSearchService(@NonNull BookRepository bookRepository) {
+    public BookSearchService(@NonNull BookRepository bookRepository)
+    {
         this.bookRepository = bookRepository;
     }
 
     /**
      * Executes a search using the given strategy and value.
      *
-     * @param strategy search strategy (e.g., by title, author, or ISBN)
-     * @param value search value
-     * @param <TValue> type of the search value
+     * @param strategy
+     *            search strategy (e.g., by title, author, or ISBN)
+     * @param value
+     *            search value
+     * @param <TValue>
+     *            type of the search value
      * @return list of matching books
      * @see Service.BookService.SearchStrategy.IBookSearchStrategy
      */
-    public <TValue> List<Book> search(@NonNull IBookSearchStrategy<TValue> strategy,
-                                      @NonNull TValue value) {
-        return strategy.searchBook(bookRepository, value);
+    public <TValue> List<Book> search(@NonNull IBookSearchStrategy<TValue> strategy,@NonNull TValue value)
+    {
+        return strategy.searchBook(bookRepository,value);
     }
 }

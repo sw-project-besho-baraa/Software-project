@@ -45,7 +45,8 @@ import static Enum.UserRole.User;
  * Handles navigation, user management, media items, counts and notifications.
  */
 @Component
-public class AdminController {
+public class AdminController
+{
 
     @FXML
     private AnchorPane addProduct;
@@ -183,36 +184,43 @@ public class AdminController {
     /**
      * Creates the admin controller with required services.
      *
-     * @param logoutService         handles logout operations
-     * @param fxmlNavigator         used to switch between FXML views
-     * @param bookCountService      service to count books
-     * @param cdCountService        service to count CDs
-     * @param userCountService      service to count users by role
-     * @param addUserService        service to add new users
-     * @param sessionManager        manages the current logged-in user
-     * @param mediaItemService      service for managing media items
-     * @param allCdService          service to load all CDs
-     * @param overdueBorrowNotifier sends overdue notifications
-     * @param adminBroadcastNotifier sends admin broadcast messages
-     * @param mediaItemSearchService service to search media items
-     * @param unregisterUserService  service to unregister users
-     * @param getAllUsersService     service to fetch all users
+     * @param logoutService
+     *            handles logout operations
+     * @param fxmlNavigator
+     *            used to switch between FXML views
+     * @param bookCountService
+     *            service to count books
+     * @param cdCountService
+     *            service to count CDs
+     * @param userCountService
+     *            service to count users by role
+     * @param addUserService
+     *            service to add new users
+     * @param sessionManager
+     *            manages the current logged-in user
+     * @param mediaItemService
+     *            service for managing media items
+     * @param allCdService
+     *            service to load all CDs
+     * @param overdueBorrowNotifier
+     *            sends overdue notifications
+     * @param adminBroadcastNotifier
+     *            sends admin broadcast messages
+     * @param mediaItemSearchService
+     *            service to search media items
+     * @param unregisterUserService
+     *            service to unregister users
+     * @param getAllUsersService
+     *            service to fetch all users
      */
     @Autowired
-    public AdminController(LogoutService logoutService,
-                           FxmlNavigator fxmlNavigator,
-                           BooksService bookCountService,
-                           CdCountService cdCountService,
-                           UserCountService userCountService,
-                           AddUserService addUserService,
-                           LocalSessionManager sessionManager,
-                           MediaItemService mediaItemService,
-                           AllCdService allCdService,
-                           OverdueBorrowNotifier overdueBorrowNotifier,
-                           AdminBroadcastNotifier adminBroadcastNotifier,
-                           MediaItemSearchService mediaItemSearchService,
-                           UnregisterUserService unregisterUserService,
-                           GetAllUsersService getAllUsersService) {
+    public AdminController(LogoutService logoutService, FxmlNavigator fxmlNavigator, BooksService bookCountService,
+            CdCountService cdCountService, UserCountService userCountService, AddUserService addUserService,
+            LocalSessionManager sessionManager, MediaItemService mediaItemService, AllCdService allCdService,
+            OverdueBorrowNotifier overdueBorrowNotifier, AdminBroadcastNotifier adminBroadcastNotifier,
+            MediaItemSearchService mediaItemSearchService, UnregisterUserService unregisterUserService,
+            GetAllUsersService getAllUsersService)
+    {
         this.logoutService = logoutService;
         this.fxmlNavigator = fxmlNavigator;
         this.bookCountService = bookCountService;
@@ -233,14 +241,16 @@ public class AdminController {
      * Initializes the admin view after FXML is loaded.
      */
     @FXML
-    private void initialize() {
+    private void initialize()
+    {
         updateBookCount();
         updateCDCount();
         updateCustomersCount();
         setUserNameDisplay();
         setupViewTable();
-        if (searchList != null) {
-            searchList.setItems(FXCollections.observableArrayList("Title (Books & CDs)", "Book Author", "Book ISBN"));
+        if (searchList != null)
+        {
+            searchList.setItems(FXCollections.observableArrayList("Title (Books & CDs)","Book Author","Book ISBN"));
             searchList.setValue("Title (Books & CDs)");
         }
     }
@@ -248,7 +258,8 @@ public class AdminController {
     /**
      * Updates the label showing total number of books.
      */
-    private void updateBookCount() {
+    private void updateBookCount()
+    {
         long bookCount = bookCountService.countBooks();
         numberOfBooks.setText(String.valueOf(bookCount));
     }
@@ -256,7 +267,8 @@ public class AdminController {
     /**
      * Updates the label showing total number of CDs.
      */
-    private void updateCDCount() {
+    private void updateCDCount()
+    {
         long cdCount = cdCountService.countCds();
         numberOfCds.setText(String.valueOf(cdCount));
     }
@@ -266,14 +278,16 @@ public class AdminController {
      *
      * @see LocalSessionManager
      */
-    private void setUserNameDisplay() {
+    private void setUserNameDisplay()
+    {
         adminNameDisplay.setText(sessionManager.getUser().getName());
     }
 
     /**
      * Updates the label showing total number of customers.
      */
-    private void updateCustomersCount() {
+    private void updateCustomersCount()
+    {
         long userCount = userCountService.countUsersByRole(User);
         numberOfCustomers.setText(String.valueOf(userCount));
     }
@@ -281,7 +295,8 @@ public class AdminController {
     /**
      * Configures the table columns and loads users for the unregister combo.
      */
-    private void setupViewTable() {
+    private void setupViewTable()
+    {
         if (itemTable == null)
             return;
 
@@ -289,10 +304,12 @@ public class AdminController {
 
         viewTitle.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
 
-        if (viewAuthor != null) {
+        if (viewAuthor != null)
+        {
             viewAuthor.setCellValueFactory(cellData -> {
                 MediaItem item = cellData.getValue();
-                if (item instanceof Book book) {
+                if (item instanceof Book book)
+                {
                     String author = book.getAuthor();
                     return new SimpleStringProperty(author != null ? author : "");
                 }
@@ -300,10 +317,12 @@ public class AdminController {
             });
         }
 
-        if (viewIsbn != null) {
+        if (viewIsbn != null)
+        {
             viewIsbn.setCellValueFactory(cellData -> {
                 MediaItem item = cellData.getValue();
-                if (item instanceof Book book) {
+                if (item instanceof Book book)
+                {
                     String isbn = book.getIsbn();
                     return new SimpleStringProperty(isbn != null ? isbn : "");
                 }
@@ -324,16 +343,16 @@ public class AdminController {
 
         viewDueToDate.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDueDate()));
 
-        if (viewType != null) {
+        if (viewType != null)
+        {
             viewType.setCellValueFactory(
                     cellData -> new SimpleStringProperty(cellData.getValue().getMediaType().name()));
         }
 
-        if (usersNamesCombo != null) {
-            var users = getAllUsersService.getAllUsers().stream()
-                    .filter(u -> u.getUserRole() == UserRole.User)
-                    .map(Entity.User::getName)
-                    .toList();
+        if (usersNamesCombo != null)
+        {
+            var users = getAllUsersService.getAllUsers().stream().filter(u -> u.getUserRole() == UserRole.User)
+                    .map(Entity.User::getName).toList();
             usersNamesCombo.setItems(FXCollections.observableArrayList(users));
         }
     }
@@ -341,7 +360,8 @@ public class AdminController {
     /**
      * Hides all main content panes.
      */
-    void setAllVisibleFalse() {
+    void setAllVisibleFalse()
+    {
         addUserPage.setVisible(false);
         adminMainPage.setVisible(false);
         sendEmailMassagePage.setVisible(false);
@@ -354,24 +374,28 @@ public class AdminController {
     /**
      * Searches items based on the selected mode and keyword.
      *
-     * @param event action event from the search button
+     * @param event
+     *            action event from the search button
      */
     @FXML
-    void searchButton(ActionEvent event) {
+    void searchButton(ActionEvent event)
+    {
         String keyword = itemSearch.getText();
         String mode = searchList.getValue();
-        var items = mediaItemSearchService.searchByMode(mode, keyword);
+        var items = mediaItemSearchService.searchByMode(mode,keyword);
         itemTable.setItems(FXCollections.observableArrayList(items));
     }
 
     /**
      * Saves a new book from the add book form.
      *
-     * @param event action event from the save button
+     * @param event
+     *            action event from the save button
      * @see Book
      */
     @FXML
-    void addBookSaveButton(ActionEvent event) {
+    void addBookSaveButton(ActionEvent event)
+    {
         String title = addBookTitle.getText();
         String author = addBookAuthor.getText();
         String isbn = addBookIsbn.getText();
@@ -387,10 +411,12 @@ public class AdminController {
     /**
      * Shows the add book page.
      *
-     * @param event action event
+     * @param event
+     *            action event
      */
     @FXML
-    void addBookPageButton(ActionEvent event) {
+    void addBookPageButton(ActionEvent event)
+    {
         setAllVisibleFalse();
         addBookPage.setVisible(true);
     }
@@ -398,10 +424,12 @@ public class AdminController {
     /**
      * Shows the add user page.
      *
-     * @param event action event
+     * @param event
+     *            action event
      */
     @FXML
-    void addUserPageButton(ActionEvent event) {
+    void addUserPageButton(ActionEvent event)
+    {
         setAllVisibleFalse();
         addUserPage.setVisible(true);
     }
@@ -409,10 +437,12 @@ public class AdminController {
     /**
      * Shows the home page and refreshes counts.
      *
-     * @param event action event
+     * @param event
+     *            action event
      */
     @FXML
-    void homePageButton(ActionEvent event) {
+    void homePageButton(ActionEvent event)
+    {
         setAllVisibleFalse();
         updateBookCount();
         updateCDCount();
@@ -423,46 +453,54 @@ public class AdminController {
     /**
      * Placeholder for item search text field action.
      *
-     * @param event action event
+     * @param event
+     *            action event
      */
     @FXML
-    void itemSearchMethod(ActionEvent event) {
+    void itemSearchMethod(ActionEvent event)
+    {
         // no-op
     }
 
     /**
      * Logs out the current admin user and returns to the login screen.
      *
-     * @param event action event
+     * @param event
+     *            action event
      */
     @FXML
-    void logoutButton(ActionEvent event) {
+    void logoutButton(ActionEvent event)
+    {
         logoutService.logout();
         System.out.println("Logout button clicked");
-        fxmlNavigator.logout((javafx.stage.Stage) pageHome.getScene().getWindow(), "/fxml/Login.fxml");
+        fxmlNavigator.logout((javafx.stage.Stage) pageHome.getScene().getWindow(),"/fxml/Login.fxml");
     }
 
     /**
      * Saves a new user based on form input.
      *
-     * @param event action event
+     * @param event
+     *            action event
      * @see UserRole
      */
     @FXML
-    void saveUserButton(ActionEvent event) {
+    void saveUserButton(ActionEvent event)
+    {
         String name = addUserName.getText();
         String email = addUserEmail.getText();
         String password = addUserPassword.getText();
         String roleString = addUserRole.getText();
         UserRole role;
-        try {
+        try
+        {
             role = UserRole.valueOf(roleString);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e)
+        {
             System.out.println("Invalid role: " + roleString);
             errorLabelAddBook.setText("Invalid role: " + roleString);
             return;
         }
-        addUserService.addUser(name, email, password, role);
+        addUserService.addUser(name,email,password,role);
         System.out.println("User added: " + name + ", " + email + ", " + role);
         errorLabelAddBook.setText("User added successfully!");
         addUserName.clear();
@@ -474,10 +512,12 @@ public class AdminController {
     /**
      * Sends a broadcast email message to all users.
      *
-     * @param event action event
+     * @param event
+     *            action event
      */
     @FXML
-    void sendEmail(ActionEvent event) {
+    void sendEmail(ActionEvent event)
+    {
         String message = emailMessage.getText();
         System.out.println("Email message to be sent: " + message);
         errorMessagesForSendEmail.setText("Broadcast email sent successfully!");
@@ -489,10 +529,12 @@ public class AdminController {
     /**
      * Opens the send email page.
      *
-     * @param event action event
+     * @param event
+     *            action event
      */
     @FXML
-    void sendEmailMassagePageButton(ActionEvent event) {
+    void sendEmailMassagePageButton(ActionEvent event)
+    {
         setAllVisibleFalse();
         sendEmailMassagePage.setVisible(true);
     }
@@ -500,10 +542,12 @@ public class AdminController {
     /**
      * Sends overdue borrow notifications.
      *
-     * @param event action event
+     * @param event
+     *            action event
      */
     @FXML
-    void sendOverDueButton(ActionEvent event) {
+    void sendOverDueButton(ActionEvent event)
+    {
         overdueBorrowNotifier.send();
         System.out.println("Overdue notifications sent.");
     }
@@ -511,10 +555,12 @@ public class AdminController {
     /**
      * Shows all items in the table.
      *
-     * @param event action event
+     * @param event
+     *            action event
      */
     @FXML
-    void viewAllButton(ActionEvent event) {
+    void viewAllButton(ActionEvent event)
+    {
         setAllVisibleFalse();
         viewItemPage.setVisible(true);
         var allItems = mediaItemService.getAllItems();
@@ -525,10 +571,12 @@ public class AdminController {
     /**
      * Opens the view item page.
      *
-     * @param event action event
+     * @param event
+     *            action event
      */
     @FXML
-    void viewItemPageButton(ActionEvent event) {
+    void viewItemPageButton(ActionEvent event)
+    {
         setAllVisibleFalse();
         viewItemPage.setVisible(true);
     }
@@ -536,10 +584,12 @@ public class AdminController {
     /**
      * Opens the add CD page.
      *
-     * @param event action event
+     * @param event
+     *            action event
      */
     @FXML
-    void addCdPageButton(ActionEvent event) {
+    void addCdPageButton(ActionEvent event)
+    {
         setAllVisibleFalse();
         addCdPage.setVisible(true);
     }
@@ -547,11 +597,13 @@ public class AdminController {
     /**
      * Saves a new CD from the add CD form.
      *
-     * @param event action event
+     * @param event
+     *            action event
      * @see Cd
      */
     @FXML
-    void addCdSaveButton(ActionEvent event) {
+    void addCdSaveButton(ActionEvent event)
+    {
         String title = addCdTitle.getText();
         Cd cd = new Cd(title);
         mediaItemService.addItem(cd);
@@ -563,10 +615,12 @@ public class AdminController {
     /**
      * Opens the unregister user page.
      *
-     * @param event action event
+     * @param event
+     *            action event
      */
     @FXML
-    void unregisterUserPageButton(ActionEvent event) {
+    void unregisterUserPageButton(ActionEvent event)
+    {
         setAllVisibleFalse();
         unregisterPage.setVisible(true);
     }
@@ -574,24 +628,28 @@ public class AdminController {
     /**
      * Unregisters the selected user from the system.
      *
-     * @param event action event
+     * @param event
+     *            action event
      */
     @FXML
-    void unregisterButton(ActionEvent event) {
+    void unregisterButton(ActionEvent event)
+    {
         Object selected = usersNamesCombo.getValue();
-        if (selected == null) {
+        if (selected == null)
+        {
             unregisterLable.setText("Please select a user to unregister.");
             unregisterLable.setStyle("-fx-text-fill: #dc2626; -fx-font-weight: bold;");
             return;
         }
 
         String userName = selected.toString();
-        try {
-            var userOpt = getAllUsersService.getAllUsers().stream()
-                    .filter(u -> u.getName().equalsIgnoreCase(userName))
+        try
+        {
+            var userOpt = getAllUsersService.getAllUsers().stream().filter(u -> u.getName().equalsIgnoreCase(userName))
                     .findFirst();
 
-            if (userOpt.isEmpty()) {
+            if (userOpt.isEmpty())
+            {
                 unregisterLable.setText("User not found: " + userName);
                 unregisterLable.setStyle("-fx-text-fill: #dc2626; -fx-font-weight: bold;");
                 return;
@@ -602,10 +660,12 @@ public class AdminController {
             unregisterLable.setStyle("-fx-text-fill: #16a34a; -fx-font-weight: bold;");
             usersNamesCombo.getItems().remove(userName);
 
-        } catch (IllegalStateException e) {
+        } catch (IllegalStateException e)
+        {
             unregisterLable.setText("Cannot unregister user: " + e.getMessage());
             unregisterLable.setStyle("-fx-text-fill: #dc2626; -fx-font-weight: bold;");
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             unregisterLable.setText("Unexpected error occurred while unregistering.");
             unregisterLable.setStyle("-fx-text-fill: #dc2626; -fx-font-weight: bold;");
             e.printStackTrace();

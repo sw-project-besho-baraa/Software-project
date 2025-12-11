@@ -14,7 +14,8 @@ import lombok.NonNull;
  * Handles the borrowing process for media items.
  */
 @Service
-public class BorrowService {
+public class BorrowService
+{
 
     private final UserRepository userRepository;
     private final BorrowValidator borrowValidator;
@@ -22,10 +23,13 @@ public class BorrowService {
     /**
      * Creates a new borrow service with the given dependencies.
      *
-     * @param userRepository repository for saving user data
-     * @param borrowValidator validator for borrow rules
+     * @param userRepository
+     *            repository for saving user data
+     * @param borrowValidator
+     *            validator for borrow rules
      */
-    public BorrowService(UserRepository userRepository, BorrowValidator borrowValidator) {
+    public BorrowService(UserRepository userRepository, BorrowValidator borrowValidator)
+    {
         this.userRepository = userRepository;
         this.borrowValidator = borrowValidator;
     }
@@ -33,16 +37,20 @@ public class BorrowService {
     /**
      * Allows a user to borrow a media item if validation passes.
      *
-     * @param user the user borrowing the item
-     * @param item the item being borrowed
-     * @throws Exception if the borrow validation fails
+     * @param user
+     *            the user borrowing the item
+     * @param item
+     *            the item being borrowed
+     * @throws Exception
+     *             if the borrow validation fails
      */
     @Transactional
-    public void borrow(@NonNull User user, @NonNull MediaItem item) throws Exception {
-        borrowValidator.validate(user, item);
+    public void borrow(@NonNull User user,@NonNull MediaItem item) throws Exception
+    {
+        borrowValidator.validate(user,item);
         var currentDate = new CurrentLocalDateTimeResolver().getCurrentLocalDateTime();
         int allowedOverdueDays = BorrowDueDurationCalculator.getDuration(item);
-        var dueDate = DateCalculator.add(currentDate, allowedOverdueDays);
+        var dueDate = DateCalculator.add(currentDate,allowedOverdueDays);
 
         item.setBorrowed(true);
         item.setBorrowedDate(currentDate);

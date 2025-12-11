@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 /**
  * Validates login credentials for authentication.
  * <p>
- * This component checks whether the provided email and password
- * match the stored user credentials using a hashing utility.
+ * This component checks whether the provided email and password match the
+ * stored user credentials using a hashing utility.
  */
 @Component
 public class LoginCredentialsValidator
@@ -19,7 +19,8 @@ public class LoginCredentialsValidator
     /**
      * Constructs a new {@code LoginCredentialsValidator}.
      *
-     * @param hashingPassword utility for verifying hashed passwords
+     * @param hashingPassword
+     *            utility for verifying hashed passwords
      */
     public LoginCredentialsValidator(IHashingPassword hashingPassword)
     {
@@ -29,8 +30,10 @@ public class LoginCredentialsValidator
     /**
      * Validates the provided user credentials against the stored user data.
      *
-     * @param userDTO contains the email and raw password entered by the user
-     * @param user the stored {@link User} entity retrieved from the database
+     * @param userDTO
+     *            contains the email and raw password entered by the user
+     * @param user
+     *            the stored {@link User} entity retrieved from the database
      * @return true if the email matches and the password is valid; false otherwise
      */
     public boolean validateLogin(UserCredentialsDTO userDTO,User user)

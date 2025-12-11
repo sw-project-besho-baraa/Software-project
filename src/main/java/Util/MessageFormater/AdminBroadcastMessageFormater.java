@@ -7,21 +7,25 @@ import org.springframework.stereotype.Component;
 /**
  * Formats HTML email messages for admin broadcasts sent to users.
  * <p>
- * This formatter generates a styled email template that includes
- * the admin’s message and the recipient’s name.
+ * This formatter generates a styled email template that includes the admin’s
+ * message and the recipient’s name.
  */
 @Component
-public class AdminBroadcastMessageFormater implements IMessageFormater<AdminBroadcastMessageData> {
+public class AdminBroadcastMessageFormater implements IMessageFormater<AdminBroadcastMessageData>
+{
 
     /**
      * Builds an HTML-formatted admin broadcast message.
      *
-     * @param data the message data containing the recipient and message text
+     * @param data
+     *            the message data containing the recipient and message text
      * @return a complete HTML string ready for sending by email
      */
     @Override
-    public String formatMessage(AdminBroadcastMessageData data) {
-        if (data == null || data.userContactDTO() == null) {
+    public String formatMessage(AdminBroadcastMessageData data)
+    {
+        if (data == null || data.userContactDTO() == null)
+        {
             return "";
         }
 
@@ -29,7 +33,7 @@ public class AdminBroadcastMessageFormater implements IMessageFormater<AdminBroa
         String message = data.message() == null ? "" : data.message();
         String userName = (user.getName() != null && !user.getName().isBlank()) ? user.getName() : "Valued Reader";
 
-        String escapedMessage = escapeHtml(message).replace("\n", "<br/>");
+        String escapedMessage = escapeHtml(message).replace("\n","<br/>");
 
         String htmlTemplate = """
                 <!DOCTYPE html>
@@ -105,24 +109,20 @@ public class AdminBroadcastMessageFormater implements IMessageFormater<AdminBroa
                 </html>
                 """;
 
-        return htmlTemplate
-                .replace("__USER_NAME__", escapeHtml(userName))
-                .replace("__MESSAGE_BODY__", escapedMessage);
+        return htmlTemplate.replace("__USER_NAME__",escapeHtml(userName)).replace("__MESSAGE_BODY__",escapedMessage);
     }
 
     /**
      * Escapes HTML special characters to prevent injection.
      *
-     * @param input the input string
+     * @param input
+     *            the input string
      * @return an escaped HTML-safe string
      */
-    private static String escapeHtml(String input) {
+    private static String escapeHtml(String input)
+    {
         if (input == null)
             return "";
-        return input
-                .replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;")
-                .replace("\"", "&quot;");
+        return input.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;").replace("\"","&quot;");
     }
 }

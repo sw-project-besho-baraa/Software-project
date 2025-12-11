@@ -8,7 +8,8 @@ import java.util.regex.Pattern;
 /**
  * Utility validator for parsing and validating monetary amounts.
  * <p>
- * Ensures proper numeric format, decimal precision, and optional maximum limits.
+ * Ensures proper numeric format, decimal precision, and optional maximum
+ * limits.
  */
 @Component
 public class AmountValidator
@@ -17,13 +18,16 @@ public class AmountValidator
     private static final int SCALE = 2;
 
     /**
-     * Validates and parses a string amount, ensuring it follows numeric format
-     * and is within the allowed range.
+     * Validates and parses a string amount, ensuring it follows numeric format and
+     * is within the allowed range.
      *
-     * @param raw         the raw amount string to validate
-     * @param maxAllowed  optional maximum allowed value (nullable)
+     * @param raw
+     *            the raw amount string to validate
+     * @param maxAllowed
+     *            optional maximum allowed value (nullable)
      * @return parsed {@link BigDecimal} value with 2 decimal places
-     * @throws IllegalArgumentException if format is invalid or exceeds max allowed
+     * @throws IllegalArgumentException
+     *             if format is invalid or exceeds max allowed
      */
     public BigDecimal validateAndParse(String raw,BigDecimal maxAllowed)
     {
@@ -69,7 +73,8 @@ public class AmountValidator
     /**
      * Validates and parses a raw string amount with no maximum limit.
      *
-     * @param raw the raw amount string
+     * @param raw
+     *            the raw amount string
      * @return parsed {@link BigDecimal} value
      */
     public BigDecimal validateAndParse(String raw)
@@ -80,7 +85,8 @@ public class AmountValidator
     /**
      * Checks if the given string matches a valid numeric amount format.
      *
-     * @param raw the string to check
+     * @param raw
+     *            the string to check
      * @return true if valid, false otherwise
      */
     public boolean isValidFormat(String raw)

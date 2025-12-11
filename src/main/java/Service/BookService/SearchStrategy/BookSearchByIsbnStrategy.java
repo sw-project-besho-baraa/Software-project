@@ -7,17 +7,21 @@ import java.util.List;
 /**
  * Search strategy for finding books by ISBN.
  */
-public class BookSearchByIsbnStrategy implements IBookSearchStrategy<String> {
+public class BookSearchByIsbnStrategy implements IBookSearchStrategy<String>
+{
 
     /**
      * Finds all books whose ISBN contains the given value.
      *
-     * @param bookRepository book repository
-     * @param isbn part or full ISBN number
+     * @param bookRepository
+     *            book repository
+     * @param isbn
+     *            part or full ISBN number
      * @return list of matching books
      */
     @Override
-    public List<Book> searchBook(BookRepository bookRepository, String isbn) {
+    public List<Book> searchBook(BookRepository bookRepository,String isbn)
+    {
         return bookRepository.findByIsbnContainingIgnoreCase(isbn);
     }
 }

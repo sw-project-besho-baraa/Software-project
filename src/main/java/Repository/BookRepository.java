@@ -12,7 +12,8 @@ import java.util.List;
  * Provides basic CRUD operations and custom search queries.
  */
 @Repository
-public interface BookRepository extends JpaRepository<@NonNull Book, @NonNull String> {
+public interface BookRepository extends JpaRepository<@NonNull Book, @NonNull String>
+{
 
     /**
      * Counts total number of books.
@@ -24,7 +25,8 @@ public interface BookRepository extends JpaRepository<@NonNull Book, @NonNull St
     /**
      * Finds books with titles containing the given value (case-insensitive).
      *
-     * @param title part of the book title
+     * @param title
+     *            part of the book title
      * @return list of matching books
      */
     List<Book> findByTitleContainingIgnoreCase(@NonNull String title);
@@ -32,7 +34,8 @@ public interface BookRepository extends JpaRepository<@NonNull Book, @NonNull St
     /**
      * Finds books with authors containing the given value (case-insensitive).
      *
-     * @param author part of the author name
+     * @param author
+     *            part of the author name
      * @return list of matching books
      */
     List<Book> findByAuthorContainingIgnoreCase(@NonNull String author);
@@ -40,7 +43,8 @@ public interface BookRepository extends JpaRepository<@NonNull Book, @NonNull St
     /**
      * Finds books with ISBNs containing the given value (case-insensitive).
      *
-     * @param isbn part of the ISBN number
+     * @param isbn
+     *            part of the ISBN number
      * @return list of matching books
      */
     List<Book> findByIsbnContainingIgnoreCase(@NonNull String isbn);

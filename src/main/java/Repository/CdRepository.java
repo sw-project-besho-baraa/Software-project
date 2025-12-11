@@ -12,7 +12,8 @@ import java.util.List;
  * Provides CRUD operations and CD-specific queries.
  */
 @Repository
-public interface CdRepository extends JpaRepository<@NonNull Cd, @NonNull String> {
+public interface CdRepository extends JpaRepository<@NonNull Cd, @NonNull String>
+{
 
     /**
      * Counts total number of CDs.
@@ -24,7 +25,8 @@ public interface CdRepository extends JpaRepository<@NonNull Cd, @NonNull String
     /**
      * Finds CDs with titles containing the given value (case-insensitive).
      *
-     * @param title part of the CD title
+     * @param title
+     *            part of the CD title
      * @return list of matching CDs
      */
     List<Cd> findByTitleContainingIgnoreCase(@NonNull String title);

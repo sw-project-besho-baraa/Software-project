@@ -13,24 +13,28 @@ import java.util.Locale;
 /**
  * Formats HTML email messages notifying users of overdue borrowed items.
  * <p>
- * This formatter builds a visually rich, mobile-friendly HTML email that includes
- * user details, summary statistics, and a table of overdue media items.
+ * This formatter builds a visually rich, mobile-friendly HTML email that
+ * includes user details, summary statistics, and a table of overdue media
+ * items.
  */
 @Component
-public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<OverdueBorrowedItemsData> {
+public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<OverdueBorrowedItemsData>
+{
 
-    private static final SimpleDateFormat BORROWED_DATE_FORMAT =
-            new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
+    private static final SimpleDateFormat BORROWED_DATE_FORMAT = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
 
     /**
      * Formats a complete overdue notification message in HTML.
      *
-     * @param overdueBorrowedItemsData the data containing the user and their overdue items
+     * @param overdueBorrowedItemsData
+     *            the data containing the user and their overdue items
      * @return the HTML-formatted message ready for email sending
      */
     @Override
-    public String formatMessage(OverdueBorrowedItemsData overdueBorrowedItemsData) {
-        if (overdueBorrowedItemsData == null) {
+    public String formatMessage(OverdueBorrowedItemsData overdueBorrowedItemsData)
+    {
+        if (overdueBorrowedItemsData == null)
+        {
             return "";
         }
 
@@ -38,13 +42,16 @@ public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<Ove
         List<OverdueBorrowedItem> items = overdueBorrowedItemsData.items();
 
         String userName = (user != null && user.getName() != null && !user.getName().isBlank())
-                ? user.getName() : "Valued Reader";
+                ? user.getName()
+                : "Valued Reader";
         String userEmail = user != null ? nullSafe(user.getEmail()) : "-";
         int overdueCount = (items == null) ? 0 : items.size();
 
         StringBuilder rowsBuilder = new StringBuilder();
-        if (items != null && !items.isEmpty()) {
-            for (OverdueBorrowedItem overdueItem : items) {
+        if (items != null && !items.isEmpty())
+        {
+            for (OverdueBorrowedItem overdueItem : items)
+            {
                 if (overdueItem == null)
                     continue;
 
@@ -52,25 +59,24 @@ public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<Ove
                 String title = (item != null) ? nullSafe(item.getTitle()) : "Unknown item";
                 String borrowedDateStr = "-";
 
-                if (item != null && item.getBorrowedDate() != null) {
+                if (item != null && item.getBorrowedDate() != null)
+                {
                     borrowedDateStr = BORROWED_DATE_FORMAT.format(item.getBorrowedDate());
                 }
 
-                String detectedAtStr = (overdueItem.detectedAt() != null)
-                        ? overdueItem.detectedAt().toString() : "-";
+                String detectedAtStr = (overdueItem.detectedAt() != null) ? overdueItem.detectedAt().toString() : "-";
                 long overdueDays = overdueItem.overdueDays();
 
                 rowsBuilder.append("""
                         <tr class="item-row">
-                            <td class="item-title"><div class="item-main-title">""")
-                        .append(escapeHtml(title))
-                        .append("</div></td>")
-                        .append("<td class=\"item-date\">").append(escapeHtml(borrowedDateStr)).append("</td>")
-                        .append("<td class=\"item-overdue\">").append(overdueDays).append(" days</td>")
+                            <td class="item-title"><div class="item-main-title">""").append(escapeHtml(title))
+                        .append("</div></td>").append("<td class=\"item-date\">").append(escapeHtml(borrowedDateStr))
+                        .append("</td>").append("<td class=\"item-overdue\">").append(overdueDays).append(" days</td>")
                         .append("<td class=\"item-detected\">").append(escapeHtml(detectedAtStr)).append("</td>")
                         .append("</tr>");
             }
-        } else {
+        } else
+        {
             rowsBuilder.append("""
                     <tr class="item-row empty-row">
                         <td colspan="4" class="empty-text">
@@ -162,35 +168,36 @@ public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<Ove
                 </html>
                 """;
 
-        return htmlTemplate
-                .replace("__USER_NAME__", escapeHtml(userName))
-                .replace("__OVERDUE_COUNT__", String.valueOf(overdueCount))
-                .replace("__ITEM_ROWS__", rowsBuilder.toString());
+        return htmlTemplate.replace("__USER_NAME__",escapeHtml(userName))
+                .replace("__OVERDUE_COUNT__",String.valueOf(overdueCount))
+                .replace("__ITEM_ROWS__",rowsBuilder.toString());
     }
 
     /**
      * Returns a non-null safe string for template replacement.
      *
-     * @param value the original string value, which may be {@code null} or blank
-     * @return "-" if the value is {@code null} or blank; otherwise the original value
+     * @param value
+     *            the original string value, which may be {@code null} or blank
+     * @return "-" if the value is {@code null} or blank; otherwise the original
+     *         value
      */
-    private static String nullSafe(String value) {
+    private static String nullSafe(String value)
+    {
         return value == null || value.isBlank() ? "-" : value;
     }
 
     /**
      * Escapes basic HTML entities to prevent injection.
      *
-     * @param input the raw input string, which may be {@code null}
-     * @return the escaped string safe for HTML contexts, or an empty string if input is {@code null}
+     * @param input
+     *            the raw input string, which may be {@code null}
+     * @return the escaped string safe for HTML contexts, or an empty string if
+     *         input is {@code null}
      */
-    private static String escapeHtml(String input) {
+    private static String escapeHtml(String input)
+    {
         if (input == null)
             return "";
-        return input
-                .replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;")
-                .replace("\"", "&quot;");
+        return input.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;").replace("\"","&quot;");
     }
 }

@@ -9,14 +9,17 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @NoArgsConstructor
-public class Cd extends MediaItem {
+public class Cd extends MediaItem
+{
 
     /**
      * Creates a new CD with a title.
      *
-     * @param title CD title
+     * @param title
+     *            CD title
      */
-    public Cd(String title) {
+    public Cd(String title)
+    {
         super(title);
     }
 
@@ -26,7 +29,8 @@ public class Cd extends MediaItem {
      * @return Cd type
      */
     @Override
-    public MediaItemType getMediaType() {
+    public MediaItemType getMediaType()
+    {
         return MediaItemType.Cd;
     }
 }

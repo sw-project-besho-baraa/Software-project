@@ -10,12 +10,14 @@ import java.util.List;
  * <p>
  * Provides access to users' fine transaction history.
  */
-public interface FineHistoryRepository extends JpaRepository<FineHistory, Integer> {
+public interface FineHistoryRepository extends JpaRepository<FineHistory, Integer>
+{
 
     /**
      * Retrieves all fine history entries for the given user, ordered by date.
      *
-     * @param user the user whose fine history is requested
+     * @param user
+     *            the user whose fine history is requested
      * @return list of fine history records in ascending date order
      */
     List<FineHistory> findByUserOrderByAppliedDateAsc(User user);

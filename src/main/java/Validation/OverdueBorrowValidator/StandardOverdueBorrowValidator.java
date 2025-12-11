@@ -21,11 +21,13 @@ public class StandardOverdueBorrowValidator implements IOverdueBorrowValidation
 {
 
     /**
-     * Validates if the given user has overdue borrowed items.
-     * If overdue items exist, an {@link OverdueItemsException} is thrown.
+     * Validates if the given user has overdue borrowed items. If overdue items
+     * exist, an {@link OverdueItemsException} is thrown.
      *
-     * @param user the user to validate
-     * @throws OverdueItemsException if user has overdue items
+     * @param user
+     *            the user to validate
+     * @throws OverdueItemsException
+     *             if user has overdue items
      * @see UserBorrowedItemsService
      * @see CurrentLocalDateTimeResolver
      */

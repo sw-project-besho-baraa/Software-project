@@ -13,7 +13,8 @@ import java.util.Date;
 @Entity
 @Table(name = "fine_history")
 @NoArgsConstructor
-public class FineHistory {
+public class FineHistory
+{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,10 +34,13 @@ public class FineHistory {
     /**
      * Creates a new fine record for a user.
      *
-     * @param user        the fined user
-     * @param fineAmount  the fine amount
+     * @param user
+     *            the fined user
+     * @param fineAmount
+     *            the fine amount
      */
-    public FineHistory(User user, BigDecimal fineAmount) {
+    public FineHistory(User user, BigDecimal fineAmount)
+    {
         this.user = user;
         this.fineAmount = fineAmount;
         this.appliedDate = new Date();

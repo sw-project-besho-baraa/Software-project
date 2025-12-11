@@ -21,7 +21,8 @@ public class BorrowValidator
     /**
      * Creates a new {@code BorrowValidator}.
      *
-     * @param overdueBorrowValidation component used to validate overdue borrows
+     * @param overdueBorrowValidation
+     *            component used to validate overdue borrows
      */
     public BorrowValidator(IOverdueBorrowValidation overdueBorrowValidation)
     {
@@ -31,9 +32,13 @@ public class BorrowValidator
     /**
      * Validates if a user can borrow the given item.
      *
-     * @param user the user attempting to borrow
-     * @param item the media item to be borrowed
-     * @throws Exception if item is already borrowed, user has fines, or overdue items exist
+     * @param user
+     *            the user attempting to borrow
+     * @param item
+     *            the media item to be borrowed
+     * @throws Exception
+     *             if item is already borrowed, user has fines, or overdue items
+     *             exist
      * @see IOverdueBorrowValidation
      */
     public void validate(User user,MediaItem item) throws Exception

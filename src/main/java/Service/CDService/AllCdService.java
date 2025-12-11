@@ -10,16 +10,19 @@ import java.util.Collection;
  * Service for retrieving all CDs from the repository.
  */
 @Service
-public class AllCdService {
+public class AllCdService
+{
 
     private final CdRepository cdRepository;
 
     /**
      * Creates a new service for CD operations.
      *
-     * @param cdRepository repository for CD data
+     * @param cdRepository
+     *            repository for CD data
      */
-    public AllCdService(CdRepository cdRepository) {
+    public AllCdService(CdRepository cdRepository)
+    {
         this.cdRepository = cdRepository;
     }
 
@@ -28,7 +31,8 @@ public class AllCdService {
      *
      * @return collection of all CDs
      */
-    public Collection<@NonNull Cd> getAllCds() {
+    public Collection<@NonNull Cd> getAllCds()
+    {
         return cdRepository.findAll();
     }
 }
