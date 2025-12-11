@@ -13,7 +13,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class BooksService_Test {
+class BooksService_Test
+{
 
     @Mock
     private BookRepository bookRepository;
@@ -22,20 +23,22 @@ class BooksService_Test {
     private BooksService booksService;
 
     @Test
-    void countBooks_whenRepositoryReturnsZero_returnsZero() {
+    void countBooks_whenRepositoryReturnsZero_returnsZero()
+    {
         when(bookRepository.count()).thenReturn(0L);
         long result = booksService.countBooks();
-        assertEquals(0L, result);
-        verify(bookRepository, times(1)).count();
+        assertEquals(0L,result);
+        verify(bookRepository,times(1)).count();
         verifyNoMoreInteractions(bookRepository);
     }
 
     @Test
-    void countBooks_whenRepositoryReturnsPositiveValue_returnsSameValue() {
+    void countBooks_whenRepositoryReturnsPositiveValue_returnsSameValue()
+    {
         when(bookRepository.count()).thenReturn(100L);
         long result = booksService.countBooks();
-        assertEquals(100L, result);
-        verify(bookRepository, times(1)).count();
+        assertEquals(100L,result);
+        verify(bookRepository,times(1)).count();
         verifyNoMoreInteractions(bookRepository);
     }
 }
