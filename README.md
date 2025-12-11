@@ -27,6 +27,6 @@ This project is organized in a clear modular structure to keep the code simple, 
 ## Opening JavaDoc
 
 You can open the generated JavaDoc here:  
-[Open JavaDoc](docs/index.html)
+[Open JavaDoc]([docs/index.html](https://besho-122.github.io/Doc/))
 
 The documentation is located in the `docs/` folder
