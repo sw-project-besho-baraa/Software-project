@@ -34,8 +34,7 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Build with Maven and run tests with JaCoCo
-        run: mvn -B jacoco:prepare-agent verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar jacoco:report -Dsonar.projectKey=sw-project-besho-baraa_Software-project
-
+        run: mvn -B jacoco:prepare-agent verify jacoco:report
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master

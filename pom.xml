@@ -8,12 +8,13 @@
     <artifactId>Library-Management-System</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-
-
-
     <properties> <maven.compiler.source>19</maven.compiler.source>
         <maven.compiler.target>19</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <sonar.organization>sw-project-besho-baraa</sonar.organization> <sonar.projectKey>sw-project-besho-baraa_Software-project</sonar.projectKey> <sonar.host.url>https://sonarcloud.io</sonar.host.url> </properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.organization>sw-project-besho-baraa</sonar.organization>
+        <sonar.projectKey>sw-project-besho-baraa_Software-project</sonar.projectKey>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    </properties>
 
     <dependencies>
         <dependency>
