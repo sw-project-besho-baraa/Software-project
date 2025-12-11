@@ -3,10 +3,21 @@ package Util.MessageFormater;
 import Service.Payment.PaymentConfirmationData;
 import org.springframework.stereotype.Component;
 
+/**
+ * Formats payment confirmation data into an HTML email body.
+ */
 @Component
 public class PaymentConfirmationMessageFormater implements IMessageFormater<PaymentConfirmationData>
 {
 
+    /**
+     * Builds an HTML payment confirmation message using the given data.
+     *
+     * @param data
+     *            the payment confirmation details
+     * @return HTML string for the confirmation email, or empty string if data is
+     *         null
+     */
     @Override
     public String formatMessage(PaymentConfirmationData data)
     {
@@ -400,6 +411,13 @@ public class PaymentConfirmationMessageFormater implements IMessageFormater<Paym
                 .replace("{{currency}}",nullSafe(data.currency()));
     }
 
+    /**
+     * Returns an empty string instead of null for safe template replacement.
+     *
+     * @param value
+     *            value to convert
+     * @return string representation or empty string if null
+     */
     private static String nullSafe(Object value)
     {
         return value == null ? "" : String.valueOf(value);

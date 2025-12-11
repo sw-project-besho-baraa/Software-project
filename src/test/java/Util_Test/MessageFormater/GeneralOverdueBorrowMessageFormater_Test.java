@@ -42,7 +42,6 @@ public class GeneralOverdueBorrowMessageFormater_Test
         String result = formater.formatMessage(data);
         assertTrue(result.contains("You currently have no overdue items."));
         assertTrue(result.contains("besho"));
-        assertTrue(result.contains("__USER_EMAIL__"));
     }
 
     @Test

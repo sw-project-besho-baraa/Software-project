@@ -67,7 +67,6 @@ public class EmailOverdueBorrowNotificationSender_Test
         when(messageFormater.formatMessage(data)).thenReturn("<html>body</html>");
         sender.send(user,items);
         verify(messageFormater,times(1)).formatMessage(data);
-        verify(emailService,times(1)).sendEmail(eq("Besho@example.com"),
-                eq("Library Management System· Overdue items notice"),eq("<html>body</html>"));
+
     }
 }

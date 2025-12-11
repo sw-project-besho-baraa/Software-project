@@ -1,30 +1,32 @@
-# Project Documentation Overview
+# Project Overview
 
-This project follows a layered modular structure with clear separation of concerns.
+This project is organized in a clear modular structure to keep the code simple, readable, and easy to maintain.
 
 ## Module Structure
 
-- Presentation: UI/controllers that translate user intent into service calls.
-- Service: Business use-cases, orchestration and transaction boundaries.
-- Repository: Data access and persistence abstraction.
-- Entity: Domain entities representing core business concepts.
-- DTO: Data Transfer Objects for moving data across layers.
-- Validation: Reusable validators enforcing input and domain constraints.
-- Exception: Custom exceptions to signal domain-specific error conditions.
-- Session: Session and contextual state management.
-- Util: Cross-cutting utilities and framework adapters.
-- Enum: Enumerations for well-defined constant sets.
+- **Presentation** – Handles the user interface and connects it to the application logic.
+- **Service** – Contains the main business logic and coordinates workflows.
+- **Repository** – Manages database operations and persistence.
+- **Entity** – Defines the core data models.
+- **DTO** – Transfers data between layers safely and efficiently.
+- **Validation** – Validates inputs and enforces rules.
+- **Exception** – Defines custom exceptions for meaningful error handling.
+- **Session** – Manages user session and application state.
+- **Util** – Provides helper functions and utilities.
+- **Enum** – Contains predefined constant sets.
 
-## Design Guidelines
+## Design Notes
 
-- Keep the Presentation layer thin; avoid direct persistence access.
-- Encapsulate domain rules inside Entities and validate at boundaries.
-- Services coordinate workflows; prefer small and cohesive methods.
-- Repositories abstract persistence details; avoid leaking vendor types.
-- DTOs should be simple, immutable where practical, and serialization-friendly.
-- Utilities are stateless and focused; avoid embedding business logic.
-- Exceptions carry actionable messages and preserve root causes.
+- Keep the UI thin and delegate logic to services.
+- Use entities to represent business rules and data.
+- Services should stay focused and cohesive.
+- Repositories handle persistence only.
+- Validators protect against invalid data.
+- Utilities should stay simple and stateless.
 
-## Generating Javadoc
+## Opening JavaDoc
 
-You can generate HTML Javadoc using Maven:
+You can open the generated JavaDoc here:  
+[Open JavaDoc](docs/index.html)
+
+The documentation is located in the `docs/` folder

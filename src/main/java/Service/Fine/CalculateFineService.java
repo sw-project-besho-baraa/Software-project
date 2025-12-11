@@ -12,24 +12,43 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * Calculates and applies fines for users with overdue borrowed items.
+ */
 @Component
-
 public class CalculateFineService
 {
-    private final MediaItemRepository mediaItemRepository;
 
+    private final MediaItemRepository mediaItemRepository;
     private final UserRepository userRepository;
+
+    /**
+     * Creates a new fine calculation service.
+     *
+     * @param mediaItemRepository
+     *            repository for media items
+     * @param userRepository
+     *            repository for users
+     */
     public CalculateFineService(MediaItemRepository mediaItemRepository, UserRepository userRepository)
     {
         this.mediaItemRepository = mediaItemRepository;
         this.userRepository = userRepository;
     }
 
+    /**
+     * Detects overdue items and calculates fines based on the number of overdue
+     * days.
+     *
+     * @param currentDateTime
+     *            the current time used for fine calculation
+     */
     @Transactional
     public void calculateFines(LocalDateTime currentDateTime)
     {
         var overdueItemDetector = new OverdueItemDetector(mediaItemRepository);
         var overdueList = overdueItemDetector.detectUsersWithOverdueBooks();
+
         for (var userData : overdueList)
         {
             User borrower = userData.user();
@@ -51,7 +70,6 @@ public class CalculateFineService
                     BigDecimal fineAmount = FineResolver.getFine(item).multiply(BigDecimal.valueOf(daysOverdue));
 
                     borrower.increaseFine(fineAmount);
-
                     item.setLastTimeFineCalculated(currentDateTime);
 
                     mediaItemRepository.save(item);

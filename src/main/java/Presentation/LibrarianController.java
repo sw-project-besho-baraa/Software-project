@@ -26,11 +26,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 
 import static Enum.UserRole.User;
 
+/**
+ * Controller for the librarian dashboard.
+ * <p>
+ * Handles viewing media items, detecting overdue items, and performing
+ * searches.
+ */
 @Component
 public class LibrarianController
 {
@@ -47,6 +51,32 @@ public class LibrarianController
     private final OverDueCountService overDueCountService;
     private final OverdueItemDetector overdueItemDetector;
 
+    /**
+     * Creates the librarian controller with injected services.
+     *
+     * @param logoutService
+     *            service used to handle logout operations
+     * @param fxmlNavigator
+     *            navigator used to change FXML views
+     * @param sessionManager
+     *            session manager providing the current user
+     * @param bookCountService
+     *            service to count the number of books
+     * @param cdCountService
+     *            service to count the number of CDs
+     * @param mediaItemService
+     *            service to manage media items
+     * @param allCdService
+     *            service to retrieve all CDs
+     * @param mediaItemSearchService
+     *            service used for media item search
+     * @param userCountService
+     *            service to count users by role
+     * @param overDueCountService
+     *            service to count overdue items
+     * @param overdueItemDetector
+     *            detector for users with overdue items
+     */
     @Autowired
     public LibrarianController(LogoutService logoutService, FxmlNavigator fxmlNavigator,
             LocalSessionManager sessionManager, BooksService bookCountService, CdCountService cdCountService,
@@ -69,67 +99,50 @@ public class LibrarianController
 
     @FXML
     private Label numberOfCustomers;
-
     @FXML
     private AnchorPane homePage;
-
     @FXML
     private Button homePageButton;
-
     @FXML
     private TableView<MediaItem> itemTable;
-
     @FXML
     private Button logoutButton;
-
     @FXML
     private Label numberOfBooks;
-
     @FXML
     private Label numberOfOverDue;
-
     @FXML
     private TextField searchBar;
-
     @FXML
     private ComboBox<String> searchList;
-
     @FXML
     private AnchorPane searchPage;
-
     @FXML
     private Button searchPageButton;
-
     @FXML
     private Label userNameTestField;
-
     @FXML
     private TableColumn<MediaItem, String> viewAuthor;
-
     @FXML
     private TableColumn<MediaItem, LocalDateTime> viewBorrowedDate;
-
     @FXML
     private TableColumn<MediaItem, LocalDateTime> viewDueToDate;
-
     @FXML
     private TableColumn<MediaItem, Integer> viewId;
-
     @FXML
     private TableColumn<MediaItem, Boolean> viewIsBorrowd;
-
     @FXML
     private TableColumn<MediaItem, String> viewIsbn;
-
     @FXML
     private TableColumn<MediaItem, String> viewTitle;
-
     @FXML
     private TableColumn<MediaItem, String> viewType;
-
     @FXML
     private TableColumn<MediaItem, String> viewUser;
 
+    /**
+     * Initializes the controller and loads initial data.
+     */
     @FXML
     private void initialize()
     {
@@ -142,32 +155,45 @@ public class LibrarianController
         showHomePage();
     }
 
+    /**
+     * Sets the librarian's name label.
+     */
     private void setUserNameDisplay()
     {
         if (sessionManager != null && sessionManager.getUser() != null)
-        {
             userNameTestField.setText(sessionManager.getUser().getName());
-        }
     }
 
+    /**
+     * Updates the book count label.
+     */
     private void updateBookCount()
     {
         long bookCount = bookCountService.countBooks();
         numberOfBooks.setText(String.valueOf(bookCount));
     }
 
+    /**
+     * Updates the overdue items count label.
+     */
     private void updateOverdueCount()
     {
         long overdue = overDueCountService.countOverdueItems();
         numberOfOverDue.setText(String.valueOf(overdue));
     }
 
+    /**
+     * Updates the number of registered customers.
+     */
     private void updateCustomersCount()
     {
         long userCount = userCountService.countUsersByRole(User);
         numberOfCustomers.setText(String.valueOf(userCount));
     }
 
+    /**
+     * Sets up the search options combo box.
+     */
     private void setupSearchList()
     {
         if (searchList != null)
@@ -177,13 +203,15 @@ public class LibrarianController
         }
     }
 
+    /**
+     * Configures the table view columns for displaying media items.
+     */
     private void setupViewTable()
     {
         if (itemTable == null)
             return;
 
         viewId.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getId()));
-
         viewTitle.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTitle()));
 
         if (viewAuthor != null)
@@ -192,8 +220,7 @@ public class LibrarianController
                 MediaItem item = cellData.getValue();
                 if (item instanceof Book book)
                 {
-                    String author = book.getAuthor();
-                    return new SimpleStringProperty(author != null ? author : "");
+                    return new SimpleStringProperty(book.getAuthor() != null ? book.getAuthor() : "");
                 }
                 return new SimpleStringProperty("");
             });
@@ -205,33 +232,30 @@ public class LibrarianController
                 MediaItem item = cellData.getValue();
                 if (item instanceof Book book)
                 {
-                    String isbn = book.getIsbn();
-                    return new SimpleStringProperty(isbn != null ? isbn : "");
+                    return new SimpleStringProperty(book.getIsbn() != null ? book.getIsbn() : "");
                 }
                 return new SimpleStringProperty("");
             });
         }
 
         viewIsBorrowd.setCellValueFactory(cellData -> new SimpleBooleanProperty(cellData.getValue().isBorrowed()));
-
         viewUser.setCellValueFactory(cellData -> {
             var borrower = cellData.getValue().getBorrower();
-            String name = (borrower != null) ? borrower.getName() : "";
-            return new SimpleStringProperty(name);
+            return new SimpleStringProperty(borrower != null ? borrower.getName() : "");
         });
 
         viewBorrowedDate
                 .setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getBorrowedDate()));
-
         viewDueToDate.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getDueDate()));
 
         if (viewType != null)
-        {
             viewType.setCellValueFactory(
                     cellData -> new SimpleStringProperty(cellData.getValue().getMediaType().name()));
-        }
     }
 
+    /**
+     * Shows the home page.
+     */
     private void showHomePage()
     {
         if (homePage != null)
@@ -240,6 +264,9 @@ public class LibrarianController
             searchPage.setVisible(false);
     }
 
+    /**
+     * Shows the search page.
+     */
     private void showSearchPage()
     {
         if (homePage != null)
@@ -248,6 +275,13 @@ public class LibrarianController
             searchPage.setVisible(true);
     }
 
+    /**
+     * Detects overdue borrowed items and displays them.
+     *
+     * @param event
+     *            button click event
+     * @see OverdueItemDetector
+     */
     @FXML
     void detectOverDue(ActionEvent event)
     {
@@ -256,6 +290,12 @@ public class LibrarianController
         itemTable.setItems(FXCollections.observableArrayList(overdueItems));
     }
 
+    /**
+     * Returns to home and refreshes counts.
+     *
+     * @param event
+     *            button click event
+     */
     @FXML
     void homeButtonClick(ActionEvent event)
     {
@@ -265,6 +305,12 @@ public class LibrarianController
         updateCustomersCount();
     }
 
+    /**
+     * Logs out the librarian.
+     *
+     * @param event
+     *            button click event
+     */
     @FXML
     void logoutButton(ActionEvent event)
     {
@@ -272,12 +318,24 @@ public class LibrarianController
         fxmlNavigator.logout((javafx.stage.Stage) logoutButton.getScene().getWindow(),"/fxml/Login.fxml");
     }
 
+    /**
+     * Opens the search page.
+     *
+     * @param event
+     *            button click event
+     */
     @FXML
     void searchButton(ActionEvent event)
     {
         showSearchPage();
     }
 
+    /**
+     * Performs search by mode and keyword.
+     *
+     * @param event
+     *            button click event
+     */
     @FXML
     void searchByButton(ActionEvent event)
     {
@@ -287,6 +345,12 @@ public class LibrarianController
         itemTable.setItems(FXCollections.observableArrayList(items));
     }
 
+    /**
+     * Displays all media items.
+     *
+     * @param event
+     *            button click event
+     */
     @FXML
     void viewAllButton(ActionEvent event)
     {
@@ -294,6 +358,12 @@ public class LibrarianController
         itemTable.setItems(FXCollections.observableArrayList(allItems));
     }
 
+    /**
+     * Placeholder for applying a fine on an item.
+     *
+     * @param event
+     *            button click event
+     */
     @FXML
     void applyFineOnItem(ActionEvent event)
     {

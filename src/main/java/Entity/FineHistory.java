@@ -5,6 +5,9 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * Stores user fine history records.
+ */
 @Getter
 @Setter
 @Entity
@@ -28,6 +31,14 @@ public class FineHistory
     @Column(name = "applied_date", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date appliedDate;
 
+    /**
+     * Creates a new fine record for a user.
+     *
+     * @param user
+     *            the fined user
+     * @param fineAmount
+     *            the fine amount
+     */
     public FineHistory(User user, BigDecimal fineAmount)
     {
         this.user = user;

@@ -39,6 +39,11 @@ import java.time.LocalDateTime;
 
 import static Enum.UserRole.User;
 
+/**
+ * Controller for the admin dashboard.
+ * <p>
+ * Handles navigation, user management, media items, counts and notifications.
+ */
 @Component
 public class AdminController
 {
@@ -60,6 +65,7 @@ public class AdminController
 
     @FXML
     private Label adminNameDisplay;
+
     @FXML
     private Label errorMessagesForSendEmail;
 
@@ -68,19 +74,25 @@ public class AdminController
 
     @FXML
     private AnchorPane viewItemPage;
+
     @FXML
     private AnchorPane unregisterPage;
+
     @FXML
     private TextField addUserEmail;
+
     @FXML
     private TextField addUserName;
+
     @FXML
     private TextField addUserPassword;
 
     @FXML
     private TextField addBookIsbn;
+
     @FXML
     private TextField addBookAuthor;
+
     @FXML
     private TextField addBookTitle;
 
@@ -104,38 +116,52 @@ public class AdminController
 
     @FXML
     private Button pageHome;
+
     @FXML
     private TextField addCdTitle;
+
     @FXML
     private Label errorLabelAddBook;
+
     @FXML
     private Label errorLabelAddCd;
+
     @FXML
     private Label unregisterLable;
 
     @FXML
     private ComboBox<String> searchList;
+
     @FXML
     private ComboBox<String> usersNamesCombo;
 
     @FXML
     private TableColumn<MediaItem, Integer> viewId;
+
     @FXML
     private TableColumn<MediaItem, String> viewTitle;
+
     @FXML
     private TableColumn<MediaItem, Boolean> viewIsBorrowd;
+
     @FXML
     private TableColumn<MediaItem, String> viewUser;
+
     @FXML
     private TableColumn<MediaItem, LocalDateTime> viewBorrowedDate;
+
     @FXML
     private TableColumn<MediaItem, LocalDateTime> viewDueToDate;
+
     @FXML
     private TableColumn<MediaItem, String> viewAuthor;
+
     @FXML
     private TableColumn<MediaItem, String> viewIsbn;
+
     @FXML
     private TableColumn<MediaItem, String> viewType;
+
     @FXML
     private TableView<MediaItem> itemTable;
 
@@ -154,6 +180,39 @@ public class AdminController
     private MediaItemSearchService mediaItemSearchService;
     private UnregisterUserService unregisterUserService;
     private GetAllUsersService getAllUsersService;
+
+    /**
+     * Creates the admin controller with required services.
+     *
+     * @param logoutService
+     *            handles logout operations
+     * @param fxmlNavigator
+     *            used to switch between FXML views
+     * @param bookCountService
+     *            service to count books
+     * @param cdCountService
+     *            service to count CDs
+     * @param userCountService
+     *            service to count users by role
+     * @param addUserService
+     *            service to add new users
+     * @param sessionManager
+     *            manages the current logged-in user
+     * @param mediaItemService
+     *            service for managing media items
+     * @param allCdService
+     *            service to load all CDs
+     * @param overdueBorrowNotifier
+     *            sends overdue notifications
+     * @param adminBroadcastNotifier
+     *            sends admin broadcast messages
+     * @param mediaItemSearchService
+     *            service to search media items
+     * @param unregisterUserService
+     *            service to unregister users
+     * @param getAllUsersService
+     *            service to fetch all users
+     */
     @Autowired
     public AdminController(LogoutService logoutService, FxmlNavigator fxmlNavigator, BooksService bookCountService,
             CdCountService cdCountService, UserCountService userCountService, AddUserService addUserService,
@@ -169,7 +228,6 @@ public class AdminController
         this.userCountService = userCountService;
         this.addUserService = addUserService;
         this.sessionManager = sessionManager;
-
         this.mediaItemService = mediaItemService;
         this.allCdService = allCdService;
         this.overdueBorrowNotifier = overdueBorrowNotifier;
@@ -177,9 +235,11 @@ public class AdminController
         this.mediaItemSearchService = mediaItemSearchService;
         this.unregisterUserService = unregisterUserService;
         this.getAllUsersService = getAllUsersService;
-
     }
 
+    /**
+     * Initializes the admin view after FXML is loaded.
+     */
     @FXML
     private void initialize()
     {
@@ -195,30 +255,46 @@ public class AdminController
         }
     }
 
+    /**
+     * Updates the label showing total number of books.
+     */
     private void updateBookCount()
     {
         long bookCount = bookCountService.countBooks();
         numberOfBooks.setText(String.valueOf(bookCount));
     }
 
+    /**
+     * Updates the label showing total number of CDs.
+     */
     private void updateCDCount()
     {
         long cdCount = cdCountService.countCds();
         numberOfCds.setText(String.valueOf(cdCount));
-
     }
 
+    /**
+     * Sets the admin name label from the current session user.
+     *
+     * @see LocalSessionManager
+     */
     private void setUserNameDisplay()
     {
         adminNameDisplay.setText(sessionManager.getUser().getName());
     }
 
+    /**
+     * Updates the label showing total number of customers.
+     */
     private void updateCustomersCount()
     {
         long userCount = userCountService.countUsersByRole(User);
         numberOfCustomers.setText(String.valueOf(userCount));
     }
 
+    /**
+     * Configures the table columns and loads users for the unregister combo.
+     */
     private void setupViewTable()
     {
         if (itemTable == null)
@@ -240,6 +316,7 @@ public class AdminController
                 return new SimpleStringProperty("");
             });
         }
+
         if (viewIsbn != null)
         {
             viewIsbn.setCellValueFactory(cellData -> {
@@ -278,9 +355,11 @@ public class AdminController
                     .map(Entity.User::getName).toList();
             usersNamesCombo.setItems(FXCollections.observableArrayList(users));
         }
-
     }
 
+    /**
+     * Hides all main content panes.
+     */
     void setAllVisibleFalse()
     {
         addUserPage.setVisible(false);
@@ -290,19 +369,30 @@ public class AdminController
         addBookPage.setVisible(false);
         addCdPage.setVisible(false);
         unregisterPage.setVisible(false);
-
     }
 
+    /**
+     * Searches items based on the selected mode and keyword.
+     *
+     * @param event
+     *            action event from the search button
+     */
     @FXML
     void searchButton(ActionEvent event)
     {
         String keyword = itemSearch.getText();
         String mode = searchList.getValue();
-
         var items = mediaItemSearchService.searchByMode(mode,keyword);
         itemTable.setItems(FXCollections.observableArrayList(items));
     }
 
+    /**
+     * Saves a new book from the add book form.
+     *
+     * @param event
+     *            action event from the save button
+     * @see Book
+     */
     @FXML
     void addBookSaveButton(ActionEvent event)
     {
@@ -316,17 +406,27 @@ public class AdminController
         addBookTitle.clear();
         addBookAuthor.clear();
         addBookIsbn.clear();
-
     }
 
+    /**
+     * Shows the add book page.
+     *
+     * @param event
+     *            action event
+     */
     @FXML
     void addBookPageButton(ActionEvent event)
     {
         setAllVisibleFalse();
         addBookPage.setVisible(true);
-
     }
 
+    /**
+     * Shows the add user page.
+     *
+     * @param event
+     *            action event
+     */
     @FXML
     void addUserPageButton(ActionEvent event)
     {
@@ -334,6 +434,12 @@ public class AdminController
         addUserPage.setVisible(true);
     }
 
+    /**
+     * Shows the home page and refreshes counts.
+     *
+     * @param event
+     *            action event
+     */
     @FXML
     void homePageButton(ActionEvent event)
     {
@@ -344,21 +450,39 @@ public class AdminController
         adminMainPage.setVisible(true);
     }
 
+    /**
+     * Placeholder for item search text field action.
+     *
+     * @param event
+     *            action event
+     */
     @FXML
     void itemSearchMethod(ActionEvent event)
     {
-
+        // no-op
     }
 
+    /**
+     * Logs out the current admin user and returns to the login screen.
+     *
+     * @param event
+     *            action event
+     */
     @FXML
     void logoutButton(ActionEvent event)
     {
         logoutService.logout();
         System.out.println("Logout button clicked");
         fxmlNavigator.logout((javafx.stage.Stage) pageHome.getScene().getWindow(),"/fxml/Login.fxml");
-
     }
 
+    /**
+     * Saves a new user based on form input.
+     *
+     * @param event
+     *            action event
+     * @see UserRole
+     */
     @FXML
     void saveUserButton(ActionEvent event)
     {
@@ -383,9 +507,14 @@ public class AdminController
         addUserEmail.clear();
         addUserPassword.clear();
         addUserRole.clear();
-
     }
 
+    /**
+     * Sends a broadcast email message to all users.
+     *
+     * @param event
+     *            action event
+     */
     @FXML
     void sendEmail(ActionEvent event)
     {
@@ -397,6 +526,12 @@ public class AdminController
         System.out.println("Broadcast email sent.");
     }
 
+    /**
+     * Opens the send email page.
+     *
+     * @param event
+     *            action event
+     */
     @FXML
     void sendEmailMassagePageButton(ActionEvent event)
     {
@@ -404,6 +539,12 @@ public class AdminController
         sendEmailMassagePage.setVisible(true);
     }
 
+    /**
+     * Sends overdue borrow notifications.
+     *
+     * @param event
+     *            action event
+     */
     @FXML
     void sendOverDueButton(ActionEvent event)
     {
@@ -411,6 +552,12 @@ public class AdminController
         System.out.println("Overdue notifications sent.");
     }
 
+    /**
+     * Shows all items in the table.
+     *
+     * @param event
+     *            action event
+     */
     @FXML
     void viewAllButton(ActionEvent event)
     {
@@ -419,9 +566,14 @@ public class AdminController
         var allItems = mediaItemService.getAllItems();
         ObservableList<MediaItem> observableItems = FXCollections.observableArrayList(allItems);
         itemTable.setItems(observableItems);
-
     }
 
+    /**
+     * Opens the view item page.
+     *
+     * @param event
+     *            action event
+     */
     @FXML
     void viewItemPageButton(ActionEvent event)
     {
@@ -429,6 +581,12 @@ public class AdminController
         viewItemPage.setVisible(true);
     }
 
+    /**
+     * Opens the add CD page.
+     *
+     * @param event
+     *            action event
+     */
     @FXML
     void addCdPageButton(ActionEvent event)
     {
@@ -436,6 +594,13 @@ public class AdminController
         addCdPage.setVisible(true);
     }
 
+    /**
+     * Saves a new CD from the add CD form.
+     *
+     * @param event
+     *            action event
+     * @see Cd
+     */
     @FXML
     void addCdSaveButton(ActionEvent event)
     {
@@ -447,14 +612,25 @@ public class AdminController
         addCdTitle.clear();
     }
 
+    /**
+     * Opens the unregister user page.
+     *
+     * @param event
+     *            action event
+     */
     @FXML
     void unregisterUserPageButton(ActionEvent event)
     {
         setAllVisibleFalse();
         unregisterPage.setVisible(true);
-
     }
 
+    /**
+     * Unregisters the selected user from the system.
+     *
+     * @param event
+     *            action event
+     */
     @FXML
     void unregisterButton(ActionEvent event)
     {
@@ -495,5 +671,4 @@ public class AdminController
             e.printStackTrace();
         }
     }
-
 }

@@ -12,12 +12,25 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Provides unified search functionality across all media item types (books and
+ * CDs) using different search strategies.
+ */
 @Service
 public class MediaItemSearchService
 {
 
     private final BookSearchService bookSearchService;
     private final CdSearchService cdSearchService;
+
+    /**
+     * Creates a new instance of the media item search service.
+     *
+     * @param bookSearchService
+     *            service responsible for book searches
+     * @param cdSearchService
+     *            service responsible for CD searches
+     */
     @Autowired
     public MediaItemSearchService(BookSearchService bookSearchService, CdSearchService cdSearchService)
     {
@@ -25,6 +38,16 @@ public class MediaItemSearchService
         this.cdSearchService = cdSearchService;
     }
 
+    /**
+     * Searches for media items based on the selected search mode and keyword.
+     *
+     * @param mode
+     *            the selected search mode (e.g. "Title (Books & CDs)", "Book
+     *            Author", "Book ISBN")
+     * @param keyword
+     *            the search keyword
+     * @return a list of matching media items
+     */
     public List<MediaItem> searchByMode(String mode,String keyword)
     {
         List<MediaItem> result = new ArrayList<>();
