@@ -8,16 +8,20 @@
     <artifactId>Library-Management-System</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <properties> <maven.compiler.source>19</maven.compiler.source>
+    <properties>
+        <maven.compiler.source>19</maven.compiler.source>
         <maven.compiler.target>19</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sonar.organization>sw-project-besho-baraa</sonar.organization>
+        <sonar.projectKey>sw-project</sonar.projectKey>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.coverage.jacoco.xmlReportPaths>
+            ${project.basedir}/target/site/jacoco/jacoco.xml
+        </sonar.coverage.jacoco.xmlReportPaths>
         <sonar.coverage.exclusions>
             **/Presentation/**
         </sonar.coverage.exclusions>
-
     </properties>
-
 
     <dependencies>
         <dependency>
@@ -85,19 +89,15 @@
             <artifactId>javafx-fxml</artifactId>
             <version>17.0.6</version>
         </dependency>
-
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.7.4</version>
         </dependency>
-
-
     </dependencies>
 
     <build>
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -111,12 +111,12 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.10.1</version>
-
                 <configuration>
                     <source>19</source>
                     <target>19</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -125,6 +125,7 @@
                     <mainClass>Presentation.Main</mainClass>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
@@ -163,6 +164,7 @@
                     <failOnViolation>true</failOnViolation>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -175,7 +177,7 @@
                     </execution>
                     <execution>
                         <id>report</id>
-                        <phase>test</phase>
+                        <phase>verify</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
@@ -187,8 +189,6 @@
                     </excludes>
                 </configuration>
             </plugin>
-
-
         </plugins>
     </build>
 </project>
