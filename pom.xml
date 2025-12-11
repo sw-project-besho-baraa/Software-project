@@ -12,8 +12,6 @@
         <maven.compiler.source>19</maven.compiler.source>
         <maven.compiler.target>19</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <sonar.organization>sw-project-besho-baraa</sonar.organization>
-        <sonar.coverage.exclusions>**/Presentation/**</sonar.coverage.exclusions>
     </properties>
 
     <dependencies>
@@ -99,7 +97,6 @@
                     <argLine>-Xshare:off</argLine>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -109,7 +106,6 @@
                     <target>19</target>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -118,7 +114,6 @@
                     <mainClass>Presentation.Main</mainClass>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
@@ -138,7 +133,6 @@
                     </java>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -157,7 +151,6 @@
                     <failOnViolation>true</failOnViolation>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
