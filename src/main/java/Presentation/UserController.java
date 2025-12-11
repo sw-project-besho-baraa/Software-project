@@ -36,7 +36,7 @@ import java.time.LocalDateTime;
 @Component
 public class UserController
 {
-
+    private static final String TITLE_MODE = "Title (Books & CDs)";
     @FXML
     private Label feinInDollar, fine, numberOfBooks, numberOfOverDue, errorPayLable, userEmailField, userNameTestField;
 
@@ -224,8 +224,8 @@ public class UserController
     {
         if (searchList != null)
         {
-            searchList.setItems(FXCollections.observableArrayList("Title (Books & CDs)","Book Author","Book ISBN"));
-            searchList.setValue("Title (Books & CDs)");
+            searchList.setItems(FXCollections.observableArrayList(TITLE_MODE,"Book Author","Book ISBN"));
+            searchList.setValue(TITLE_MODE);
         }
     }
 
@@ -499,7 +499,7 @@ public class UserController
         if (itemTable == null)
             return;
         String keyword = searchBar != null ? searchBar.getText() : "";
-        String mode = searchList != null ? searchList.getValue() : "Title (Books & CDs)";
+        String mode = searchList != null ? searchList.getValue() : TITLE_MODE;
         var items = mediaItemSearchService.searchByMode(mode,keyword);
         itemTable.setItems(FXCollections.observableArrayList(items));
     }
