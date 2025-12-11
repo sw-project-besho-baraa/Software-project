@@ -12,9 +12,12 @@
         <maven.compiler.target>19</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sonar.organization>sw-project-besho-baraa</sonar.organization>
-        <sonar.projectKey>sw-project-besho-baraa_Software-project</sonar.projectKey>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.coverage.exclusions>
+            **/Presentation/**
+        </sonar.coverage.exclusions>
+
     </properties>
+
 
     <dependencies>
         <dependency>
