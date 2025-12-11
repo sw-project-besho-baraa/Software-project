@@ -1,35 +1,23 @@
 package Util.MessageFormater;
 
-import DTO.UserDTO.UserContactDTO;
 import Entity.MediaItem;
 import Service.OverdueBorrowDetection.OverdueBorrowedItem;
 import Service.OverdueBorrowDetection.OverdueBorrowedItemsData;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Formats HTML email messages notifying users of overdue borrowed items.
- * <p>
- * This formatter builds a visually rich, mobile-friendly HTML email that
- * includes user details, summary statistics, and a table of overdue media
- * items.
- */
 @Component
 public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<OverdueBorrowedItemsData>
 {
 
-    private static final SimpleDateFormat BORROWED_DATE_FORMAT = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
+    private final SimpleDateFormat borrowedDateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
 
-    /**
-     * Formats a complete overdue notification message in HTML.
-     *
-     * @param overdueBorrowedItemsData
-     *            the data containing the user and their overdue items
-     * @return the HTML-formatted message ready for email sending
-     */
     @Override
     public String formatMessage(OverdueBorrowedItemsData overdueBorrowedItemsData)
     {
@@ -44,16 +32,18 @@ public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<Ove
         String userName = (user != null && user.getName() != null && !user.getName().isBlank())
                 ? user.getName()
                 : "Valued Reader";
-        String userEmail = user != null ? nullSafe(user.getEmail()) : "-";
-        int overdueCount = (items == null) ? 0 : items.size();
 
+        int overdueCount = (items == null) ? 0 : items.size();
         StringBuilder rowsBuilder = new StringBuilder();
+
         if (items != null && !items.isEmpty())
         {
             for (OverdueBorrowedItem overdueItem : items)
             {
                 if (overdueItem == null)
+                {
                     continue;
+                }
 
                 MediaItem item = overdueItem.item();
                 String title = (item != null) ? nullSafe(item.getTitle()) : "Unknown item";
@@ -61,10 +51,11 @@ public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<Ove
 
                 if (item != null && item.getBorrowedDate() != null)
                 {
-                    borrowedDateStr = BORROWED_DATE_FORMAT.format(item.getBorrowedDate());
+                    borrowedDateStr = formatBorrowedDate(item.getBorrowedDate());
                 }
 
                 String detectedAtStr = (overdueItem.detectedAt() != null) ? overdueItem.detectedAt().toString() : "-";
+
                 long overdueDays = overdueItem.overdueDays();
 
                 rowsBuilder.append("""
@@ -88,13 +79,11 @@ public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<Ove
 
         String htmlTemplate = """
                 <!DOCTYPE html>
-                <html lang="en" dir="ltr">
+                <html lang="en">
                 <head>
                     <meta charset="UTF-8">
                     <title>MOBO Library · Overdue Items Notice</title>
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                     <style>
-                        /* Tailwind-like dark luxury theme */
                         :root {
                             --bg: #020617;
                             --card-bg: #020617;
@@ -125,7 +114,8 @@ public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<Ove
                             margin-bottom: 16px;
                         }
                         .badge-logo {
-                            height: 26px; width: 26px;
+                            height: 26px;
+                            width: 26px;
                             border-radius: 50%;
                             background: radial-gradient(circle at 20% 20%, #e0f2fe, transparent 55%),
                                         radial-gradient(circle at 80% 80%, #38bdf8, transparent 55%);
@@ -173,31 +163,42 @@ public class GeneralOverdueBorrowMessageFormater implements IMessageFormater<Ove
                 .replace("__ITEM_ROWS__",rowsBuilder.toString());
     }
 
-    /**
-     * Returns a non-null safe string for template replacement.
-     *
-     * @param value
-     *            the original string value, which may be {@code null} or blank
-     * @return "-" if the value is {@code null} or blank; otherwise the original
-     *         value
-     */
+    private String formatBorrowedDate(Object rawDate)
+    {
+        if (rawDate == null)
+        {
+            return "-";
+        }
+
+        if (rawDate instanceof java.util.Date date)
+        {
+            return borrowedDateFormat.format(date);
+        }
+
+        if (rawDate instanceof LocalDate localDate)
+        {
+            return localDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy",Locale.ENGLISH));
+        }
+
+        if (rawDate instanceof LocalDateTime localDateTime)
+        {
+            return localDateTime.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMM yyyy",Locale.ENGLISH));
+        }
+
+        return rawDate.toString();
+    }
+
     private static String nullSafe(String value)
     {
         return value == null || value.isBlank() ? "-" : value;
     }
 
-    /**
-     * Escapes basic HTML entities to prevent injection.
-     *
-     * @param input
-     *            the raw input string, which may be {@code null}
-     * @return the escaped string safe for HTML contexts, or an empty string if
-     *         input is {@code null}
-     */
     private static String escapeHtml(String input)
     {
         if (input == null)
+        {
             return "";
+        }
         return input.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;").replace("\"","&quot;");
     }
 }
