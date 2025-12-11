@@ -15,9 +15,11 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+/**
+ * Controller for displaying a user's fine history in a table view.
+ */
 @Component
-public class FineHistoryReportController
-{
+public class FineHistoryReportController {
 
     @FXML
     private TableView<FineHistory> tblHistory;
@@ -32,53 +34,63 @@ public class FineHistoryReportController
     private TableColumn<FineHistory, String> colAmount;
 
     private final FineHistoryRepository fineHistoryRepository;
-
     private User user;
-
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
+    /**
+     * Creates the controller with a fine history repository.
+     *
+     * @param fineHistoryRepository repository for fine history records
+     */
     @Autowired
-    public FineHistoryReportController(FineHistoryRepository fineHistoryRepository)
-    {
+    public FineHistoryReportController(FineHistoryRepository fineHistoryRepository) {
         this.fineHistoryRepository = fineHistoryRepository;
     }
 
+    /**
+     * Initializes table columns and their value factories.
+     */
     @FXML
-    private void initialize()
-    {
+    private void initialize() {
+        colDate.setCellValueFactory(cellData -> new SimpleStringProperty(
+                cellData.getValue().getAppliedDate() != null
+                        ? dateFormat.format(cellData.getValue().getAppliedDate())
+                        : ""
+        ));
 
-        colDate.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAppliedDate() != null
-                ? dateFormat.format(cellData.getValue().getAppliedDate())
-                : ""));
         colAmount.setCellValueFactory(cellData -> {
             BigDecimal amount = cellData.getValue().getFineAmount();
             return new SimpleStringProperty(amount != null ? amount.toString() : "0.00");
         });
+
         colType.setCellValueFactory(cellData -> {
             BigDecimal amount = cellData.getValue().getFineAmount();
             String type;
-            if (amount == null || amount.compareTo(BigDecimal.ZERO) == 0)
-            {
+            if (amount == null || amount.compareTo(BigDecimal.ZERO) == 0) {
                 type = "Neutral";
-            } else if (amount.compareTo(BigDecimal.ZERO) > 0)
-            {
+            } else if (amount.compareTo(BigDecimal.ZERO) > 0) {
                 type = "Fine";
-            } else
-            {
+            } else {
                 type = "Payment";
             }
             return new SimpleStringProperty(type);
         });
     }
 
-    public void setUser(User user)
-    {
+    /**
+     * Sets the user whose fine history should be displayed.
+     *
+     * @param user target user
+     */
+    public void setUser(User user) {
         this.user = user;
         loadData();
     }
 
-    private void loadData()
-    {
+    /**
+     * Loads fine history data for the current user.
+     */
+    private void loadData() {
         if (user == null || tblHistory == null)
             return;
 

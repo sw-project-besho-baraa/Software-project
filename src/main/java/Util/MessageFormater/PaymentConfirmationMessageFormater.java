@@ -3,15 +3,21 @@ package Util.MessageFormater;
 import Service.Payment.PaymentConfirmationData;
 import org.springframework.stereotype.Component;
 
+/**
+ * Formats payment confirmation data into an HTML email body.
+ */
 @Component
-public class PaymentConfirmationMessageFormater implements IMessageFormater<PaymentConfirmationData>
-{
+public class PaymentConfirmationMessageFormater implements IMessageFormater<PaymentConfirmationData> {
 
+    /**
+     * Builds an HTML payment confirmation message using the given data.
+     *
+     * @param data the payment confirmation details
+     * @return HTML string for the confirmation email, or empty string if data is null
+     */
     @Override
-    public String formatMessage(PaymentConfirmationData data)
-    {
-        if (data == null)
-        {
+    public String formatMessage(PaymentConfirmationData data) {
+        if (data == null) {
             return "";
         }
 
@@ -388,20 +394,25 @@ public class PaymentConfirmationMessageFormater implements IMessageFormater<Paym
                 </html>
                 """;
 
-        return htmlTemplate.replace("{{patronName}}",nullSafe(data.patronName()))
-                .replace("{{amountPaid}}",nullSafe(data.amountPaid()))
-                .replace("{{paymentDate}}",nullSafe(data.paymentDate()))
-                .replace("{{receiptId}}",nullSafe(data.receiptId()))
-                .replace("{{paymentMethod}}",nullSafe(data.paymentMethod()))
-                .replace("{{transactionId}}",nullSafe(data.transactionId()))
-                .replace("{{processedBy}}",nullSafe(data.processedBy()))
-                .replace("{{previousBalance}}",nullSafe(data.previousBalance()))
-                .replace("{{remainingBalance}}",nullSafe(data.remainingBalance()))
-                .replace("{{currency}}",nullSafe(data.currency()));
+        return htmlTemplate.replace("{{patronName}}", nullSafe(data.patronName()))
+                .replace("{{amountPaid}}", nullSafe(data.amountPaid()))
+                .replace("{{paymentDate}}", nullSafe(data.paymentDate()))
+                .replace("{{receiptId}}", nullSafe(data.receiptId()))
+                .replace("{{paymentMethod}}", nullSafe(data.paymentMethod()))
+                .replace("{{transactionId}}", nullSafe(data.transactionId()))
+                .replace("{{processedBy}}", nullSafe(data.processedBy()))
+                .replace("{{previousBalance}}", nullSafe(data.previousBalance()))
+                .replace("{{remainingBalance}}", nullSafe(data.remainingBalance()))
+                .replace("{{currency}}", nullSafe(data.currency()));
     }
 
-    private static String nullSafe(Object value)
-    {
+    /**
+     * Returns an empty string instead of null for safe template replacement.
+     *
+     * @param value value to convert
+     * @return string representation or empty string if null
+     */
+    private static String nullSafe(Object value) {
         return value == null ? "" : String.valueOf(value);
     }
 }

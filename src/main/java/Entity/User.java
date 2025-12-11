@@ -9,13 +9,16 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 
+/**
+ * Represents a library user with account, role, and fine details.
+ */
 @Getter
 @Setter
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
-public class User
-{
+public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -45,8 +48,12 @@ public class User
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<FineHistory> fineHistoryList = new ArrayList<>();
 
-    public void increaseFine(@NonNull BigDecimal amount)
-    {
+    /**
+     * Increases the user's fine balance.
+     *
+     * @param amount amount to add
+     */
+    public void increaseFine(@NonNull BigDecimal amount) {
         if (amount.compareTo(BigDecimal.ZERO) <= 0)
             return;
         if (fineBalance == null)
@@ -54,8 +61,12 @@ public class User
         fineBalance = fineBalance.add(amount);
     }
 
-    public void decreaseFine(@NonNull BigDecimal amount)
-    {
+    /**
+     * Decreases the user's fine balance.
+     *
+     * @param amount amount to subtract
+     */
+    public void decreaseFine(@NonNull BigDecimal amount) {
         if (amount.compareTo(BigDecimal.ZERO) <= 0)
             return;
         if (fineBalance == null)
@@ -63,27 +74,37 @@ public class User
 
         fineBalance = fineBalance.subtract(amount);
         if (fineBalance.compareTo(BigDecimal.ZERO) < 0)
-        {
             fineBalance = BigDecimal.ZERO;
-        }
     }
 
-    public User(String name, String email, String hashedPassword)
-    {
+    /**
+     * Creates a new user with basic info.
+     *
+     * @param name user's name
+     * @param email user's email
+     * @param hashedPassword hashed password
+     */
+    public User(String name, String email, String hashedPassword) {
         this.name = name;
         this.email = email;
         this.hashedPassword = hashedPassword;
     }
 
+    /**
+     * Returns a string representation of the user.
+     *
+     * @return user details as a string
+     */
     @Override
-    public String toString()
-    {
-        return ToStringBuilder.reflectionToString(this,ToStringStyle.MULTI_LINE_STYLE);
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 
+    /**
+     * Sets the creation date when the user is first persisted.
+     */
     @PrePersist
-    protected void onCreate()
-    {
+    protected void onCreate() {
         creationDate = LocalDateTime.now();
     }
 }

@@ -16,9 +16,13 @@ import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Controller for handling the login screen.
+ * <p>
+ * Authenticates users and navigates them to their respective dashboards.
+ */
 @Component
-public class LoginController
-{
+public class LoginController {
 
     @FXML
     private TextField emailTextField;
@@ -37,33 +41,53 @@ public class LoginController
     private final ISessionManager sessionManager;
     private final FxmlNavigator fxmlNavigator;
 
+    /**
+     * Creates the login controller with required services.
+     */
     @Autowired
-    public LoginController(LoginService loginService, RoleToFxmlMapper roleToFxmlMapper, ISessionManager sessionManager,
-            FxmlNavigator fxmlNavigator)
-    {
+    public LoginController(LoginService loginService,
+                           RoleToFxmlMapper roleToFxmlMapper,
+                           ISessionManager sessionManager,
+                           FxmlNavigator fxmlNavigator) {
         this.loginService = loginService;
         this.roleToFxmlMapper = roleToFxmlMapper;
         this.sessionManager = sessionManager;
         this.fxmlNavigator = fxmlNavigator;
     }
 
+    /**
+     * Handles the sign-in button click event.
+     * <p>
+     * Validates user credentials and navigates to the corresponding dashboard on success.
+     *
+     * @param event action event triggered by the sign-in button
+     * @see LoginService
+     * @see RoleToFxmlMapper
+     */
     @FXML
-    void onSignIn(ActionEvent event)
-    {
+    void onSignIn(ActionEvent event) {
         System.out.println("Sign In button clicked");
+
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
         UserCredentialsDTO userDTO = new UserCredentialsDTO(email, password);
+
         boolean loginSuccessful = loginService.login(userDTO);
-        if (loginSuccessful)
-        {
+        if (loginSuccessful) {
             wrongUsernameOrPassword.setText("Login successful!");
             User currentUser = sessionManager.getUser();
             System.out.println(currentUser.getUserRole());
-            String fxmlPath = roleToFxmlMapper.getFxmlFileForRole(currentUser.getUserRole()).orElse("/fxml/Login.fxml");
-            fxmlNavigator.navigateTo((Stage) signInButton.getScene().getWindow(),fxmlPath,"Main Application");
-        } else
-        {
+
+            String fxmlPath = roleToFxmlMapper
+                    .getFxmlFileForRole(currentUser.getUserRole())
+                    .orElse("/fxml/Login.fxml");
+
+            fxmlNavigator.navigateTo(
+                    (Stage) signInButton.getScene().getWindow(),
+                    fxmlPath,
+                    "Main Application"
+            );
+        } else {
             wrongUsernameOrPassword.setText("Wrong username or password.");
         }
     }

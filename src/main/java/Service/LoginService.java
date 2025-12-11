@@ -7,62 +7,53 @@ import Validation.LoginCredentialsValidator;
 import org.springframework.stereotype.Service;
 
 /**
- * Service responsible for authenticating users and establishing a session.
+ * Handles user authentication and session initialization.
  * <p>
- * It validates provided credentials, checks the user repository, and delegates
- * session establishment to an {@link ISessionManager}.
+ * Validates user credentials, checks the user repository, and starts a new
+ * session using an {@link ISessionManager} if authentication succeeds.
  */
 @Service
-public class LoginService
-{
+public class LoginService {
 
     private final LoginCredentialsValidator loginCredentialsValidator;
     private final ISessionManager sessionManager;
     private final UserRepository userRepository;
 
     /**
-     * Constructs a new LoginService with its required collaborators.
+     * Creates a new login service with its required dependencies.
      *
-     * @param loginCredentialsValidator
-     *            validator used to verify provided credentials against stored user
-     *            data
-     * @param sessionManager
-     *            session manager responsible for maintaining the current user
-     *            session
-     * @param userRepository
-     *            repository used to load users by email (or other identifiers)
+     * @param loginCredentialsValidator validator for verifying provided credentials
+     * @param sessionManager            manages the authenticated user session
+     * @param userRepository            repository for accessing stored user data
      */
-    public LoginService(LoginCredentialsValidator loginCredentialsValidator, ISessionManager sessionManager,
-            UserRepository userRepository)
-    {
+    public LoginService(LoginCredentialsValidator loginCredentialsValidator,
+                        ISessionManager sessionManager,
+                        UserRepository userRepository) {
         this.loginCredentialsValidator = loginCredentialsValidator;
         this.sessionManager = sessionManager;
         this.userRepository = userRepository;
     }
 
     /**
-     * Attempts to authenticate a user with the provided credentials and start a
-     * session on success.
+     * Attempts to log in a user using the provided credentials.
+     * <p>
+     * The service validates the credentials and, on success, stores
+     * the authenticated user in the active session.
      *
-     * @param userDTO
-     *            contains the email and password to authenticate
-     * @return true if authentication succeeds and a session is started; false
-     *         otherwise
+     * @param userDTO the DTO containing the user's email and password
+     * @return {@code true} if authentication succeeds; {@code false} otherwise
      */
-
-    public boolean login(UserCredentialsDTO userDTO)
-    {
+    public boolean login(UserCredentialsDTO userDTO) {
         var userOpt = userRepository.findByEmail(userDTO.getEmail());
+        if (userOpt.isEmpty()) {
+            return false;
+        }
 
-        if (userOpt.isEmpty())
-        {
-            return false;
-        }
         var user = userOpt.get();
-        if (!loginCredentialsValidator.validateLogin(userDTO,user))
-        {
+        if (!loginCredentialsValidator.validateLogin(userDTO, user)) {
             return false;
         }
+
         sessionManager.login(user);
         return true;
     }
